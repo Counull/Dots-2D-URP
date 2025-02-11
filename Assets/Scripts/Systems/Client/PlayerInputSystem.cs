@@ -2,8 +2,9 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using PlayerInput = Authoring.PlayerInput;
 
-namespace Systems.Cliet {
+namespace Systems.Client {
     [UpdateInGroup(typeof(GhostInputSystemGroup))]
     public partial struct PlayerInputSystem : ISystem {
         public class InputActions : IComponentData {

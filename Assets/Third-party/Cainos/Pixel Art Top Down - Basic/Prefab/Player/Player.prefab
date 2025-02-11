@@ -317,7 +317,7 @@ MonoBehaviour:
   OptimizationMode: 0
   Importance: 250
   MaxSendRate: 0
-  prefabId: 
+  prefabId: ef67ba864d1ecc042b5f4cf48455c0a6
   HasOwner: 1
   SupportAutoCommandTarget: 1
   TrackInterpolationDelay: 0
