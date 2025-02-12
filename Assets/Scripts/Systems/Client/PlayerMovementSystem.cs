@@ -19,7 +19,7 @@ namespace Systems.Client {
         public void OnUpdate(ref SystemState state) {
             foreach (var (playerTransform, input, player) in
                      SystemAPI.Query<RefRW<LocalTransform>, RefRO<PlayerInput>, RefRO<Player>>()
-                         .WithAll<Simulate>()) {
+                         .WithAll<Simulate, GhostOwnerIsLocal>()) {
                 if (input.ValueRO is {Horizontal: 0, Vertical: 0}) {
                     continue;
                 }
