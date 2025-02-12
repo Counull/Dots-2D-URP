@@ -18,6 +18,7 @@ namespace Systems.Server {
         }
 
 
+        
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var playerPrefab = SystemAPI.GetSingleton<PlayerSpawner>().PlayerPrefab;

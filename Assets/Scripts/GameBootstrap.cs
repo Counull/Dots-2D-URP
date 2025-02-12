@@ -17,6 +17,7 @@ public class GameBootstrap : ClientServerBootstrap {
         AutoConnectPort = 14747;
         //-p 设置端口
         ProcessCommandLineArgs(defaultWorldName);
+        
 
 #if UNITY_EDITOR
         base.Initialize(defaultWorldName);

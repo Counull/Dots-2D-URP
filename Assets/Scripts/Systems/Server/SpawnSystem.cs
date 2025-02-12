@@ -12,7 +12,7 @@ namespace Systems.Server {
         }
 
 
-        private void SpawnLocalPlayer() { }
+   
 
     }
 }

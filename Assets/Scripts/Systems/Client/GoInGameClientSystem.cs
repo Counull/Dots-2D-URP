@@ -1,4 +1,5 @@
 using Unity.Burst;
+using Unity.Cinemachine;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
@@ -10,6 +11,8 @@ namespace Systems.Client {
 
     [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation | WorldSystemFilterFlags.ThinClientSimulation)]
     public partial struct GoInGameClientSystem : ISystem {
+       
+     
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<NetworkId>();
