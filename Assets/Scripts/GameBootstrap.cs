@@ -1,6 +1,7 @@
 using System;
 using Unity.Entities;
 using Unity.NetCode;
+using Unity.Networking.Transport;
 using UnityEngine;
 
 /// <summary>
@@ -17,11 +18,11 @@ public class GameBootstrap : ClientServerBootstrap {
         AutoConnectPort = 14747;
         //-p 设置端口
         ProcessCommandLineArgs(defaultWorldName);
-        
+
 
 #if UNITY_EDITOR
-        base.Initialize(defaultWorldName);
-        return true;
+        return base.Initialize(defaultWorldName);
+
 #else
         if (IsServerPlatform) {
             return CreateServerWorld(defaultWorldName) != null;
@@ -39,8 +40,17 @@ public class GameBootstrap : ClientServerBootstrap {
                     throw new Exception("Invalid command line arguments");
                 }
 
-                AutoConnectPort = ushort.Parse(args[i + 1]);
+                AutoConnectPort = ushort.Parse(args[i]);
                 Debug.Log("AutoConnectPort set: " + AutoConnectPort);
+            }
+            else if (args[i] == "-ip") {
+                i++;
+                if (i >= args.Length) {
+                    throw new Exception("Invalid command line arguments");
+                }
+
+                DefaultConnectAddress = NetworkEndpoint.Parse(args[i], AutoConnectPort);
+                Debug.Log("defaultWorldName set: " + defaultWorldName);
             }
         }
     }
