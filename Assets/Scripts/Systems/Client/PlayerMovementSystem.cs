@@ -17,22 +17,19 @@ namespace Systems.Client {
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            Debug.Log("PlayerMovementSystem");
+            ;
             var playerMovement = SystemAPI.GetSingleton<PlayerMovement>();
             var speed = SystemAPI.Time.DeltaTime * playerMovement.Speed;
 
             foreach (var (playerTransform, input) in
-                     SystemAPI.Query<RefRW<LocalTransform>,RefRO<PlayerInput>>()
+                     SystemAPI.Query<RefRW<LocalTransform>, RefRO<PlayerInput>>()
                          .WithAll<Simulate>()) {
-                if (input.ValueRO.Horizontal == 0 && input.ValueRO.Vertical == 0)
-                {
+                if (input.ValueRO is {Horizontal: 0, Vertical: 0}) {
                     continue;
                 }
-                var move = new float3(input.ValueRO.Horizontal, 0, input.ValueRO.Vertical) * speed;
+                var move = new float3(input.ValueRO.Horizontal, input.ValueRO.Vertical, 0) * speed;
                 playerTransform.ValueRW.Position += move;
             }
-        
-        
         }
     }
 }

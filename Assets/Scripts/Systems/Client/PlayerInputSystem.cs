@@ -2,7 +2,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using PlayerInput = Authoring.PlayerInput;
+
 
 namespace Systems.Client {
     [UpdateInGroup(typeof(GhostInputSystemGroup))]
@@ -20,19 +20,17 @@ namespace Systems.Client {
 
 
         public void OnUpdate(ref SystemState state) {
-            Debug.Log("Player Input System OnUpdate");
             //这模板用法总感觉是在写cpp
             foreach (var input in
-                     SystemAPI.Query<RefRW<PlayerInput>>()
+                     SystemAPI.Query<RefRW<Authoring.PlayerInput>>()
                          .WithAll<GhostOwnerIsLocal>()
-                     ) {
+                    ) {
                 input.ValueRW = default;
-            
+
                 var actions = state.EntityManager.GetComponentObject<InputActions>(state.SystemHandle);
                 var move = actions.MoveAction.ReadValue<Vector2>();
                 input.ValueRW.Horizontal = move.x;
                 input.ValueRW.Vertical = move.y;
-            
             }
         }
     }

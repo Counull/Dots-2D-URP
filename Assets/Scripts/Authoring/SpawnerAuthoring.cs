@@ -14,7 +14,7 @@ namespace Authoring {
                     PlayerPrefab = GetEntity(authoring.playerPrefab, TransformUsageFlags.Dynamic),
                 });
            
-                AddComponent<EnemySpawner>(entity,new EnemySpawner() {
+                AddComponent(entity,new EnemySpawner() {
                     EnemyPrefab = GetEntity(authoring.enemyPrefab,TransformUsageFlags.Dynamic)
                 });
             }

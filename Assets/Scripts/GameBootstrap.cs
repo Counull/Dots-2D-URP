@@ -1,4 +1,5 @@
 using System;
+using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 
@@ -18,7 +19,8 @@ public class GameBootstrap : ClientServerBootstrap {
         ProcessCommandLineArgs(defaultWorldName);
 
 #if UNITY_EDITOR
-        return base.Initialize(defaultWorldName);
+        base.Initialize(defaultWorldName);
+        return true;
 #else
         if (IsServerPlatform) {
             return CreateServerWorld(defaultWorldName) != null;
