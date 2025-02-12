@@ -42,7 +42,7 @@ namespace Systems.Client {
                     managedComponent.CreatePlayerVisualizationInstance();
 
                     //如果是本地玩家，就让摄像机跟随
-                    if (EntityManager.HasComponent<GhostOwnerIsLocal>(entity)) {
+                    if (EntityManager.IsComponentEnabled<GhostOwnerIsLocal>(entity)) {
                         camera.Follow = managedComponent.VisualizationInstance.transform;
                     }
                 }

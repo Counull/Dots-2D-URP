@@ -12,11 +12,11 @@ namespace Authoring {
             public override void Bake(PlayerAuthoring authoring) {
                 var entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
 
-                AddComponentObject<PlayerVisualizationComponent>(entity, new PlayerVisualizationComponent() {
+                AddComponentObject(entity, new PlayerVisualizationComponent() {
                     PlayerVisualizationPrefab = authoring.playerVisualizationPrefab
                 });
 
-                AddComponent<Player>(entity,new Player(){Speed = 5});
+                AddComponent(entity,new Player(){Speed = 5});
                 AddComponent<PlayerInput>(entity);
 
 
@@ -31,10 +31,11 @@ namespace Authoring {
         public float Speed;
     }
 
-    [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
-    public struct PlayerInput : IInputComponentData {
-        public float Horizontal;
-        public float Vertical;
+    [GhostComponent()]
+    public struct PlayerInput : IInputComponentData{
+        [GhostField]  public float Horizontal;
+        [GhostField] public float Vertical;
+      
     }
 
 
