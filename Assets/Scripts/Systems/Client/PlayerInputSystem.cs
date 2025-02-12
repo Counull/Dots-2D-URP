@@ -16,6 +16,9 @@ namespace Systems.Client {
             //以便在Update中使用GetComponentObject<>（）函数取回
             state.EntityManager.AddComponentObject(state.SystemHandle,
                 new InputActions() {MoveAction = InputSystem.actions.FindAction("Move")});
+
+            state.RequireForUpdate<Authoring.PlayerInput>();
+            state.RequireForUpdate<GhostOwnerIsLocal>();
         }
 
 
