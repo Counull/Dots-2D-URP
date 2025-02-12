@@ -14644,7 +14644,6 @@ GameObject:
   - component: {fileID: 1553430955}
   - component: {fileID: 1553430958}
   - component: {fileID: 1553430959}
-  - component: {fileID: 1553430960}
   m_Layer: 6
   m_Name: Environment
   m_TagString: Untagged
@@ -14787,18 +14786,6 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 1553430954}
---- !u!114 &1553430960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553430954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383e31901165c974bb1cb333042a24ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1707414278
 GameObject:
   m_ObjectHideFlags: 0

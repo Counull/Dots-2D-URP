@@ -16,12 +16,11 @@ namespace Authoring {
                     PlayerVisualizationPrefab = authoring.playerVisualizationPrefab
                 });
 
-                AddComponent<Player>(entity);
+                AddComponent<Player>(entity,new Player(){Speed = 5});
                 AddComponent<PlayerInput>(entity);
 
 
-                //TODO 这里添加这个组件或许会破坏与其他Player原型？
-                AddComponent(entity, new PlayerMovement() {Speed = authoring.moveSpeed});
+ 
             }
         }
     }
@@ -29,6 +28,7 @@ namespace Authoring {
 
     public struct Player : IComponentData {
         public bool IsDead;
+        public float Speed;
     }
 
     [GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
@@ -37,9 +37,7 @@ namespace Authoring {
         public float Vertical;
     }
 
-    public struct PlayerMovement : IComponentData {
-        public float Speed;
-    }
+
 
 
     public class PlayerVisualizationComponent : IComponentData {

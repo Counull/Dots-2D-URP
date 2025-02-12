@@ -11,23 +11,21 @@ namespace Systems.Client {
     public partial struct PlayerMovementSystem : ISystem {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
-            state.RequireForUpdate<PlayerMovement>();
+            state.RequireForUpdate<Player>();
         }
 
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            ;
-            var playerMovement = SystemAPI.GetSingleton<PlayerMovement>();
-            var speed = SystemAPI.Time.DeltaTime * playerMovement.Speed;
-
-            foreach (var (playerTransform, input) in
-                     SystemAPI.Query<RefRW<LocalTransform>, RefRO<PlayerInput>>()
+            foreach (var (playerTransform, input, player) in
+                     SystemAPI.Query<RefRW<LocalTransform>, RefRO<PlayerInput>, RefRO<Player>>()
                          .WithAll<Simulate>()) {
                 if (input.ValueRO is {Horizontal: 0, Vertical: 0}) {
                     continue;
                 }
-                var move = new float3(input.ValueRO.Horizontal, input.ValueRO.Vertical, 0) * speed;
+
+                var move = new float3(input.ValueRO.Horizontal, input.ValueRO.Vertical, 0) * SystemAPI.Time.DeltaTime *
+                           player.ValueRO.Speed;
                 playerTransform.ValueRW.Position += move;
             }
         }
