@@ -1,7 +1,9 @@
+using Component;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using PlayerInput = Component.PlayerInput;
 
 
 namespace Systems.Client {
@@ -17,7 +19,7 @@ namespace Systems.Client {
             state.EntityManager.AddComponentObject(state.SystemHandle,
                 new InputActions() {MoveAction = InputSystem.actions.FindAction("Move")});
 
-            state.RequireForUpdate<Authoring.PlayerInput>();
+            state.RequireForUpdate<PlayerInput>();
             state.RequireForUpdate<GhostOwnerIsLocal>();
         }
 
@@ -25,7 +27,7 @@ namespace Systems.Client {
         public void OnUpdate(ref SystemState state) {
             //这模板用法总感觉是在写cpp
             foreach (var input in
-                     SystemAPI.Query<RefRW<Authoring.PlayerInput>>()
+                     SystemAPI.Query<RefRW<PlayerInput>>()
                          .WithAll<GhostOwnerIsLocal>()
                     ) {
                 input.ValueRW = default;

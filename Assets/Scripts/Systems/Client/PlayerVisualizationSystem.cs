@@ -1,13 +1,10 @@
-﻿using System.Runtime.InteropServices;
-using Authoring;
+﻿using Component;
 using Unity.Cinemachine;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Transforms;
-using Unity.VisualScripting;
 using UnityEngine;
-using PlayerInput = UnityEngine.InputSystem.PlayerInput;
+
 
 namespace Systems.Client {
     /// <summary>
@@ -23,7 +20,7 @@ namespace Systems.Client {
         private CinemachineCamera camera;
 
         protected override void OnCreate() {
-            RequireForUpdate<Player>();
+            RequireForUpdate<PlayerComponent>();
             RequireForUpdate<PlayerVisualizationComponent>();
         }
 
@@ -34,7 +31,7 @@ namespace Systems.Client {
 
         protected override void OnUpdate() {
             foreach (var (localTransform, playerInput, entity) in
-                     SystemAPI.Query<RefRO<LocalTransform>, RefRO<Authoring.PlayerInput>>().WithEntityAccess()) {
+                     SystemAPI.Query<RefRO<LocalTransform>, RefRO<PlayerInput>>().WithEntityAccess()) {
                 var managedComponent = EntityManager.GetComponentObject<PlayerVisualizationComponent>(entity);
 
                 //如果没有可视化对象，就实例化一个
