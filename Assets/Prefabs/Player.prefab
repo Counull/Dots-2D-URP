@@ -121,7 +121,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b85b252b4d114f4eaf5e15d1b7a99ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  attributes:
+    isDead: 0
+    speed: 5
+    health: 100
+    maxWeaponCount: 6
   playerVisualizationPrefab: {fileID: 5628018141983903104, guid: fb4d48c684e8fc043a98fb4d3c28c0e1, type: 3}
 --- !u!114 &5582199848832912948
 MonoBehaviour:
