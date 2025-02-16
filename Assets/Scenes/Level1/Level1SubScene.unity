@@ -241,9 +241,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 5628018141983903104, guid: e50eddfa11a93c84d900c79382590b9d, type: 3}
-  weaponPrefab:
+  weaponPrefabs:
   - {fileID: 1491544606043698972, guid: 3dd81ac3ed6b48f4f9ea3737666a1e88, type: 3}
-  enemyPrefab: {fileID: 0}
+  enemyInput:
+  - enemyPrefab: {fileID: 176818573609820773, guid: ab75c32501f33784ebf0953af3a9582d, type: 3}
+    enemyAttributes:
+      maxSpawnCount: 5
 --- !u!1001 &2981921506695376462
 PrefabInstance:
   m_ObjectHideFlags: 0

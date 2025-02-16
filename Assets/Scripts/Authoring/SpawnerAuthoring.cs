@@ -6,11 +6,10 @@ namespace Authoring {
     public class SpawnerAuthoring : MonoBehaviour {
         [Header("Player")] [SerializeField] private GameObject playerPrefab;
 
-        [FormerlySerializedAs("weaponPrefab")] [Header("Weapon")] [SerializeField]
+         [SerializeField]
         private GameObject[] weaponPrefabs;
 
-        [FormerlySerializedAs("enemyPrefab")] [Header("Enemy")] [SerializeField]
-        private GameObject[] enemyPrefabs;
+        [SerializeField] private EnemySpawnerInput[] enemyInput;
 
         class Baker : Baker<SpawnerAuthoring> {
             public override void Bake(SpawnerAuthoring authoring) {
@@ -22,9 +21,11 @@ namespace Authoring {
 
 
                 var enemyBuffer = AddBuffer<EnemyPrefabElement>(entity);
-                foreach (var enemyPrefab in authoring.enemyPrefabs) {
-                    enemyBuffer.Add(new EnemyPrefabElement()
-                        {EnemyPrefab = GetEntity(enemyPrefab, TransformUsageFlags.Dynamic)});
+                foreach (var input in authoring.enemyInput) {
+                    enemyBuffer.Add(new EnemyPrefabElement() {
+                        EnemyPrefab = GetEntity(input.enemyPrefab, TransformUsageFlags.Dynamic),
+                        EnemyAttributes = input.enemyAttributes
+                    });
                 }
 
 
@@ -45,6 +46,19 @@ namespace Authoring {
 
     public struct EnemyPrefabElement : IBufferElementData {
         public Entity EnemyPrefab;
+        public EnemySpawnAttributes EnemyAttributes;
+    }
+
+    [System.Serializable]
+    public struct EnemySpawnerInput {
+        public GameObject enemyPrefab;
+        public EnemySpawnAttributes enemyAttributes;
+    }
+
+    [System.Serializable]
+    public struct EnemySpawnAttributes : IComponentData {
+        public float maxSpawnCount;
+        public ushort groupSpawnRange;
     }
 
     public struct WeaponPrefabElement : IBufferElementData {

@@ -21,14 +21,14 @@ namespace Component {
 
     [Serializable]
     public struct PlayerAttributes : IComponentData {
-        public bool isDead;
         public float speed;
         public float health;
         public uint maxWeaponCount;
+        public bool isDead;
     }
 
-    
-    [GhostComponent]    
+
+    [GhostComponent]
     public struct PlayerComponent : IComponentData {
         public float Experience;
         public uint Level;

@@ -23,7 +23,8 @@ namespace Systems.RoundSystem {
                 if (roundData.PhaseState.Phase == RoundPhase.Settlement && roundData.PhaseState.NextPhase == null) {
                     state.EntityManager.RemoveComponent<RoundData>(state.SystemHandle);
                 }
-
+                
+                //状态切换调度
                 roundData.PhaseState.PhaseExit();
                 roundData.PhaseState = roundData.PhaseState.NextPhase;
                 roundData.PhaseState?.PhaseEnter();
