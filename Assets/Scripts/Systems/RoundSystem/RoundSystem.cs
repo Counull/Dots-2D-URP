@@ -9,9 +9,9 @@ namespace Systems.RoundSystem {
     public partial struct RoundSystem : ISystem {
         public void OnCreate(ref SystemState state) {
             var roundData = new RoundData() { };
+            roundData.PhaseState = new RoundInitPhase(roundData);
             state.EntityManager.AddComponentObject(state.SystemHandle,
                 roundData);
-            roundData.PhaseState = new RoundInitPhase(roundData);
             state.RequireForUpdate<RoundData>();
         }
 
@@ -20,7 +20,13 @@ namespace Systems.RoundSystem {
         public void OnUpdate(ref SystemState state) {
             var roundData = state.EntityManager.GetComponentObject<RoundData>(state.SystemHandle);
             if (roundData.PhaseState.ReadyForNextPhase()) {
+                if (roundData.PhaseState.Phase == RoundPhase.Settlement && roundData.PhaseState.NextPhase == null) {
+                    state.EntityManager.RemoveComponent<RoundData>(state.SystemHandle);
+                }
+
+                roundData.PhaseState.PhaseExit();
                 roundData.PhaseState = roundData.PhaseState.NextPhase;
+                roundData.PhaseState?.PhaseEnter();
             }
         }
     }
@@ -29,10 +35,14 @@ namespace Systems.RoundSystem {
     public class RoundData : IComponentData {
         public RoundPhaseState PhaseState;
         public float CombatTimeCountingDown;
-        public float MaxCombatTime;
         public ushort CombatRound;
-        public ushort MaxCombatRound;
-        public bool RoundFiled;
+        public float MaxCombatTime = 60f;
+        public ushort MaxCombatRound = 20;
+        public bool RoundDefeated;
+
+
+        public bool CombatTimeOut => CombatTimeCountingDown <= 0;
+        public bool IsCombatPhase => PhaseState is {Phase: RoundPhase.Combat};
     }
 
 

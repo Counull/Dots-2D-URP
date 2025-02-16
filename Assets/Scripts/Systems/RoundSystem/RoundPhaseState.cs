@@ -1,18 +1,23 @@
+using Component;
+using Unity.Entities;
 using Unity.VisualScripting;
 
 namespace Systems.RoundSystem {
     public abstract class RoundPhaseState {
         private int _preparingSystemCount;
 
+
+        protected readonly RoundData RoundData;
+        public abstract RoundPhase Phase { get; }
+        public RoundPhaseState NextPhase { get; protected set; }
+
         public RoundPhaseState(RoundData roundData) {
             RoundData = roundData;
         }
 
-        protected RoundData RoundData;
-        public abstract RoundPhase Phase { get; }
 
-
-        public RoundPhaseState NextPhase { get; protected set; }
+        public virtual void PhaseEnter() { }
+        public virtual void PhaseExit() { }
 
         public virtual void SystemPreparing() {
             _preparingSystemCount++;
@@ -29,65 +34,73 @@ namespace Systems.RoundSystem {
 
 
     public class RoundInitPhase : RoundPhaseState {
+        public override RoundPhase Phase => RoundPhase.Init;
+
         public RoundInitPhase(RoundData roundData) :
             base(roundData) {
-            roundData.CombatRound = 0;
             NextPhase = new RoundCombatPhase(roundData);
         }
 
-        public override RoundPhase Phase => RoundPhase.Init;
+        public override void PhaseEnter() {
+            RoundData.CombatRound = 0;
+        }
     }
 
 
     public class RoundCombatPhase : RoundPhaseState {
+        public override RoundPhase Phase => RoundPhase.Combat;
+
         public RoundCombatPhase(RoundData roundData) :
-            base(roundData) {
-            roundData.CombatRound++;
-            roundData.CombatTimeCountingDown = roundData.MaxCombatTime;
-            roundData.RoundFiled = false;
-            if (roundData.CombatRound <= roundData.MaxCombatRound) {
-                NextPhase = new RoundLevelUpPhase(roundData);
+            base(roundData) { }
+
+        public override void PhaseEnter() {
+            RoundData.CombatRound++;
+            RoundData.CombatTimeCountingDown = RoundData.MaxCombatTime;
+            RoundData.RoundDefeated = false;
+            if (RoundData.CombatRound < RoundData.MaxCombatRound) {
+                NextPhase = new RoundLevelUpPhase(RoundData);
             }
             else {
                 //所有战斗回合结束进入结算阶段    
-                NextPhase = new RoundSettlementPhase(roundData);
+                NextPhase = new RoundSettlementPhase(RoundData);
             }
         }
+
 
         public override bool ReadyForNextPhase() {
             //如果战斗提前失败则直接进入结算阶段
-            if (RoundData.RoundFiled && NextPhase is not RoundSettlementPhase) {
+            if (RoundData.RoundDefeated && NextPhase is not RoundSettlementPhase) {
                 NextPhase = new RoundSettlementPhase(RoundData);
             }
 
-            return base.ReadyForNextPhase() && (RoundData.CombatTimeCountingDown <= 0 || RoundData.RoundFiled);
+            return base.ReadyForNextPhase() && (RoundData.CombatTimeOut || RoundData.RoundDefeated);
         }
-
-        public override RoundPhase Phase => RoundPhase.Combat;
     }
 
     public class RoundLevelUpPhase : RoundPhaseState {
+        public override RoundPhase Phase => RoundPhase.LevelUp;
+
         public RoundLevelUpPhase(RoundData roundData) :
             base(roundData) {
             NextPhase = new RoundPurchasePhase(roundData);
         }
-
-        public override RoundPhase Phase => RoundPhase.LevelUp;
     }
 
 
     public class RoundPurchasePhase : RoundPhaseState {
-        public RoundPurchasePhase(RoundData roundData) :
-            base(roundData) { }
-
         public override RoundPhase Phase => RoundPhase.Purchase;
+
+        public RoundPurchasePhase(RoundData roundData) :
+            base(roundData) {
+            NextPhase = new RoundCombatPhase(roundData);
+        }
     }
 
 
     public class RoundSettlementPhase : RoundPhaseState {
+        public override RoundPhase Phase => RoundPhase.Settlement;
+
         public RoundSettlementPhase(RoundData roundData) :
             base(roundData) { }
-
-        public override RoundPhase Phase => RoundPhase.Settlement;
     }
 }

@@ -1,13 +1,16 @@
 using Unity.Entities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Authoring {
     public class SpawnerAuthoring : MonoBehaviour {
         [Header("Player")] [SerializeField] private GameObject playerPrefab;
 
-        [Header("Weapon")] [SerializeField] private GameObject[] weaponPrefab;
+        [FormerlySerializedAs("weaponPrefab")] [Header("Weapon")] [SerializeField]
+        private GameObject[] weaponPrefabs;
 
-        [Header("Enemy")] [SerializeField] private GameObject enemyPrefab;
+        [FormerlySerializedAs("enemyPrefab")] [Header("Enemy")] [SerializeField]
+        private GameObject[] enemyPrefabs;
 
         class Baker : Baker<SpawnerAuthoring> {
             public override void Bake(SpawnerAuthoring authoring) {
@@ -17,18 +20,21 @@ namespace Authoring {
                     PlayerPrefab = GetEntity(authoring.playerPrefab, TransformUsageFlags.Dynamic),
                 });
 
-                AddComponent(entity, new EnemySpawner() {
-                    EnemyPrefab = GetEntity(authoring.enemyPrefab, TransformUsageFlags.Dynamic)
-                });
+
+                var enemyBuffer = AddBuffer<EnemyPrefabElement>(entity);
+                foreach (var enemyPrefab in authoring.enemyPrefabs) {
+                    enemyBuffer.Add(new EnemyPrefabElement()
+                        {EnemyPrefab = GetEntity(enemyPrefab, TransformUsageFlags.Dynamic)});
+                }
+
 
                 // Add and initialize the DynamicBuffer
                 var buffer = AddBuffer<WeaponPrefabElement>(entity);
-                foreach (var prefab in authoring.weaponPrefab) {
+                foreach (var prefab in authoring.weaponPrefabs) {
                     buffer.Add(new WeaponPrefabElement {
                         WeaponPrefab = GetEntity(prefab, TransformUsageFlags.Dynamic)
                     });
                 }
-               
             }
         }
     }
@@ -37,7 +43,7 @@ namespace Authoring {
         public Entity PlayerPrefab;
     }
 
-    public struct EnemySpawner : IComponentData {
+    public struct EnemyPrefabElement : IBufferElementData {
         public Entity EnemyPrefab;
     }
 

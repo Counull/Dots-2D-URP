@@ -1,5 +1,6 @@
 using Authoring;
 using Component;
+using Systems.RoundSystem;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -13,11 +14,16 @@ namespace Systems.Client {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<PlayerComponent>();
+            state.RequireForUpdate<RoundData>();
         }
 
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
+            if (state.EntityManager.GetComponentObject<RoundData>(state.SystemHandle) is {IsCombatPhase: false}) {
+                return;
+            }
+
             foreach (var (playerTransform, input, player) in
                      SystemAPI.Query<RefRW<LocalTransform>, RefRO<PlayerInput>, RefRO<PlayerComponent>>()
                          .WithAll<Simulate, GhostOwnerIsLocal>()) {
