@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-
 namespace Systems.Client {
     [UpdateInGroup(typeof(GhostInputSystemGroup))]
     public partial struct PlayerInputSystem : ISystem {
@@ -18,7 +17,7 @@ namespace Systems.Client {
             state.EntityManager.AddComponentObject(state.SystemHandle,
                 new InputActions() {MoveAction = InputSystem.actions.FindAction("Move")});
 
-            state.RequireForUpdate<PlayerInput>();
+
             state.RequireForUpdate<GhostOwnerIsLocal>();
         }
 
@@ -27,8 +26,7 @@ namespace Systems.Client {
             //这模板用法总感觉是在写cpp
             foreach (var input in
                      SystemAPI.Query<RefRW<Component.PlayerInput>>()
-                         .WithAll<GhostOwnerIsLocal>()
-                    ) {
+                         .WithAll<GhostOwnerIsLocal>()) {
                 input.ValueRW = default;
 
                 var actions = state.EntityManager.GetComponentObject<InputActions>(state.SystemHandle);

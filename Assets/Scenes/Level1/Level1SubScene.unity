@@ -247,7 +247,11 @@ MonoBehaviour:
   - enemyPrefab: {fileID: 176818573609820773, guid: ab75c32501f33784ebf0953af3a9582d, type: 3}
     enemyAttributes:
       maxSpawnCount: 5
-      groupSpawnRange: 5
+      groupSpawnRange: 2
+      spawnInterval: 5
+      nextSpawnTime: 0
+  spawnFiledLB: {x: -19, y: -18}
+  spawnFiledRT: {x: 20, y: 12}
 --- !u!1001 &2981921506695376462
 PrefabInstance:
   m_ObjectHideFlags: 0

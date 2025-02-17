@@ -1,3 +1,4 @@
+using Component;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -5,15 +6,20 @@ using UnityEngine.Serialization;
 namespace Authoring {
     public class SpawnerAuthoring : MonoBehaviour {
         [Header("Player")] [SerializeField] private GameObject playerPrefab;
-
-         [SerializeField]
-        private GameObject[] weaponPrefabs;
-
+        [SerializeField] private GameObject[] weaponPrefabs;
         [SerializeField] private EnemySpawnerInput[] enemyInput;
+        [SerializeField] private Vector2 spawnFiledLB;
+        [SerializeField] private Vector2 spawnFiledRT;
+
 
         class Baker : Baker<SpawnerAuthoring> {
             public override void Bake(SpawnerAuthoring authoring) {
                 var entity = GetEntity(authoring.gameObject, TransformUsageFlags.None);
+
+                AddComponent(entity, new SpawnSettings() {
+                    SpawnFiledLB = authoring.spawnFiledLB,
+                    SpawnFiledRT = authoring.spawnFiledRT
+                });
 
                 AddComponent(entity, new PlayerSpawner() {
                     PlayerPrefab = GetEntity(authoring.playerPrefab, TransformUsageFlags.Dynamic),
@@ -39,29 +45,14 @@ namespace Authoring {
             }
         }
     }
-
-    public struct PlayerSpawner : IComponentData {
-        public Entity PlayerPrefab;
-    }
-
-    public struct EnemyPrefabElement : IBufferElementData {
-        public Entity EnemyPrefab;
-        public EnemySpawnAttributes EnemyAttributes;
-    }
-
+    
+    
+    //用作输入
     [System.Serializable]
     public struct EnemySpawnerInput {
         public GameObject enemyPrefab;
         public EnemySpawnAttributes enemyAttributes;
     }
 
-    [System.Serializable]
-    public struct EnemySpawnAttributes : IComponentData {
-        public float maxSpawnCount;
-        public ushort groupSpawnRange;
-    }
 
-    public struct WeaponPrefabElement : IBufferElementData {
-        public Entity WeaponPrefab;
-    }
 }
