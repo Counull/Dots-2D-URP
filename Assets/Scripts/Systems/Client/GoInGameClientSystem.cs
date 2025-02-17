@@ -11,8 +11,6 @@ namespace Systems.Client {
 
     [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation | WorldSystemFilterFlags.ThinClientSimulation)]
     public partial struct GoInGameClientSystem : ISystem {
-       
-     
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<NetworkId>();

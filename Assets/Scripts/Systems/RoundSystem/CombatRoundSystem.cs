@@ -9,22 +9,21 @@ namespace Systems.Server {
         }
 
         public void OnUpdate(ref SystemState state) {
-            //  或许这里依靠RequireForUpdate会更好？
-            var roundData = state.EntityManager.GetComponentObject<RoundData>(state.SystemHandle);
-            //如果当前不是战斗阶段，就不进行任何操作
-            if (!roundData.IsCombatPhase) return;
+            var roundData = SystemAPI.GetSingletonRW<RoundData>();
 
-            roundData.CombatTimeCountingDown -= SystemAPI.Time.DeltaTime;
-            if (roundData.CombatTimeOut) {
+            //如果当前不是战斗阶段，就不进行任何操作
+            if (roundData.ValueRO.Phase != RoundPhase.Combat) return;
+
+            roundData.ValueRW.CombatTimeCountingDown -= SystemAPI.Time.DeltaTime;
+            if (roundData.ValueRO.CombatTimeOut) {
                 return;
             }
 
-            CheckRoundFailed(ref state);
+            CheckRoundFailed(ref state,ref roundData.ValueRW);
         }
 
 
-        private void CheckRoundFailed(ref SystemState state) {
-            var roundData = state.EntityManager.GetComponentObject<RoundData>(state.SystemHandle);
+        private void CheckRoundFailed( ref SystemState state ,ref RoundData roundData) {
             var defeated = true;
             foreach (var player in SystemAPI.Query<RefRO<PlayerComponent>>()) {
                 defeated &= player.ValueRO.InGameAttributes.isDead;

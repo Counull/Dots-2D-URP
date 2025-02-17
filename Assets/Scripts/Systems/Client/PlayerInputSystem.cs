@@ -1,9 +1,8 @@
-using Component;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using PlayerInput = Component.PlayerInput;
+
 
 
 namespace Systems.Client {
@@ -27,7 +26,7 @@ namespace Systems.Client {
         public void OnUpdate(ref SystemState state) {
             //这模板用法总感觉是在写cpp
             foreach (var input in
-                     SystemAPI.Query<RefRW<PlayerInput>>()
+                     SystemAPI.Query<RefRW<Component.PlayerInput>>()
                          .WithAll<GhostOwnerIsLocal>()
                     ) {
                 input.ValueRW = default;

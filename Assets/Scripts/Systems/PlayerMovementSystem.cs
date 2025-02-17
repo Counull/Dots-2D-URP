@@ -20,9 +20,7 @@ namespace Systems.Client {
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            if (state.EntityManager.GetComponentObject<RoundData>(state.SystemHandle) is {IsCombatPhase: false}) {
-                return;
-            }
+
 
             foreach (var (playerTransform, input, player) in
                      SystemAPI.Query<RefRW<LocalTransform>, RefRO<PlayerInput>, RefRO<PlayerComponent>>()
