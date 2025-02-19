@@ -1,18 +1,17 @@
-using Authoring;
 using Component;
-using Systems.RoundSystem;
+using Systems.Server.RoundSystem;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Transforms;
-using UnityEngine;
 
-namespace Systems.Client {
+namespace Systems {
     [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
     public partial struct PlayerMovementSystem : ISystem {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
+
             state.RequireForUpdate<PlayerComponent>();
             state.RequireForUpdate<RoundData>();
         }
@@ -20,8 +19,6 @@ namespace Systems.Client {
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-
-
             foreach (var (playerTransform, input, player) in
                      SystemAPI.Query<RefRW<LocalTransform>, RefRO<PlayerInput>, RefRO<PlayerComponent>>()
                          .WithAll<Simulate, GhostOwnerIsLocal>()) {

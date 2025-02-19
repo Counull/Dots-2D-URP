@@ -288,7 +288,7 @@ MonoBehaviour:
     NearClipPlane: 0.3
     FarClipPlane: 30
     Dutch: 0
-    ModeOverride: 2
+    ModeOverride: 1
     PhysicalProperties:
       GateFit: 2
       SensorSize: {x: 21.946, y: 16.002}
@@ -2478,7 +2478,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 30
   field of view: 34
-  orthographic: 0
+  orthographic: 1
   orthographic size: 6.25
   m_Depth: -1
   m_CullingMask:

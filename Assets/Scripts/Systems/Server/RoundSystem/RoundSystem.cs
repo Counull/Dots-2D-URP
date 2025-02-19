@@ -1,9 +1,7 @@
-using System;
-using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Systems.RoundSystem {
+namespace Systems.Server.RoundSystem {
     /// <summary>
     /// 这是创建这个System我第一个想到的事儿，
     /// 就是或许这个System是个管理类会更好，因为我完全可以面向对象写一个状态机去管理游戏状态变化

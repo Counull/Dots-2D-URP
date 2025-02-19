@@ -246,9 +246,9 @@ MonoBehaviour:
   enemyInput:
   - enemyPrefab: {fileID: 176818573609820773, guid: ab75c32501f33784ebf0953af3a9582d, type: 3}
     enemyAttributes:
-      maxSpawnCount: 5
+      maxSpawnCount: 10
       groupSpawnRange: 2
-      spawnInterval: 5
+      spawnInterval: 1
       nextSpawnTime: 0
   spawnFiledLB: {x: -19, y: -18}
   spawnFiledRT: {x: 20, y: 12}
