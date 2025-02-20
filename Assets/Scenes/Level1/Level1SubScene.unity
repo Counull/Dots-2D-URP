@@ -192,8 +192,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 422166302}
   - {fileID: 1548112198}
+  - {fileID: 422166302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1548112197
@@ -246,9 +246,15 @@ MonoBehaviour:
   enemyInput:
   - enemyPrefab: {fileID: 176818573609820773, guid: ab75c32501f33784ebf0953af3a9582d, type: 3}
     enemyAttributes:
-      maxSpawnCount: 10
+      maxSpawnCount: 5
       groupSpawnRange: 2
-      spawnInterval: 1
+      spawnInterval: 3
+      nextSpawnTime: 0
+  - enemyPrefab: {fileID: 766763217834028015, guid: 951d2fbdc12bc8e428888e53b8bdd244, type: 3}
+    enemyAttributes:
+      maxSpawnCount: 1
+      groupSpawnRange: 3
+      spawnInterval: 10000
       nextSpawnTime: 0
   spawnFiledLB: {x: -19, y: -18}
   spawnFiledRT: {x: 20, y: 12}

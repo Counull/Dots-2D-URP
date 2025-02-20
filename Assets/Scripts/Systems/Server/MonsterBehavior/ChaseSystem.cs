@@ -10,74 +10,33 @@ using Unity.Transforms;
 namespace Systems.Server.MonsterBehavior {
     /// <summary>
     /// TODO 画饼之RVO避障
+    /// 怪物更新最近的玩家
     /// </summary>
+    [UpdateInGroup(typeof(MonsterBehaviorGroup))]
+    [UpdateAfter(typeof(SearchingTargetSystem))]
     public partial struct ChaseSystem : ISystem {
-        EntityQuery _monsterQuery;
-        EntityQuery _targetQuery;
-
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
-            _monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, ChaseComponent, MonsterComponent>()
+            var monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent, ChaseComponent>()
                 .Build();
-            _targetQuery = SystemAPI.QueryBuilder().WithAll<PlayerComponent, LocalTransform>().Build();
-            state.RequireForUpdate(_monsterQuery);
-            state.RequireForUpdate(_targetQuery);
+            state.RequireForUpdate(monsterQuery);
             state.RequireForUpdate<RoundData>();
         }
 
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var roundData = SystemAPI.GetSingletonRW<RoundData>();
             if (roundData.ValueRO.Phase != RoundPhase.Combat) return;
-
-            var targetTransforms =
-                _targetQuery.ToComponentDataListAsync<LocalTransform>(state.World.UpdateAllocator.ToAllocator,
-                    out var targetHandle);
-
-            var chaseJob = new ChaseJob {
-                TargetTransforms = targetTransforms,
-                DeltaTime = SystemAPI.Time.DeltaTime
-            };
-            state.Dependency.Complete();
-            state.Dependency = chaseJob.ScheduleParallel(targetHandle);
-            state.Dependency.Complete();
-            
-            
-        }
-    }
-
-
-    public partial struct ChaseJob : IJobEntity {
-        [ReadOnly] public NativeList<LocalTransform> TargetTransforms;
-        public float DeltaTime;
-
-        private void Execute(MonsterAspect monsterAspect) {
-            var monsterTransform = monsterAspect.Transform.ValueRO;
-
-            // 寻找最近的目标
-            var nearestTarget = TargetTransforms[0];
-            var nearestDistanceSq = math.distancesq(monsterTransform.Position, nearestTarget.Position);
-            for (int i = 1; i < TargetTransforms.Length; i++) {
-                var target = TargetTransforms[i];
-                var newDistanceSq = math.distancesq(monsterTransform.Position, target.Position);
-                if (!(newDistanceSq < nearestDistanceSq)) continue;
-                nearestTarget = target;
-                nearestDistanceSq = newDistanceSq;
+            var deltaTime = SystemAPI.Time.DeltaTime;
+            foreach (var (transform, chase, monsterComponent) in
+                     SystemAPI.Query<RefRW<LocalTransform>, RefRO<ChaseComponent>, RefRO<MonsterComponent>>()
+                    ) {
+                if (monsterComponent.ValueRO.IsDead) continue;
+                transform.ValueRW.Position +=
+                    math.normalize(monsterComponent.ValueRO.targetPlayerPos - transform.ValueRO.Position) *
+                    deltaTime *
+                    chase.ValueRO.speed;
             }
-
-            // 更新怪物位置 在多线程环境下这里并不安全
-            monsterAspect.Transform.ValueRW = new LocalTransform {
-                Position = monsterTransform.Position +
-                           math.normalize(nearestTarget.Position - monsterTransform.Position) * DeltaTime *
-                           monsterAspect.Chase.ValueRO.Speed,
-                Rotation = monsterTransform.Rotation,
-                Scale = monsterTransform.Scale
-            };
-            
         }
-    }
-
-    public readonly partial struct MonsterAspect : IAspect {
-        public readonly RefRW<LocalTransform> Transform;
-        public readonly RefRO<ChaseComponent> Chase;
-        public readonly RefRO<MonsterComponent> Monster;
     }
 }

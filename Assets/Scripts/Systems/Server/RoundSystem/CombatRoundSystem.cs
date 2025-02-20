@@ -31,7 +31,7 @@ namespace Systems.Server.RoundSystem {
         private void CheckRoundFailed(ref SystemState state, ref RoundData roundData) {
             var defeated = true;
             foreach (var player in SystemAPI.Query<RefRO<PlayerComponent>>()) {
-                defeated &= player.ValueRO.InGameAttributes.isDead;
+                defeated &= player.ValueRO.InGameAttributes.IsDead;
             }
 
             roundData.RoundDefeated = defeated;

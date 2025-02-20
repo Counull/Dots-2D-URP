@@ -24,7 +24,7 @@ namespace Component {
         public float speed;
         public float health;
         public uint maxWeaponCount;
-        public bool isDead;
+        public bool IsDead => health <= 0;
     }
 
 

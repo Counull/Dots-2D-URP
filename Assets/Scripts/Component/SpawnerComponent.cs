@@ -17,7 +17,7 @@ namespace Component {
         public float maxSpawnCount;
         public ushort groupSpawnRange;
         public float spawnInterval;
-       [HideInInspector] public double nextSpawnTime;
+        [HideInInspector] public double nextSpawnTime;
     }
 
     public struct WeaponPrefabElement : IBufferElementData {

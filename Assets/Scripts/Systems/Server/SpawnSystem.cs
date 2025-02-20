@@ -1,6 +1,7 @@
 using Authoring;
 using Component;
 using Systems.Server.RoundSystem;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -13,6 +14,7 @@ namespace Systems.Server {
     public partial struct SpawnSystem : ISystem {
         private BufferLookup<EnemyPrefabElement> _enemyBufferLookup;
 
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<SpawnSettings>();
             state.RequireForUpdate<RoundData>();
@@ -26,6 +28,7 @@ namespace Systems.Server {
         /// 也可以将生成随机位置的逻辑放到别的系统中
         /// </summary>
         /// <param name="state"></param>
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var spawner = SystemAPI.GetSingletonEntity<SpawnSettings>();
             var spawnerData = state.EntityManager.GetComponentData<SpawnSettings>(spawner);
@@ -44,9 +47,11 @@ namespace Systems.Server {
                     var spawnPos = RandomInRange(center, element.EnemyAttributes.groupSpawnRange);
                     var currentTransform = state.EntityManager.GetComponentData<LocalTransform>(enemy);
                     currentTransform.Position = spawnPos;
+        
                     state.EntityManager.SetComponentData(enemy, currentTransform);
+                    
                 }
-                
+
                 // 设置敌人Spawn的冷却时间
                 element.EnemyAttributes.nextSpawnTime =
                     SystemAPI.Time.ElapsedTime + element.EnemyAttributes.spawnInterval;
