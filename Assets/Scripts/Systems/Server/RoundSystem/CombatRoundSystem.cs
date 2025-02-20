@@ -2,6 +2,8 @@ using Component;
 using Unity.Entities;
 
 namespace Systems.Server.RoundSystem {
+    [UpdateInGroup(typeof(RoundSystemGroup))]
+    [UpdateAfter(typeof(RoundSystem))]
     public partial struct CombatRoundSystem : ISystem {
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<RoundData>();

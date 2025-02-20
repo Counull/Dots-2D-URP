@@ -7,6 +7,7 @@ namespace Systems.Server.RoundSystem {
     /// 就是或许这个System是个管理类会更好，因为我完全可以面向对象写一个状态机去管理游戏状态变化
     /// 我已经预感到这个类会被实现得很烂
     /// </summary>
+    [UpdateInGroup(typeof(RoundSystemGroup))]
     public partial struct RoundSystem : ISystem {
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<RoundData>();

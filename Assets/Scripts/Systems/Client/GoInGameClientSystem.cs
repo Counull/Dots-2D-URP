@@ -22,8 +22,7 @@ namespace Systems.Client {
             //查找所有带着networkId(跟着返回他们的entity)
             //且他们暂时还没带有NetworkStreamInGame的标签
             foreach (var (id, entity) in
-                     SystemAPI.Query<RefRO<NetworkId>>()
-                         .WithNone<NetworkStreamInGame>()
+                     SystemAPI.Query<RefRO<NetworkId>>().WithNone<NetworkStreamInGame>()
                          .WithEntityAccess()) {
                 //为entity添加NetworkStreamInGame标签 
                 ecb.AddComponent<NetworkStreamInGame>(entity);

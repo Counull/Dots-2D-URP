@@ -17,8 +17,7 @@ namespace Systems.Server.MonsterBehavior {
     public partial struct ChaseSystem : ISystem {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
-            var monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent, ChaseComponent>()
-                .Build();
+            var monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent, ChaseComponent>().Build();
             state.RequireForUpdate(monsterQuery);
             state.RequireForUpdate<RoundData>();
         }
