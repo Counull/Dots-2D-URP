@@ -62,7 +62,7 @@ MonoBehaviour:
   DefaultGhostMode: 1
   SupportedGhostModes: 3
   OptimizationMode: 0
-  Importance: 50
+  Importance: 100
   MaxSendRate: 0
   prefabId: ab75c32501f33784ebf0953af3a9582d
   HasOwner: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterData:
     maxHealth: 15
-    health: 0
+    health: 15
     targetPlayerPos:
       x: 0
       y: 0

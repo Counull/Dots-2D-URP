@@ -42,6 +42,9 @@ namespace Authoring {
                         WeaponPrefab = GetEntity(prefab, TransformUsageFlags.Dynamic)
                     });
                 }
+                
+                
+                
             }
         }
     }

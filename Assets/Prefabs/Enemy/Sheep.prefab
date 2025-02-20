@@ -59,10 +59,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c79d771cedb4794bf100ce60df5f764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultGhostMode: 0
+  DefaultGhostMode: 1
   SupportedGhostModes: 3
   OptimizationMode: 0
-  Importance: 1
+  Importance: 100
   MaxSendRate: 0
   prefabId: 951d2fbdc12bc8e428888e53b8bdd244
   HasOwner: 0

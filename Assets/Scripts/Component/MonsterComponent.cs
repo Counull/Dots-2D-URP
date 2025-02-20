@@ -1,5 +1,6 @@
 using System;
 using Data;
+using Sirenix.OdinInspector;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -15,7 +16,7 @@ namespace Component {
         [HideInInspector] public float targetDistanceSq;
         public bool IsDead => health <= 0;
 
-       public void Reset() {
+        public void Reset() {
             health = maxHealth;
         }
     }
@@ -37,8 +38,18 @@ namespace Component {
     }
 
     [Serializable]
-    public struct ShootComponent : IComponentData, IEnableableComponent {
-        public float shootRange;
+    public struct ShooterComponent : IComponentData, IEnableableComponent {
+        public ushort count;
+        public float triggerRange;
+        public ProjectileData projectileData;
         public CoolDownData coolDownData;
+        [HideInInspector] public float spreadAngleRad;
+        [HideInInspector] public Entity ProjectilePrefab;
+        
+        [ShowInInspector]
+        public float SpreadAngleDeg {
+            get => math.degrees(spreadAngleRad);
+            set => spreadAngleRad = math.radians(value);
+        }
     }
 }

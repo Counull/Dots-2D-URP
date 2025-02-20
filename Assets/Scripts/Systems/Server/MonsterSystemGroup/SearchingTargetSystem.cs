@@ -35,11 +35,11 @@ namespace Systems.Server.MonsterBehavior {
                 _targetQuery.ToComponentDataListAsync<LocalTransform>(state.WorldUnmanaged.UpdateAllocator.ToAllocator,
                     out var targetHandle);
 
-            var chaseJob = new SearchingTargetJob {
+            var searchingTargetJob = new SearchingTargetJob {
                 TargetTransforms = targetTransforms,
             };
             state.Dependency.Complete();
-            state.Dependency = chaseJob.ScheduleParallel(targetHandle);
+            state.Dependency = searchingTargetJob.ScheduleParallel(targetHandle);
             state.Dependency.Complete();
         }
     }
@@ -69,14 +69,13 @@ namespace Systems.Server.MonsterBehavior {
 
             monsterAspect.Monster.ValueRW.targetPlayerPos = nearestTarget.Position;
             monsterAspect.Monster.ValueRW.targetDistanceSq = nearestDistanceSq;
-      ;
+            ;
         }
     }
 
 
     public readonly partial struct MonsterAspect : IAspect {
         public readonly RefRW<LocalTransform> Transform;
-
         public readonly RefRW<MonsterComponent> Monster;
     }
 }

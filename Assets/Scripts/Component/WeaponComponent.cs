@@ -21,10 +21,7 @@ namespace Component {
         public Entity Projectile;
     }
 
-    [Serializable]
-    public struct WeaponPrefabInput {
-        public GameObject projectile;
-    }
+
 
     public enum WeaponType {
         Melee,
