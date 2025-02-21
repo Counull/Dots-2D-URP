@@ -11,7 +11,7 @@ namespace Systems.Server.MonsterBehavior {
     /// TODO 画饼之RVO避障
     /// 怪物更新最近的玩家
     /// </summary>
-    [UpdateInGroup(typeof(MonsterBehaviorGroup))]
+    [UpdateInGroup(typeof(MonsterBehaviorGroup), OrderFirst = true)]
     public partial struct SearchingTargetSystem : ISystem {
         EntityQuery _monsterQuery;
         EntityQuery _targetQuery;

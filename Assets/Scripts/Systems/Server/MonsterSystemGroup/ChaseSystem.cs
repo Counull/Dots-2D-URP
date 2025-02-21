@@ -12,12 +12,13 @@ namespace Systems.Server.MonsterBehavior {
     /// TODO 画饼之RVO避障
     /// 怪物更新最近的玩家
     /// </summary>
-    [UpdateInGroup(typeof(MonsterBehaviorGroup))]
+    [UpdateInGroup(typeof(MonsterBehaviorGroup), OrderLast = true)]
     [UpdateAfter(typeof(SearchingTargetSystem))]
     public partial struct ChaseSystem : ISystem {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
-            var monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent, ChaseComponent>().Build();
+            var monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent, ChaseComponent>()
+                .Build();
             state.RequireForUpdate(monsterQuery);
             state.RequireForUpdate<RoundData>();
         }

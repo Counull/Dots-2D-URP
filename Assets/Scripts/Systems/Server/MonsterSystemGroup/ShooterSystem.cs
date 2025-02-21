@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace Systems.Server.MonsterBehavior {
+    [UpdateInGroup(typeof(MonsterBehaviorGroup))]
     public partial struct ShooterSystem : ISystem {
         BufferLookup<ProjectileShootingEvent> _projectileShootingEventBuffer;
 
@@ -34,7 +35,9 @@ namespace Systems.Server.MonsterBehavior {
                 var buffer = _projectileShootingEventBuffer[entity];
                 var projectileData = shooter.ValueRO.projectileData;
                 projectileData.startPosition = localTransform.ValueRO.Position;
+                projectileData.spawnTime = SystemAPI.Time.ElapsedTime;
                 projectileData.Shooter = entity;
+                projectileData.target = ProjectileTarget.Player;
                 var radPerBullet = shooter.ValueRO.spreadAngleRad / shooter.ValueRO.count;
 
                 for (var i = 0; i < shooter.ValueRO.count; i++) {

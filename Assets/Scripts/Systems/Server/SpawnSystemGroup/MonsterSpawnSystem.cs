@@ -8,7 +8,7 @@ using Unity.Transforms;
 using Random = UnityEngine.Random;
 
 namespace Systems.Server.SpawnSystemGroup {
-    [UpdateBefore(typeof(MonsterBehaviorGroup))]
+    [UpdateBefore(typeof(SpawnSystemGroup))]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct MonsterSpawnSystem : ISystem {
         private BufferLookup<EnemyPrefabElement> _enemyBufferLookup;

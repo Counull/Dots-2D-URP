@@ -28,7 +28,6 @@ namespace Systems.Server.RoundSystem {
 
             if (phaseStateData.PhaseState.ReadyForNextPhase(ref roundData.ValueRW)) {
                 phaseStateData.PhaseState.PhaseExit(ref roundData.ValueRW);
-
                 if (phaseStateData.PhaseState.Phase == RoundPhase.Settlement &&
                     phaseStateData.PhaseState.NextPhase == null) {
                     //游戏结束
