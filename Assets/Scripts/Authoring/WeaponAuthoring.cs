@@ -1,15 +1,13 @@
 using Component;
-using Data;
 using Unity.Entities;
 using UnityEngine;
 
-
 namespace Authoring {
     public class WeaponAuthoring : MonoBehaviour {
-        [SerializeField] WeaponComponent weaponComponent;
-        [SerializeField] GameObject projectilePrefab;
+        [SerializeField] private WeaponComponent weaponComponent;
+        [SerializeField] private GameObject projectilePrefab;
 
-        class Baker : Baker<WeaponAuthoring> {
+        private class Baker : Baker<WeaponAuthoring> {
             public override void Bake(WeaponAuthoring authoring) {
                 var entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
 

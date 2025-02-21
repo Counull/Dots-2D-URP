@@ -5,14 +5,13 @@ using Unity.NetCode;
 using Unity.Transforms;
 using UnityEngine;
 
-
 namespace Systems.Client {
     /// <summary>
-    /// 需要与GameObject交互所以使用托管组件
-    /// 在客户端的所有移动操作（包括网络同步）之后更新
+    ///     需要与GameObject交互所以使用托管组件
+    ///     在客户端的所有移动操作（包括网络同步）之后更新
     /// </summary>
     [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
-    [UpdateAfter(typeof(Systems.PlayerMovementSystem))]
+    [UpdateAfter(typeof(PlayerMovementSystem))]
     [UpdateAfter(typeof(GhostSimulationSystemGroup))]
     public partial class PlayerVisualizationSystem : SystemBase {
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
@@ -39,9 +38,8 @@ namespace Systems.Client {
                     managedComponent.CreatePlayerVisualizationInstance();
 
                     //如果是本地玩家，就让摄像机跟随
-                    if (EntityManager.IsComponentEnabled<GhostOwnerIsLocal>(entity)) {
+                    if (EntityManager.IsComponentEnabled<GhostOwnerIsLocal>(entity))
                         camera.Follow = managedComponent.VisualizationInstance.transform;
-                    }
                 }
 
                 //更新可视化对象的位置
@@ -54,25 +52,20 @@ namespace Systems.Client {
         }
 
 
-        void UpdateAnimation(Animator animator, Vector2 input) {
+        private void UpdateAnimation(Animator animator, Vector2 input) {
             //更新可视化对象的动画
             var isWalking = input.magnitude > 0;
             animator.SetBool(IsMoving, isWalking);
             if (!isWalking) return;
-            if (input.x < 0) {
+            if (input.x < 0)
                 animator.SetInteger(Direction, 3);
-            }
-            else if (input.x > 0) {
+            else if (input.x > 0)
                 animator.SetInteger(Direction, 2);
-            }
-            else if (input.y < 0) {
+            else if (input.y < 0)
                 animator.SetInteger(Direction, 0);
-            }
-            else if (input.y > 0) {
-                animator.SetInteger(Direction, 1);
-            }
+            else if (input.y > 0) animator.SetInteger(Direction, 1);
         }
     }
 
-    public struct CameraFollowed : IComponentData { }
+
 }

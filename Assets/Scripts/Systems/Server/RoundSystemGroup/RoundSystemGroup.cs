@@ -1,7 +1,6 @@
-using Systems.Server.MonsterBehavior;
 using Unity.Entities;
 
-namespace Systems.Server.RoundSystem {
+namespace Systems.Server.RoundSystemGroup {
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial class RoundSystemGroup : ComponentSystemGroup { }
 }

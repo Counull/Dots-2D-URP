@@ -13,10 +13,10 @@ namespace Systems.Server {
         }
 
         public void OnUpdate(ref SystemState state) {
-            ProjectileMovementJob job = new ProjectileMovementJob() {
+            var job = new ProjectileMovementJob {
                 SystemTime = SystemAPI.Time,
                 Ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
-                    .CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
+                    .CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
             };
             state.Dependency = job.ScheduleParallel(state.Dependency);
         }
@@ -26,7 +26,8 @@ namespace Systems.Server {
         public TimeData SystemTime;
         public EntityCommandBuffer.ParallelWriter Ecb;
 
-        void Execute(Entity entity, [EntityIndexInQuery] int entityInQueryIndex, ref LocalTransform localPosition,
+        private void Execute(Entity entity, [EntityIndexInQuery] int entityInQueryIndex,
+            ref LocalTransform localPosition,
             ref ProjectileData data) {
             if (SystemTime.ElapsedTime - data.spawnTime > data.lifeTime) {
                 Ecb.DestroyEntity(entityInQueryIndex, entity);

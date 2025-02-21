@@ -1,9 +1,7 @@
 using Unity.Burst;
-using Unity.Cinemachine;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
-
 
 namespace Systems.Client {
     public struct GoInGameRequest : IRpcCommand { }
@@ -28,7 +26,7 @@ namespace Systems.Client {
                 ecb.AddComponent<NetworkStreamInGame>(entity);
                 var req = ecb.CreateEntity();
                 ecb.AddComponent<GoInGameRequest>(req);
-                ecb.AddComponent(req, new SendRpcCommandRequest() {
+                ecb.AddComponent(req, new SendRpcCommandRequest {
                     TargetConnection = entity
                 });
             }

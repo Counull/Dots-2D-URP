@@ -1,6 +1,10 @@
-namespace Systems.Server.RoundSystem {
+
+
+using Component;
+
+namespace Systems.Server.RoundSystemGroup {
     /// <summary>
-    /// 阶段转换的状态机
+    ///     阶段转换的状态机
     /// </summary>
     public abstract class RoundPhaseState {
         public abstract RoundPhase Phase { get; }
@@ -8,9 +12,7 @@ namespace Systems.Server.RoundSystem {
 
         public virtual void PhaseEnter(ref RoundData roundData) {
             roundData.Phase = Phase;
-            if (NextPhase != null) {
-                roundData.NextPhase = NextPhase.Phase;
-            }
+            if (NextPhase != null) roundData.NextPhase = NextPhase.Phase;
         }
 
         public virtual void PhaseExit(ref RoundData roundData) { }
@@ -21,12 +23,10 @@ namespace Systems.Server.RoundSystem {
     }
 
     /// <summary>
-    /// 初始化阶段
+    ///     初始化阶段
     /// </summary>
     public class RoundInitPhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.Init;
-
-        public RoundInitPhase() { }
 
         public override void PhaseEnter(ref RoundData roundData) {
             NextPhase = new RoundCombatPhase();
@@ -36,7 +36,7 @@ namespace Systems.Server.RoundSystem {
     }
 
     /// <summary>
-    /// 战斗阶段
+    ///     战斗阶段
     /// </summary>
     public class RoundCombatPhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.Combat;
@@ -45,13 +45,11 @@ namespace Systems.Server.RoundSystem {
             roundData.CombatRound++;
             roundData.CombatTimeCountingDown = roundData.MaxCombatTime;
             roundData.RoundDefeated = false;
-            if (roundData.CombatRound < roundData.MaxCombatRound) {
+            if (roundData.CombatRound < roundData.MaxCombatRound)
                 NextPhase = new RoundLevelUpPhase();
-            }
-            else {
+            else
                 //所有战斗回合结束进入结算阶段    
                 NextPhase = new RoundSettlementPhase();
-            }
 
             base.PhaseEnter(ref roundData);
         }
@@ -70,12 +68,10 @@ namespace Systems.Server.RoundSystem {
     }
 
     /// <summary>
-    /// 升级选择阶段
+    ///     升级选择阶段
     /// </summary>
     public class RoundLevelUpPhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.LevelUp;
-
-        public RoundLevelUpPhase() { }
 
         public override void PhaseEnter(ref RoundData roundData) {
             NextPhase = new RoundPurchasePhase();
@@ -85,12 +81,10 @@ namespace Systems.Server.RoundSystem {
 
 
     /// <summary>
-    /// 购买物品阶段
+    ///     购买物品阶段
     /// </summary>
     public class RoundPurchasePhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.Purchase;
-
-        public RoundPurchasePhase() { }
 
         public override void PhaseEnter(ref RoundData roundData) {
             NextPhase = new RoundCombatPhase();
@@ -100,11 +94,9 @@ namespace Systems.Server.RoundSystem {
 
 
     /// <summary>
-    /// 结算阶段
+    ///     结算阶段
     /// </summary>
     public class RoundSettlementPhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.Settlement;
-
-        public RoundSettlementPhase() { }
     }
 }

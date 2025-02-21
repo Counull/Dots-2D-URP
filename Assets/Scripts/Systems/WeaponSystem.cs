@@ -8,9 +8,7 @@ namespace Systems {
         }
 
         public void OnUpdate(ref SystemState state) {
-            foreach (var weapon in SystemAPI.Query<RefRW<WeaponComponent>>()) {
-                
-            }
+            foreach (var weapon in SystemAPI.Query<RefRW<WeaponComponent>>()) { }
         }
     }
 }

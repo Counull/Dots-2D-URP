@@ -1,14 +1,14 @@
 using System;
-using Unity.Entities;
 using Unity.NetCode;
 using Unity.Networking.Transport;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 /// <summary>
-/// 游戏启动类，根据平台选择是启动服务器还是客户端
-/// 此类仅为示例大概率会被更改
+///     游戏启动类，根据平台选择是启动服务器还是客户端
+///     此类仅为示例大概率会被更改
 /// </summary>
-[UnityEngine.Scripting.Preserve]
+[Preserve]
 public class GameBootstrap : ClientServerBootstrap {
     private static bool IsServerPlatform => Application.platform == RuntimePlatform.LinuxServer
                                             || Application.platform == RuntimePlatform.WindowsServer
@@ -35,26 +35,21 @@ public class GameBootstrap : ClientServerBootstrap {
     }
 
     private void ProcessCommandLineArgs(string defaultWorldName) {
-        var args = System.Environment.GetCommandLineArgs();
-        for (var i = 0; i < args.Length; i++) {
+        var args = Environment.GetCommandLineArgs();
+        for (var i = 0; i < args.Length; i++)
             if (args[i] == "-p") {
                 i++;
-                if (i >= args.Length) {
-                    throw new Exception("Invalid command line arguments");
-                }
+                if (i >= args.Length) throw new Exception("Invalid command line arguments");
 
                 AutoConnectPort = ushort.Parse(args[i]);
                 Debug.Log("AutoConnectPort set: " + AutoConnectPort);
             }
             else if (args[i] == "-ip") {
                 i++;
-                if (i >= args.Length) {
-                    throw new Exception("Invalid command line arguments");
-                }
+                if (i >= args.Length) throw new Exception("Invalid command line arguments");
 
                 DefaultConnectAddress = NetworkEndpoint.Parse(args[i], AutoConnectPort);
                 Debug.Log("defaultWorldName set: " + defaultWorldName);
             }
-        }
     }
 }

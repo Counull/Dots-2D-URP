@@ -1,11 +1,9 @@
 using System;
-using Data;
+using Common;
 using Sirenix.OdinInspector;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Component {
     [Serializable]
@@ -45,7 +43,7 @@ namespace Component {
         public CoolDownData coolDownData;
         [HideInInspector] public float spreadAngleRad;
         [HideInInspector] public Entity ProjectilePrefab;
-        
+
         [ShowInInspector]
         public float SpreadAngleDeg {
             get => math.degrees(spreadAngleRad);

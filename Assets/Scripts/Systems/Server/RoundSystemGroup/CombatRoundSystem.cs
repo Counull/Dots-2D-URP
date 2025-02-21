@@ -1,7 +1,8 @@
 using Component;
+
 using Unity.Entities;
 
-namespace Systems.Server.RoundSystem {
+namespace Systems.Server.RoundSystemGroup {
     [UpdateInGroup(typeof(RoundSystemGroup))]
     [UpdateAfter(typeof(RoundSystem))]
     public partial struct CombatRoundSystem : ISystem {
@@ -17,24 +18,21 @@ namespace Systems.Server.RoundSystem {
             if (roundData.ValueRO.Phase != RoundPhase.Combat) return;
             //更新计时
             roundData.ValueRW.CombatTimeCountingDown -= SystemAPI.Time.DeltaTime;
-            if (roundData.ValueRO.CombatTimeOut) {
-                return;
-            }
+            if (roundData.ValueRO.CombatTimeOut) return;
 
             CheckRoundFailed(ref state, ref roundData.ValueRW);
         }
 
 
         /// <summary>
-        /// 所有玩家死亡则战斗回合失败
+        ///     所有玩家死亡则战斗回合失败
         /// </summary>
         /// <param name="state"></param>
         /// <param name="roundData"></param>
         private void CheckRoundFailed(ref SystemState state, ref RoundData roundData) {
             var defeated = true;
-            foreach (var player in SystemAPI.Query<RefRO<PlayerComponent>>()) {
+            foreach (var player in SystemAPI.Query<RefRO<PlayerComponent>>())
                 defeated &= player.ValueRO.InGameAttributes.IsDead;
-            }
 
             roundData.RoundDefeated = defeated;
         }

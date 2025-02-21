@@ -1,22 +1,22 @@
 using System;
-using UnityEngine;
 using Unity.Entities;
 using Unity.NetCode;
-using UnityEngine.Serialization;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
 
 namespace Component {
-    public class GlobalPlayerAttributes {
+
         [Serializable]
         public struct ExperienceGrowthFormula {
             public float baseExperience; // A
             public float growthRate; // b
 
-            static double CalculateExperience(int level, ExperienceGrowthFormula formula) {
+            private static double CalculateExperience(int level, ExperienceGrowthFormula formula) {
                 return formula.baseExperience * Math.Pow(formula.growthRate, level);
             }
         }
-    }
+    
 
 
     [Serializable]
@@ -44,18 +44,22 @@ namespace Component {
         [GhostField] public float Vertical;
     }
 
+    public class InputActions : IComponentData {
+        public InputAction MoveAction;
+    }
+
+    public struct CameraFollowed : IComponentData { }
 
     public class PlayerVisualizationComponent : IComponentData {
+        public Animator Animator;
         public GameObject PlayerVisualizationPrefab;
         public GameObject VisualizationInstance;
-        public Animator Animator;
 
         /// <summary>
-        /// 有点纠结这个函数的位置，感觉应该放在PlayerManagedComponent里但是这个类是个组件
-        /// 《重构》里的典型坏代码
-        /// 还是放在这了
+        ///     有点纠结这个函数的位置，感觉应该放在PlayerManagedComponent里但是这个类是个组件
+        ///     《重构》里的典型坏代码
+        ///     还是放在这了
         /// </summary>
-        /// <param name="playerVisualizationComponent"></param>
         public void CreatePlayerVisualizationInstance() {
             //实例化可视化对象
             VisualizationInstance = Object.Instantiate(PlayerVisualizationPrefab);

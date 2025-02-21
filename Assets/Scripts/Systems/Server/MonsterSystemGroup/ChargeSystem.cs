@@ -1,13 +1,10 @@
 using Component;
-using Systems.Server.RoundSystem;
-using Unity.Burst;
+using Systems.Server.RoundSystemGroup;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Unity.VisualScripting;
-using UnityEngine;
 
-namespace Systems.Server.MonsterBehavior {
+namespace Systems.Server.MonsterSystemGroup {
     [UpdateInGroup(typeof(MonsterBehaviorGroup))]
     [UpdateAfter(typeof(SearchingTargetSystem))]
     public partial struct ChargeSystem : ISystem {
@@ -21,7 +18,7 @@ namespace Systems.Server.MonsterBehavior {
 
 
         /// <summary>
-        /// 暂时是否使用异步只是基于可能激活此系统的怪物数量
+        ///     暂时是否使用异步只是基于可能激活此系统的怪物数量
         /// </summary>
         /// <param name="state"></param>
         public void OnUpdate(ref SystemState state) {
@@ -31,7 +28,6 @@ namespace Systems.Server.MonsterBehavior {
                              RefRO<MonsterComponent>>()
                          .WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)
                          .WithEntityAccess()) {
-                
                 if (monsterComponent.ValueRO.IsDead) continue; //怪物死亡
 
                 ref var chargeDataRW = ref chargeComponent.ValueRW;
@@ -47,7 +43,7 @@ namespace Systems.Server.MonsterBehavior {
                     if (!cd.IsCoolDownReady(SystemAPI.Time.ElapsedTime)) continue; //冷却时间未到
                     var rangeSq = chargeDataRW.chargeRange * chargeDataRW.chargeRange;
                     if (monsterComponent.ValueRO.targetDistanceSq > rangeSq) continue; //超出范围
-                    
+
                     //如果没有激活冲锋则初始化冲锋数据
                     cd.TriggerCoolDown(SystemAPI.Time.ElapsedTime); //触发冷却
                     var targetDir = monsterComponent.ValueRO.targetPlayerPos - localTransform.ValueRO.Position;

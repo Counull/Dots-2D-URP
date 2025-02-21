@@ -1,11 +1,9 @@
-using Authoring;
 using Component;
 using Systems.Client;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
-
 
 namespace Systems.Server {
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
@@ -19,12 +17,11 @@ namespace Systems.Server {
         }
 
 
-        
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var playerPrefab = SystemAPI.GetSingleton<PlayerSpawner>().PlayerPrefab;
             var ecb = new EntityCommandBuffer(Allocator.Temp);
-            
+
             //当服务器World内接收到GoInGameRequest时
             //生成一个Player实体
             foreach (var (requestSource, requestEntity) in

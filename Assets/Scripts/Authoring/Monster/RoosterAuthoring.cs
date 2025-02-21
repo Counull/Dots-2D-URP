@@ -1,11 +1,10 @@
 using Component;
 using Unity.Entities;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utils;
 
-namespace Authoring {
-    class RoosterAuthoring : MonoBehaviour {
+namespace Authoring.Monster {
+    internal class RoosterAuthoring : MonoBehaviour {
         [SerializeField] private MonsterComponent monsterData;
         [SerializeField] private ChaseComponent chaseData;
         [SerializeField] private ChargeComponent chargeData;
@@ -14,7 +13,7 @@ namespace Authoring {
 
         [SerializeField] private GameObject projectilePrefab;
 
-        class RoosterAuthoringBaker : Baker<RoosterAuthoring> {
+        private class RoosterAuthoringBaker : Baker<RoosterAuthoring> {
             public override void Bake(RoosterAuthoring authoring) {
                 authoring.monsterData.Reset();
                 authoring.shooterData.ProjectilePrefab =

@@ -1,20 +1,21 @@
+using Common;
 using Component;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Systems.Server.MonsterBehavior {
+namespace Systems.Server.MonsterSystemGroup {
     [UpdateInGroup(typeof(MonsterBehaviorGroup))]
     public partial struct ShooterSystem : ISystem {
-        BufferLookup<ProjectileShootingEvent> _projectileShootingEventBuffer;
+        private BufferLookup<ProjectileShootingEvent> projectileShootingEventBuffer;
 
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<ShooterComponent>();
-            _projectileShootingEventBuffer = state.GetBufferLookup<ProjectileShootingEvent>();
+            projectileShootingEventBuffer = state.GetBufferLookup<ProjectileShootingEvent>();
         }
 
         public void OnUpdate(ref SystemState state) {
-            _projectileShootingEventBuffer.Update(ref state);
+            projectileShootingEventBuffer.Update(ref state);
             foreach (var (shooter, localTransform, monster, entity)
                      in SystemAPI.Query<RefRW<ShooterComponent>, RefRO<LocalTransform>, RefRO<MonsterComponent>>()
                          .WithEntityAccess()) {
@@ -32,21 +33,21 @@ namespace Systems.Server.MonsterBehavior {
                     continue;
                 targetDir = math.normalize(targetDir);
                 cd.TriggerCoolDown(SystemAPI.Time.ElapsedTime);
-                var buffer = _projectileShootingEventBuffer[entity];
+                var buffer = projectileShootingEventBuffer[entity];
                 var projectileData = shooter.ValueRO.projectileData;
                 projectileData.startPosition = localTransform.ValueRO.Position;
                 projectileData.spawnTime = SystemAPI.Time.ElapsedTime;
                 projectileData.Shooter = entity;
-                projectileData.target = ProjectileTarget.Player;
+                projectileData.target = Faction.Player;
                 var radPerBullet = shooter.ValueRO.spreadAngleRad / shooter.ValueRO.count;
 
                 for (var i = 0; i < shooter.ValueRO.count; i++) {
                     var angle = radPerBullet * (i - (shooter.ValueRO.count - 1) / 2.0f);
                     var rotatedDir = math.mul(quaternion.AxisAngle(math.forward(), angle), targetDir);
                     projectileData.direction = rotatedDir;
-                    buffer.Add(new ProjectileShootingEvent() {
+                    buffer.Add(new ProjectileShootingEvent {
                         ProjectileData = projectileData,
-                        ProjectilePrefab = shooter.ValueRO.ProjectilePrefab,
+                        ProjectilePrefab = shooter.ValueRO.ProjectilePrefab
                     });
                 }
             }

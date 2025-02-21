@@ -1,10 +1,6 @@
 using System;
-using Unity.Entities;
-using Unity.Mathematics;
-using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Data {
+namespace Common {
     [Serializable]
     public struct CoolDownData {
         public float totalTime;
@@ -23,7 +19,4 @@ namespace Data {
             return currentTime - TriggerTime >= totalTime;
         }
     }
-
-
-
 }

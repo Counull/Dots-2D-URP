@@ -1,3 +1,4 @@
+using System;
 using Unity.Entities;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace Component {
     }
 
 
-    [System.Serializable]
+    [Serializable]
     public struct EnemySpawnAttributes : IComponentData {
         public float maxSpawnCount;
         public ushort groupSpawnRange;

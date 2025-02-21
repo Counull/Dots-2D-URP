@@ -1,21 +1,18 @@
+using Component;
 using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using PlayerInput = Component.PlayerInput;
 
 namespace Systems.Client {
     [UpdateInGroup(typeof(GhostInputSystemGroup))]
     public partial struct PlayerInputSystem : ISystem {
-        public class InputActions : IComponentData {
-            public InputAction MoveAction;
-        }
-
         public void OnCreate(ref SystemState state) {
             //将硬件输入转换为Component添加到SystemHandle上，
             //以便在Update中使用GetComponentObject<>（）函数取回
             state.EntityManager.AddComponentObject(state.SystemHandle,
-                new InputActions() {MoveAction = InputSystem.actions.FindAction("Move")});
+                new InputActions {MoveAction = InputSystem.actions.FindAction("Move")});
 
 
             state.RequireForUpdate<GhostOwnerIsLocal>();
@@ -25,7 +22,7 @@ namespace Systems.Client {
         public void OnUpdate(ref SystemState state) {
             //这模板用法总感觉是在写cpp
             foreach (var input in
-                     SystemAPI.Query<RefRW<Component.PlayerInput>>()
+                     SystemAPI.Query<RefRW<PlayerInput>>()
                          .WithAll<GhostOwnerIsLocal>()) {
                 input.ValueRW = default;
 

@@ -1,28 +1,28 @@
 using Component;
-using Systems.Server.RoundSystem;
+
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Systems.Server.MonsterBehavior {
+namespace Systems.Server.MonsterSystemGroup {
     /// <summary>
-    /// TODO 画饼之RVO避障
-    /// 怪物更新最近的玩家
+    ///     TODO 画饼之RVO避障
+    ///     怪物更新最近的玩家
     /// </summary>
     [UpdateInGroup(typeof(MonsterBehaviorGroup), OrderFirst = true)]
     public partial struct SearchingTargetSystem : ISystem {
-        EntityQuery _monsterQuery;
-        EntityQuery _targetQuery;
+        private EntityQuery monsterQuery;
+        private EntityQuery targetQuery;
 
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
-            _monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent>()
+            monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent>()
                 .Build();
-            _targetQuery = SystemAPI.QueryBuilder().WithAll<PlayerComponent, LocalTransform>().Build();
-            state.RequireForUpdate(_monsterQuery);
-            state.RequireForUpdate(_targetQuery);
+            targetQuery = SystemAPI.QueryBuilder().WithAll<PlayerComponent, LocalTransform>().Build();
+            state.RequireForUpdate(monsterQuery);
+            state.RequireForUpdate(targetQuery);
             state.RequireForUpdate<RoundData>();
         }
 
@@ -32,11 +32,11 @@ namespace Systems.Server.MonsterBehavior {
             if (roundData.ValueRO.Phase != RoundPhase.Combat) return;
 
             var targetTransforms =
-                _targetQuery.ToComponentDataListAsync<LocalTransform>(state.WorldUnmanaged.UpdateAllocator.ToAllocator,
+                targetQuery.ToComponentDataListAsync<LocalTransform>(state.WorldUnmanaged.UpdateAllocator.ToAllocator,
                     out var targetHandle);
 
             var searchingTargetJob = new SearchingTargetJob {
-                TargetTransforms = targetTransforms,
+                TargetTransforms = targetTransforms
             };
             state.Dependency.Complete();
             state.Dependency = searchingTargetJob.ScheduleParallel(targetHandle);
@@ -45,7 +45,7 @@ namespace Systems.Server.MonsterBehavior {
     }
 
     /// <summary>
-    /// 跟踪最近的玩家的行为
+    ///     跟踪最近的玩家的行为
     /// </summary>
     [BurstCompile]
     public partial struct SearchingTargetJob : IJobEntity {
@@ -59,7 +59,7 @@ namespace Systems.Server.MonsterBehavior {
             // 说不定用碰撞检测会有BVH之类的优化性能会更好
             var nearestTarget = TargetTransforms[0];
             var nearestDistanceSq = math.distancesq(monsterTransform.Position, nearestTarget.Position);
-            for (int i = 1; i < TargetTransforms.Length; i++) {
+            for (var i = 1; i < TargetTransforms.Length; i++) {
                 var target = TargetTransforms[i];
                 var newDistanceSq = math.distancesq(monsterTransform.Position, target.Position);
                 if (!(newDistanceSq < nearestDistanceSq)) continue;

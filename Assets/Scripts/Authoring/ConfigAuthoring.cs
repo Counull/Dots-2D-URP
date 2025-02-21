@@ -1,8 +1,5 @@
 using UnityEngine;
 
 namespace Authoring {
-    public class ConfigAuthoring : MonoBehaviour
-    {
- 
-    }
+    public class ConfigAuthoring : MonoBehaviour { }
 }

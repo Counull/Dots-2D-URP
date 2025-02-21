@@ -1,16 +1,10 @@
 using System;
+using Common;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Component {
-    public enum ProjectileTarget {
-        Player,
-        Monster
-    }
-
-
     [Serializable]
     public struct ProjectileData : IComponentData {
         public float speed;
@@ -20,7 +14,7 @@ namespace Component {
         [HideInInspector] public float3 startPosition;
         [HideInInspector] public float3 direction;
         [HideInInspector] public Entity Shooter;
-        [HideInInspector] public ProjectileTarget target;
+        [HideInInspector] public Faction target;
     }
 
     public struct ProjectileShootingEvent : IBufferElementData {

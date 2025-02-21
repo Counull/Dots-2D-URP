@@ -1,16 +1,13 @@
 using Component;
-using Systems.Server.RoundSystem;
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
-using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Systems.Server.MonsterBehavior {
+namespace Systems.Server.MonsterSystemGroup {
     /// <summary>
-    /// TODO 画饼之RVO避障
-    /// 怪物更新最近的玩家
+    ///     TODO 画饼之RVO避障
+    ///     怪物更新最近的玩家
     /// </summary>
     [UpdateInGroup(typeof(MonsterBehaviorGroup), OrderLast = true)]
     [UpdateAfter(typeof(SearchingTargetSystem))]
