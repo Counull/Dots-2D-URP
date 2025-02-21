@@ -73,7 +73,6 @@ MonoBehaviour:
     triggerRange: 7
     projectileData:
       speed: 10
-      dmg: 5
       lifeTime: 9
       spawnTime: 0
       startPosition:
@@ -84,7 +83,9 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      target: 0
+    dmgSrcComponent:
+      damage: 5
+      ownerFaction: 0
     coolDownData:
       totalTime: 3
     spreadAngleRad: 6.2831855

@@ -1,5 +1,5 @@
+using Aspect;
 using Component;
-
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -53,7 +53,7 @@ namespace Systems.Server.MonsterSystemGroup {
 
 
         private void Execute(MonsterAspect monsterAspect) {
-            var monsterTransform = monsterAspect.Transform.ValueRO;
+            var monsterTransform = monsterAspect.LocalTransform.ValueRO;
 
             // 寻找最近的目标 随便写的临时代码 之后会用RVO或者碰撞检测
             // 说不定用碰撞检测会有BVH之类的优化性能会更好
@@ -71,11 +71,5 @@ namespace Systems.Server.MonsterSystemGroup {
             monsterAspect.Monster.ValueRW.targetDistanceSq = nearestDistanceSq;
             ;
         }
-    }
-
-
-    public readonly partial struct MonsterAspect : IAspect {
-        public readonly RefRW<LocalTransform> Transform;
-        public readonly RefRW<MonsterComponent> Monster;
     }
 }

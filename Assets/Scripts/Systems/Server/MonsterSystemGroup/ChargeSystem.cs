@@ -1,3 +1,4 @@
+using Aspect;
 using Component;
 using Systems.Server.RoundSystemGroup;
 using Unity.Entities;
@@ -22,13 +23,11 @@ namespace Systems.Server.MonsterSystemGroup {
         /// </summary>
         /// <param name="state"></param>
         public void OnUpdate(ref SystemState state) {
-            foreach (var (localTransform, chargeComponent
-                         , monsterComponent, entity)
-                     in SystemAPI.Query<RefRW<LocalTransform>, RefRW<ChargeComponent>,
-                             RefRO<MonsterComponent>>()
+            foreach (var (monsterAspect, chargeComponent, entity)
+                     in SystemAPI.Query<MonsterAspectWithHealthRW, RefRW<ChargeComponent>>()
                          .WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)
                          .WithEntityAccess()) {
-                if (monsterComponent.ValueRO.IsDead) continue; //怪物死亡
+                if (monsterAspect.HealthComponent.ValueRO.IsDead) continue; //怪物死亡
 
                 ref var chargeDataRW = ref chargeComponent.ValueRW;
                 var charging = state.EntityManager.IsComponentEnabled<ChargeComponent>(entity);
@@ -42,17 +41,18 @@ namespace Systems.Server.MonsterSystemGroup {
 
                     if (!cd.IsCoolDownReady(SystemAPI.Time.ElapsedTime)) continue; //冷却时间未到
                     var rangeSq = chargeDataRW.chargeRange * chargeDataRW.chargeRange;
-                    if (monsterComponent.ValueRO.targetDistanceSq > rangeSq) continue; //超出范围
+                    if (monsterAspect.Monster.ValueRO.targetDistanceSq > rangeSq) continue; //超出范围
 
                     //如果没有激活冲锋则初始化冲锋数据
                     cd.TriggerCoolDown(SystemAPI.Time.ElapsedTime); //触发冷却
-                    var targetDir = monsterComponent.ValueRO.targetPlayerPos - localTransform.ValueRO.Position;
+                    var targetDir = monsterAspect.Monster.ValueRO.targetPlayerPos -
+                                    monsterAspect.LocalTransform.ValueRO.Position;
                     chargeDataRW.direction = math.normalize(targetDir); //这里的normalize其实是可以被优化的节省一个dot的计算量
                     EnableCharge(ref state, entity, true);
                 }
 
                 //冲锋状态移动
-                localTransform.ValueRW.Position +=
+                monsterAspect.LocalTransform.ValueRW.Position +=
                     chargeDataRW.direction * chargeDataRW.speed * SystemAPI.Time.DeltaTime;
 
                 //如果未超过冲锋时间则不进行处理

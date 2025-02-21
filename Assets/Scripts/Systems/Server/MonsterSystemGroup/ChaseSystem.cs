@@ -1,3 +1,4 @@
+using Aspect;
 using Component;
 using Unity.Burst;
 using Unity.Entities;
@@ -25,14 +26,16 @@ namespace Systems.Server.MonsterSystemGroup {
             var roundData = SystemAPI.GetSingletonRW<RoundData>();
             if (roundData.ValueRO.Phase != RoundPhase.Combat) return;
             var deltaTime = SystemAPI.Time.DeltaTime;
-            foreach (var (transform, chase, monsterComponent) in
-                     SystemAPI.Query<RefRW<LocalTransform>, RefRO<ChaseComponent>, RefRO<MonsterComponent>>()
+            foreach (var (monsterAspect, chase) in
+                     SystemAPI.Query<MonsterAspectWithHealthRW, RefRO<ChaseComponent>>()
                     ) {
-                if (monsterComponent.ValueRO.IsDead) continue;
-                transform.ValueRW.Position +=
-                    math.normalize(monsterComponent.ValueRO.targetPlayerPos - transform.ValueRO.Position) *
-                    deltaTime *
-                    chase.ValueRO.speed;
+                if (monsterAspect.HealthComponent.ValueRO.IsDead) continue;
+
+                //移动怪物位置
+                monsterAspect.LocalTransform.ValueRW.Position +=
+                    math.normalize(monsterAspect.Monster.ValueRO.targetPlayerPos -
+                                   monsterAspect.LocalTransform.ValueRO.Position) *
+                    deltaTime * chase.ValueRO.speed;
             }
         }
     }

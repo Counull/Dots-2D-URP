@@ -4,19 +4,13 @@ using Sirenix.OdinInspector;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Component {
     [Serializable]
     public struct MonsterComponent : IComponentData {
-        public float maxHealth;
-        [HideInInspector] public float health;
         [HideInInspector] public float3 targetPlayerPos;
         [HideInInspector] public float targetDistanceSq;
-        public bool IsDead => health <= 0;
-
-        public void Reset() {
-            health = maxHealth;
-        }
     }
 
 
@@ -38,8 +32,10 @@ namespace Component {
     [Serializable]
     public struct ShooterComponent : IComponentData, IEnableableComponent {
         public ushort count;
+
         public float triggerRange;
         public ProjectileData projectileData;
+        public DmgSrcComponent dmgSrcComponent;
         public CoolDownData coolDownData;
         [HideInInspector] public float spreadAngleRad;
         [HideInInspector] public Entity ProjectilePrefab;

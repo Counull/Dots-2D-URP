@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Authoring {
     public class PlayerAuthoring : MonoBehaviour {
         [SerializeField] private PlayerAttributes attributes;
-
+        [SerializeField] private HealthComponent healthComponent;
         [SerializeField] private GameObject playerVisualizationPrefab;
 
 
@@ -19,6 +19,7 @@ namespace Authoring {
                 AddComponent(entity,
                     new PlayerComponent
                         {BaseAttributes = authoring.attributes, InGameAttributes = authoring.attributes});
+                AddComponent(entity, authoring.healthComponent);
                 AddComponent<PlayerInput>(entity);
             }
         }

@@ -6,25 +6,21 @@ using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
 
 namespace Component {
+    [Serializable]
+    public struct ExperienceGrowthFormula {
+        public float baseExperience; // A
+        public float growthRate; // b
 
-        [Serializable]
-        public struct ExperienceGrowthFormula {
-            public float baseExperience; // A
-            public float growthRate; // b
-
-            private static double CalculateExperience(int level, ExperienceGrowthFormula formula) {
-                return formula.baseExperience * Math.Pow(formula.growthRate, level);
-            }
+        private static double CalculateExperience(int level, ExperienceGrowthFormula formula) {
+            return formula.baseExperience * Math.Pow(formula.growthRate, level);
         }
-    
+    }
 
 
     [Serializable]
     public struct PlayerAttributes : IComponentData {
         public float speed;
-        public float health;
         public uint maxWeaponCount;
-        public bool IsDead => health <= 0;
     }
 
 

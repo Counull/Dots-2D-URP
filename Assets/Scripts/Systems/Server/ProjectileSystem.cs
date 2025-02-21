@@ -29,11 +29,13 @@ namespace Systems.Server {
         private void Execute(Entity entity, [EntityIndexInQuery] int entityInQueryIndex,
             ref LocalTransform localPosition,
             ref ProjectileData data) {
+            //如果超过生命周期，销毁
             if (SystemTime.ElapsedTime - data.spawnTime > data.lifeTime) {
                 Ecb.DestroyEntity(entityInQueryIndex, entity);
                 return;
             }
 
+            //直线移动
             localPosition.Position += data.direction * data.speed * SystemTime.DeltaTime;
         }
     }

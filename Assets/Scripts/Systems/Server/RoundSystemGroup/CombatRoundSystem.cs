@@ -1,5 +1,4 @@
 using Component;
-
 using Unity.Entities;
 
 namespace Systems.Server.RoundSystemGroup {
@@ -31,8 +30,8 @@ namespace Systems.Server.RoundSystemGroup {
         /// <param name="roundData"></param>
         private void CheckRoundFailed(ref SystemState state, ref RoundData roundData) {
             var defeated = true;
-            foreach (var player in SystemAPI.Query<RefRO<PlayerComponent>>())
-                defeated &= player.ValueRO.InGameAttributes.IsDead;
+            foreach (var player in SystemAPI.Query<RefRO<HealthComponent>>().WithAll<PlayerComponent>())
+                defeated &= player.ValueRO.IsDead;
 
             roundData.RoundDefeated = defeated;
         }
