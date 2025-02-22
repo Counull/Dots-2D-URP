@@ -18,10 +18,13 @@ namespace Systems.Server {
                 Ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
                     .CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
             };
-            state.Dependency = job.ScheduleParallel(state.Dependency);
+            state.Dependency = job.Schedule(state.Dependency);
         }
     }
 
+    /// <summary>
+    /// TODO 此处应该改用IJobEntityBatch
+    /// </summary>
     public partial struct ProjectileMovementJob : IJobEntity {
         public TimeData SystemTime;
         public EntityCommandBuffer.ParallelWriter Ecb;

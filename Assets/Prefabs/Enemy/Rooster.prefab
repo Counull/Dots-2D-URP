@@ -53,13 +53,18 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    targetPlayerDirNormalized:
+      x: 0
+      y: 0
+      z: 0
     targetDistanceSq: 0
   healthComponent:
-    health: 15
     maxHealth: 15
+    maxHit: 0
+    currentHealth: 0
+    hitCounter: 0
   collisionDmgSrc:
     damage: 3
-    ownerFaction: 1
   chaseData:
     speed: 5
   chargeData:
@@ -89,7 +94,11 @@ MonoBehaviour:
         z: 0
     dmgSrcComponent:
       damage: 5
-      ownerFaction: 0
+    projectileHealth:
+      maxHealth: 0
+      maxHit: 1
+      currentHealth: 0
+      hitCounter: 0
     coolDownData:
       totalTime: 3
     spreadAngleRad: 6.2831855
@@ -201,7 +210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2034241233464783862}
   - component: {fileID: 4636760833674767085}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

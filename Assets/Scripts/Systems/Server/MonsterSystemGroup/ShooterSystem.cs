@@ -29,10 +29,10 @@ namespace Systems.Server.MonsterSystemGroup {
                 cd.TriggerCoolDown(SystemAPI.Time.ElapsedTime); //触发冷却
 
                 var buffer = _projectileShootingEventBuffer[entity];
-              
+
                 var dmgSrc = shooterData.dmgSrcComponent;
-                dmgSrc.ownerFaction = Faction.Monster;
-                
+
+
                 //赋值子弹的起始属性
                 var projectileData = shooterData.projectileData;
                 projectileData.spawnTime = SystemAPI.Time.ElapsedTime;
@@ -53,8 +53,10 @@ namespace Systems.Server.MonsterSystemGroup {
                     //子弹生成事件将会在ProjectileSpawnSystem中处理
                     buffer.Add(new ProjectileShootingEvent {
                         ProjectileData = projectileData,
+                        DmgSrcComponent = dmgSrc,
+                        HealthComponent = shooter.ValueRO.projectileHealth,
+                        FactionComponent = FactionComponent.Monster,
                         ProjectilePrefab = shooter.ValueRO.ProjectilePrefab,
-                        DmgSrcComponent = dmgSrc
                     });
                 }
             }

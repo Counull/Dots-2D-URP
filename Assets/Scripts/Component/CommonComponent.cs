@@ -8,17 +8,56 @@ namespace Component {
     [Serializable]
     public struct DmgSrcComponent : IComponentData {
         public float damage;
-        [HideInInspector] public Faction ownerFaction;
     }
 
     [Serializable]
-    public struct HealthComponent : IComponentData {
-        public float health;
+    public struct HealthComponent : IComponentData, IEnableableComponent {
         public float maxHealth;
-        public bool IsDead => health <= 0;
+        public ushort maxHit;
+
+        [HideInInspector] public float currentHealth;
+        [HideInInspector] public ushort hitCounter;
+
+        public bool IsDead {
+            get {
+                if (maxHit > 0) {
+                    return hitCounter >= maxHit;
+                }
+
+                return currentHealth <= 0;
+            }
+        }
 
         public void Reset() {
-            health = maxHealth;
+            currentHealth = maxHealth;
+        }
+    }
+
+    public struct FactionComponent : IComponentData, IEquatable<FactionComponent> {
+        public Faction Faction;
+
+        public static FactionComponent Player => new FactionComponent {Faction = Faction.Player};
+        public static FactionComponent Monster => new FactionComponent {Faction = Faction.Monster};
+
+
+        public bool Equals(FactionComponent other) {
+            return Faction == other.Faction;
+        }
+
+        public override bool Equals(object obj) {
+            return obj is FactionComponent other && Equals(other);
+        }
+
+        public override int GetHashCode() {
+            return (int) Faction;
+        }
+
+        public static bool operator ==(FactionComponent left, FactionComponent right) {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(FactionComponent left, FactionComponent right) {
+            return !(left == right);
         }
     }
 }

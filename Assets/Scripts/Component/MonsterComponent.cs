@@ -37,6 +37,7 @@ namespace Component {
         public float triggerRange;
         public ProjectileData projectileData;
         public DmgSrcComponent dmgSrcComponent;
+        public HealthComponent projectileHealth;
         public CoolDownData coolDownData;
         [HideInInspector] public float spreadAngleRad;
         [HideInInspector] public Entity ProjectilePrefab;

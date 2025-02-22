@@ -31,9 +31,10 @@ namespace Systems.Server.SpawnSystemGroup {
                 foreach (var projectileEvent in buffer) {
                     // 处理每个ProjectileShootingEvent
                     var projectileEntity = ecb.Instantiate(projectileEvent.ProjectilePrefab);
-
                     ecb.AddComponent(projectileEntity, projectileEvent.ProjectileData);
                     ecb.AddComponent(projectileEntity, projectileEvent.DmgSrcComponent);
+                    ecb.AddComponent(projectileEntity, projectileEvent.HealthComponent);
+                    ecb.AddComponent(projectileEntity, projectileEvent.FactionComponent);
                     ecb.SetComponent(projectileEntity, new LocalTransform {
                         Scale = 1f,
                         Position = projectileEvent.ProjectileData.startPosition,

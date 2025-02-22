@@ -23,20 +23,23 @@ namespace Systems.Server.MonsterSystemGroup {
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            var roundData = SystemAPI.GetSingletonRW<RoundData>();
-            if (roundData.ValueRO.Phase != RoundPhase.Combat) return;
+            var roundData = SystemAPI.GetSingleton<RoundData>();
+            if (roundData.Phase != RoundPhase.Combat) return;
             var deltaTime = SystemAPI.Time.DeltaTime;
             var chaseMoveJob = new ChaseMoveJob {
                 DeltaTime = deltaTime
             };
-            state.Dependency = chaseMoveJob.ScheduleParallel(state.Dependency);
+            state.Dependency = chaseMoveJob.Schedule(state.Dependency);
         }
     }
 
+    /// <summary>
+    /// todo 此处改用IJobEntityBatch
+    /// </summary>
     public partial struct ChaseMoveJob : IJobEntity {
         public float DeltaTime;
 
-        public void Execute(MonsterAspectWithHealthRW monsterAspect, 
+        public void Execute(MonsterAspectWithHealthRW monsterAspect,
             ref ChaseComponent chase) {
             if (monsterAspect.HealthComponent.ValueRO.IsDead) return;
             monsterAspect.LocalTransform.ValueRW.Position +=

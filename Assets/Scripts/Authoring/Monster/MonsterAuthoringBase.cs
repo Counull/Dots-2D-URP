@@ -13,7 +13,6 @@ namespace Authoring.Monster {
 
         protected void InitComponentData() {
             healthComponent.Reset();
-            collisionDmgSrc.ownerFaction = Faction.Monster;
         }
 
 
@@ -21,6 +20,7 @@ namespace Authoring.Monster {
             baker.AddComponent(entity, healthComponent);
             baker.AddComponent(entity, monsterData);
             baker.AddComponent(entity, collisionDmgSrc);
+            baker.AddComponent(entity, new FactionComponent {Faction = Faction.Monster});
         }
 
         public static void AddShooterComponent(IBaker baker, Entity entity, ShooterComponent shooterData,

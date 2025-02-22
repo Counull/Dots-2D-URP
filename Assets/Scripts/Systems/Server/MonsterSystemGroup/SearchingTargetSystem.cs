@@ -28,9 +28,8 @@ namespace Systems.Server.MonsterSystemGroup {
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            var roundData = SystemAPI.GetSingletonRW<RoundData>();
-            if (roundData.ValueRO.Phase != RoundPhase.Combat) return;
-
+            var roundData = SystemAPI.GetSingleton<RoundData>();
+            if (roundData.Phase != RoundPhase.Combat) return;
             var targetTransforms =
                 targetQuery.ToComponentDataListAsync<LocalTransform>(state.WorldUnmanaged.UpdateAllocator.ToAllocator,
                     out var targetHandle);

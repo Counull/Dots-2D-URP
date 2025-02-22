@@ -7,6 +7,7 @@ namespace Systems.Server.RoundSystemGroup {
     ///     这是创建这个System我第一个想到的事儿，
     ///     就是或许这个System是个管理类会更好，因为我完全可以面向对象写一个状态机去管理游戏状态变化
     ///     我已经预感到这个类会被实现得很烂
+    /// todo 重构这个类 应当用Enableable组件描述阶段状态之后依靠RequestForUpdate限制其他System的更新
     /// </summary>
     [UpdateInGroup(typeof(RoundSystemGroup))]
     public partial struct RoundSystem : ISystem {
@@ -45,5 +46,4 @@ namespace Systems.Server.RoundSystemGroup {
 
 
     // manged component真的是有诸多限制
-
 }

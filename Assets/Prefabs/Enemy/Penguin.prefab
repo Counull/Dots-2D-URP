@@ -90,13 +90,18 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    targetPlayerDirNormalized:
+      x: 0
+      y: 0
+      z: 0
     targetDistanceSq: 0
   healthComponent:
-    health: 10
     maxHealth: 10
+    maxHit: 0
+    currentHealth: 0
+    hitCounter: 0
   collisionDmgSrc:
     damage: 2
-    ownerFaction: 1
   chaseData:
     speed: 4
 --- !u!54 &3205186023982476457
@@ -169,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8362441847587052237}
   - component: {fileID: 2630148694728287288}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

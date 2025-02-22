@@ -1,3 +1,4 @@
+using Common;
 using Component;
 using Unity.Entities;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace Authoring {
                         {BaseAttributes = authoring.attributes, InGameAttributes = authoring.attributes});
                 AddComponent(entity, authoring.healthComponent);
                 AddComponent<PlayerInput>(entity);
+                AddComponent(entity, new FactionComponent {Faction = Faction.Player});
             }
         }
     }
