@@ -53,15 +53,16 @@ namespace Systems.Server.MonsterSystemGroup {
 
 
         private void Execute(MonsterAspect monsterAspect) {
-            var monsterTransform = monsterAspect.LocalTransform.ValueRO;
-
+            var monsterTransform = monsterAspect.LocalTransform.ValueRO.Position;
+            monsterTransform.z = 0;
             // 寻找最近的目标 随便写的临时代码 之后会用RVO或者碰撞检测
             // 说不定用碰撞检测会有BVH之类的优化性能会更好
             var nearestTarget = TargetTransforms[0];
-            var nearestDistanceSq = math.distancesq(monsterTransform.Position, nearestTarget.Position);
+            var nearestDistanceSq = math.distancesq(monsterTransform, nearestTarget.Position);
             for (var i = 1; i < TargetTransforms.Length; i++) {
                 var target = TargetTransforms[i];
-                var newDistanceSq = math.distancesq(monsterTransform.Position, target.Position);
+                var newDistanceSq = math.distancesq(monsterTransform, target.Position);
+                target.Position.z = 0;
                 if (!(newDistanceSq < nearestDistanceSq)) continue;
                 nearestTarget = target;
                 nearestDistanceSq = newDistanceSq;
@@ -69,7 +70,8 @@ namespace Systems.Server.MonsterSystemGroup {
 
             monsterAspect.Monster.ValueRW.targetPlayerPos = nearestTarget.Position;
             monsterAspect.Monster.ValueRW.targetDistanceSq = nearestDistanceSq;
-            ;
+            monsterAspect.Monster.ValueRW.targetPlayerDirNormalized =
+                math.normalize(nearestTarget.Position - monsterTransform);
         }
     }
 }

@@ -33,13 +33,7 @@ namespace Systems.Server.MonsterSystemGroup {
                 var charging = state.EntityManager.IsComponentEnabled<ChargeComponent>(entity);
                 ref var cd = ref chargeDataRW.coolDownData;
                 if (!charging) {
-                    if (cd.TriggerTime == 0) {
-                        //未触发过冷则初始化冷却时间
-                        cd.TriggerCoolDown(SystemAPI.Time.ElapsedTime);
-                        continue;
-                    }
-
-                    if (!cd.IsCoolDownReady(SystemAPI.Time.ElapsedTime)) continue; //冷却时间未到
+                    if (!cd.IsCoolDownReadyWithBaseCd(SystemAPI.Time.ElapsedTime)) continue; //冷却时间未到
                     var rangeSq = chargeDataRW.chargeRange * chargeDataRW.chargeRange;
                     if (monsterAspect.Monster.ValueRO.targetDistanceSq > rangeSq) continue; //超出范围
 

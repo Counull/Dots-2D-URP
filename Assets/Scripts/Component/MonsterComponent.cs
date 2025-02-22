@@ -10,6 +10,7 @@ namespace Component {
     [Serializable]
     public struct MonsterComponent : IComponentData {
         [HideInInspector] public float3 targetPlayerPos;
+        [HideInInspector] public float3 targetPlayerDirNormalized;
         [HideInInspector] public float targetDistanceSq;
     }
 

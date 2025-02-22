@@ -26,17 +26,22 @@ namespace Systems.Server.MonsterSystemGroup {
             var roundData = SystemAPI.GetSingletonRW<RoundData>();
             if (roundData.ValueRO.Phase != RoundPhase.Combat) return;
             var deltaTime = SystemAPI.Time.DeltaTime;
-            foreach (var (monsterAspect, chase) in
-                     SystemAPI.Query<MonsterAspectWithHealthRW, RefRO<ChaseComponent>>()
-                    ) {
-                if (monsterAspect.HealthComponent.ValueRO.IsDead) continue;
+            var chaseMoveJob = new ChaseMoveJob {
+                DeltaTime = deltaTime
+            };
+            state.Dependency = chaseMoveJob.ScheduleParallel(state.Dependency);
+        }
+    }
 
-                //移动怪物位置
-                monsterAspect.LocalTransform.ValueRW.Position +=
-                    math.normalize(monsterAspect.Monster.ValueRO.targetPlayerPos -
-                                   monsterAspect.LocalTransform.ValueRO.Position) *
-                    deltaTime * chase.ValueRO.speed;
-            }
+    public partial struct ChaseMoveJob : IJobEntity {
+        public float DeltaTime;
+
+        public void Execute(MonsterAspectWithHealthRW monsterAspect, 
+            ref ChaseComponent chase) {
+            if (monsterAspect.HealthComponent.ValueRO.IsDead) return;
+            monsterAspect.LocalTransform.ValueRW.Position +=
+                monsterAspect.Monster.ValueRO.targetPlayerDirNormalized *
+                DeltaTime * chase.speed;
         }
     }
 }
