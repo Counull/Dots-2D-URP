@@ -123,8 +123,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attributes:
     speed: 6
-    health: 100
     maxWeaponCount: 6
+  healthComponent:
+    health: 0
+    maxHealth: 20
   playerVisualizationPrefab: {fileID: 5628018141983903104, guid: fb4d48c684e8fc043a98fb4d3c28c0e1, type: 3}
 --- !u!114 &5582199848832912948
 MonoBehaviour:

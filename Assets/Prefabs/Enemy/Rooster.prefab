@@ -49,13 +49,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterData:
-    maxHealth: 20
-    health: 20
     targetPlayerPos:
       x: 0
       y: 0
       z: 0
     targetDistanceSq: 0
+  healthComponent:
+    health: 15
+    maxHealth: 15
+  collisionDmgSrc:
+    damage: 3
+    ownerFaction: 1
   chaseData:
     speed: 5
   chargeData:

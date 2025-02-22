@@ -11,6 +11,8 @@ namespace Authoring {
 
         private class Baker : Baker<PlayerAuthoring> {
             public override void Bake(PlayerAuthoring authoring) {
+                authoring.healthComponent.Reset();
+
                 var entity = GetEntity(authoring.gameObject, TransformUsageFlags.Dynamic);
 
                 AddComponentObject(entity, new PlayerVisualizationComponent {
