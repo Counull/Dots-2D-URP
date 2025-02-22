@@ -10,11 +10,14 @@ namespace Systems.Server.MonsterSystemGroup {
         private BufferLookup<ProjectileShootingEvent> _projectileShootingEventBuffer;
 
         public void OnCreate(ref SystemState state) {
+            state.RequireForUpdate<RoundData>();
             state.RequireForUpdate<ShooterComponent>();
             _projectileShootingEventBuffer = state.GetBufferLookup<ProjectileShootingEvent>();
         }
 
         public void OnUpdate(ref SystemState state) {
+            var roundData = SystemAPI.GetSingleton<RoundData>();
+            if (roundData.Phase != RoundPhase.Combat) return;
             _projectileShootingEventBuffer.Update(ref state);
             foreach (var (shooter, monsterAspect, entity)
                      in SystemAPI.Query<RefRW<ShooterComponent>, MonsterAspect>()

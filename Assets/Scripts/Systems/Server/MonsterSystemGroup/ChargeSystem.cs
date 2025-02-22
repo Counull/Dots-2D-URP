@@ -27,6 +27,9 @@ namespace Systems.Server.MonsterSystemGroup {
                      in SystemAPI.Query<MonsterAspectWithHealthRW, RefRW<ChargeComponent>>()
                          .WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)
                          .WithEntityAccess()) {
+                var roundData = SystemAPI.GetSingleton<RoundData>();
+                if (roundData.Phase != RoundPhase.Combat) return; //不在战斗阶段
+
                 if (monsterAspect.HealthComponent.ValueRO.IsDead) continue; //怪物死亡
 
                 ref var chargeDataRW = ref chargeComponent.ValueRW;

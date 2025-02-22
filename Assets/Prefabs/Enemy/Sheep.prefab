@@ -98,7 +98,7 @@ MonoBehaviour:
   healthComponent:
     maxHealth: 21
     maxHit: 0
-    currentHealth: 0
+    currentHealth: 21
     hitCounter: 0
   collisionDmgSrc:
     damage: 6

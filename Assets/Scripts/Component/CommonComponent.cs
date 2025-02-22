@@ -14,7 +14,8 @@ namespace Component {
     public struct HealthComponent : IComponentData, IEnableableComponent {
         public float maxHealth;
         public ushort maxHit;
-
+        public float invincibilityTimeBeenHit;
+        [HideInInspector] public double invincibilityEndTime;
         [HideInInspector] public float currentHealth;
         [HideInInspector] public ushort hitCounter;
 
@@ -23,7 +24,6 @@ namespace Component {
                 if (maxHit > 0) {
                     return hitCounter >= maxHit;
                 }
-
                 return currentHealth <= 0;
             }
         }
@@ -32,6 +32,7 @@ namespace Component {
             currentHealth = maxHealth;
         }
     }
+
 
     public struct FactionComponent : IComponentData, IEquatable<FactionComponent> {
         public Faction Faction;
