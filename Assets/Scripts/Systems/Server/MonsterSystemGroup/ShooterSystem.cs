@@ -18,10 +18,12 @@ namespace Systems.Server.MonsterSystemGroup {
         public void OnUpdate(ref SystemState state) {
             var roundData = SystemAPI.GetSingleton<RoundData>();
             if (roundData.Phase != RoundPhase.Combat) return;
+
             _projectileShootingEventBuffer.Update(ref state);
             foreach (var (shooter, monsterAspect, entity)
-                     in SystemAPI.Query<RefRW<ShooterComponent>, MonsterAspect>()
+                     in SystemAPI.Query<RefRW<ShooterComponent>, MonsterAspectWithHealthRW>()
                          .WithEntityAccess()) {
+                if (monsterAspect.HealthComponent.ValueRO.IsDead) continue;
                 ref var cd = ref shooter.ValueRW.coolDownData;
                 if (!cd.IsCoolDownReadyWithBaseCd(SystemAPI.Time.ElapsedTime)) continue; //如果冷却时间未到
                 var shooterData = shooter.ValueRO;

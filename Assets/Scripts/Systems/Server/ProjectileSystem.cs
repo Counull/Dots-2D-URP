@@ -31,15 +31,16 @@ namespace Systems.Server {
 
         private void Execute(Entity entity, [EntityIndexInQuery] int entityInQueryIndex,
             ref LocalTransform localPosition,
-            ref ProjectileData data) {
-            //如果超过生命周期，销毁
-            if (SystemTime.ElapsedTime - data.spawnTime > data.lifeTime) {
-                Ecb.DestroyEntity(entityInQueryIndex, entity);
-                return;
-            }
-
+            ref ProjectileData data, ref HealthComponent healthComponent) {
+            var distance = data.speed * SystemTime.DeltaTime;
             //直线移动
-            localPosition.Position += data.direction * data.speed * SystemTime.DeltaTime;
+            localPosition.Position += data.direction * distance;
+            //增加投射物的移动距离
+            data.currentDistance += distance;
+            if (!data.ShouldDestroy(SystemTime.ElapsedTime)) return;
+            //如果超过生命周期，标记销毁投射物
+            healthComponent.MarkDeath();
+            return;
         }
     }
 }

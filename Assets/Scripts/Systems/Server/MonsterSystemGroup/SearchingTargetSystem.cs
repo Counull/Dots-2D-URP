@@ -13,16 +13,16 @@ namespace Systems.Server.MonsterSystemGroup {
     /// </summary>
     [UpdateInGroup(typeof(MonsterBehaviorGroup), OrderFirst = true)]
     public partial struct SearchingTargetSystem : ISystem {
-        private EntityQuery monsterQuery;
-        private EntityQuery targetQuery;
+        private EntityQuery _monsterQuery;
+        private EntityQuery _targetQuery;
 
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
-            monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent>()
+            _monsterQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, MonsterComponent>()
                 .Build();
-            targetQuery = SystemAPI.QueryBuilder().WithAll<PlayerComponent, LocalTransform>().Build();
-            state.RequireForUpdate(monsterQuery);
-            state.RequireForUpdate(targetQuery);
+            _targetQuery = SystemAPI.QueryBuilder().WithAll<PlayerComponent, LocalTransform>().Build();
+            state.RequireForUpdate(_monsterQuery);
+            state.RequireForUpdate(_targetQuery);
             state.RequireForUpdate<RoundData>();
         }
 
@@ -31,7 +31,7 @@ namespace Systems.Server.MonsterSystemGroup {
             var roundData = SystemAPI.GetSingleton<RoundData>();
             if (roundData.Phase != RoundPhase.Combat) return;
             var targetTransforms =
-                targetQuery.ToComponentDataListAsync<LocalTransform>(state.WorldUnmanaged.UpdateAllocator.ToAllocator,
+                _targetQuery.ToComponentDataListAsync<LocalTransform>(state.WorldUnmanaged.UpdateAllocator.ToAllocator,
                     out var targetHandle);
 
             var searchingTargetJob = new SearchingTargetJob {

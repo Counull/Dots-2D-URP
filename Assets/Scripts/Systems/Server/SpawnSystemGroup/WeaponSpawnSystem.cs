@@ -32,15 +32,16 @@ namespace Systems.Server.SpawnSystemGroup {
                 foreach (var element in weaponBuffer) {
                     var weapon = ecb.Instantiate(element.WeaponPrefab);
                     ecb.AddComponent(weapon, new Parent {Value = entity});
-
+                    ecb.AddComponent(weapon, FactionComponent.Player);
                     //计算武器的位置
-                    var position = new float3(
+
+                    var newLocal = LocalTransform.Identity;
+                    newLocal.Position = new float3(
                         Mathf.Cos(weaponPerRad * weaponIndex) * weaponMountDistance,
                         Mathf.Sin(weaponPerRad * weaponIndex) * weaponMountDistance,
                         0
                     );
-                    var newLocal = LocalTransform.Identity;
-                    newLocal.Position = position;
+
                     ecb.SetComponent(weapon, newLocal);
                     weaponIndex++;
                 }

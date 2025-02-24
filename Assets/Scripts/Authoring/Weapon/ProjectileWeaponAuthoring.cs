@@ -14,6 +14,7 @@ namespace Authoring.Weapon {
                 authoring.weaponProjectile.ProjectilePrefab = projectilePrefab;
                 AddComponent(entity, authoring.weaponComponent);
                 AddComponent(entity, authoring.weaponProjectile);
+                AddBuffer<ProjectileShootingEvent>(entity);
             }
         }
     }

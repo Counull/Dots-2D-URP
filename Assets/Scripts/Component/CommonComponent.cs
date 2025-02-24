@@ -13,12 +13,15 @@ namespace Component {
     [Serializable]
     public struct HealthComponent : IComponentData, IEnableableComponent {
         public float maxHealth;
+
+        //todo 这里计数Hit是否有必要 目前只有投射物在用
         public ushort maxHit;
         public float invincibilityTimeBeenHit;
         [HideInInspector] public double invincibilityEndTime;
         [HideInInspector] public float currentHealth;
         [HideInInspector] public ushort hitCounter;
 
+        //根基命中次数和生命值判断死亡
         public bool IsDead {
             get {
                 if (maxHit > 0) {
@@ -27,6 +30,11 @@ namespace Component {
 
                 return currentHealth <= 0;
             }
+        }
+
+        public void MarkDeath() {
+            currentHealth = float.MinValue;
+            hitCounter = ushort.MaxValue;
         }
 
         public void Reset() {
