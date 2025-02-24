@@ -35,14 +35,14 @@ namespace Systems.Server.SpawnSystemGroup {
                     ecb.AddComponent(weapon, FactionComponent.Player);
                     //计算武器的位置
 
-                    var newLocal = LocalTransform.Identity;
-                    newLocal.Position = new float3(
+                    var newLocalTrans = state.EntityManager.GetComponentData<LocalTransform>(element.WeaponPrefab);
+                    newLocalTrans.Position = new float3(
                         Mathf.Cos(weaponPerRad * weaponIndex) * weaponMountDistance,
                         Mathf.Sin(weaponPerRad * weaponIndex) * weaponMountDistance,
                         0
                     );
 
-                    ecb.SetComponent(weapon, newLocal);
+                    ecb.SetComponent(weapon, newLocalTrans);
                     weaponIndex++;
                 }
 

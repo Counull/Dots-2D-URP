@@ -32,17 +32,16 @@ namespace Systems.Server.SpawnSystemGroup {
                 foreach (var projectileEvent in buffer) {
                     // 处理每个ProjectileShootingEvent
                     var projectileEntity = ecb.Instantiate(projectileEvent.ProjectilePrefab);
+                    var prefabTransform =
+                        state.EntityManager.GetComponentData<LocalTransform>(projectileEvent.ProjectilePrefab);
+                    prefabTransform.Position = projectileEvent.ProjectileData.startPosition;
+                    prefabTransform.Rotation = quaternion.LookRotationSafe(new float3(0, 0, 1),
+                        projectileEvent.ProjectileData.direction);
                     ecb.AddComponent(projectileEntity, projectileEvent.ProjectileData);
                     ecb.AddComponent(projectileEntity, projectileEvent.DmgSrcComponent);
                     ecb.AddComponent(projectileEntity, projectileEvent.HealthComponent);
                     ecb.AddComponent(projectileEntity, projectileEvent.FactionComponent);
-                    ecb.SetComponent(projectileEntity, new LocalTransform {
-                        Scale = 1f,
-                        Position = projectileEvent.ProjectileData.startPosition,
-                        Rotation =
-                            quaternion.LookRotationSafe(new float3(0, 0, 1),
-                                projectileEvent.ProjectileData.direction)
-                    });
+                    ecb.SetComponent(projectileEntity, prefabTransform);
                 }
 
                 buffer.Clear();
