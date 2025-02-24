@@ -144,7 +144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2886352139783535409}
-  - component: {fileID: 1250962246618537904}
+  - component: {fileID: 6474912493738072469}
   m_Layer: 0
   m_Name: Weapon_proj
   m_TagString: Untagged
@@ -168,7 +168,7 @@ Transform:
   - {fileID: 8920718091546957932}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1250962246618537904
+--- !u!114 &6474912493738072469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,14 +177,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 7648292333534193872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e1943d0185f4fdd91fe31990e4d34f2, type: 3}
+  m_Script: {fileID: 11500000, guid: fed26b019e5a46d9b237e187b9e2611a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weaponComponent:
-    baseDamage: 10
-    range: 20
-    fireRate: 1
-    weaponType: 2
-    projectileSpeed: 7
-  prefabs:
-    projectile: {fileID: 2075434912211488848, guid: dff7b8f6e40a7b34b9f0a805b47ffaf6, type: 3}
+    baseDamage: 0
+    range: 0
+    coolDownData:
+      totalTime: 0
+    dmgSrcComponent:
+      damage: 0
+  projectilePrefab: {fileID: 2075434912211488848, guid: dff7b8f6e40a7b34b9f0a805b47ffaf6, type: 3}
+  weaponProjectile:
+    projectileHealth:
+      maxHealth: 0
+      maxHit: 4
+      invincibilityTimeBeenHit: 0
+      invincibilityEndTime: 0
+      currentHealth: 0
+      hitCounter: 0
+    projectileData:
+      speed: 15
+      lifeTime: 1
+      spawnTime: 0
+      startPosition:
+        x: 0
+        y: 0
+        z: 0
+      direction:
+        x: 0
+        y: 0
+        z: 0

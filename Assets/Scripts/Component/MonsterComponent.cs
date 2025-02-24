@@ -33,7 +33,6 @@ namespace Component {
     [Serializable]
     public struct ShooterComponent : IComponentData, IEnableableComponent {
         public ushort count;
-
         public float triggerRange;
         public ProjectileData projectileData;
         public DmgSrcComponent dmgSrcComponent;

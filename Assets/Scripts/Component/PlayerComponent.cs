@@ -6,16 +6,7 @@ using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
 
 namespace Component {
-    [Serializable]
-    public struct ExperienceGrowthFormula {
-        public float baseExperience; // A
-        public float growthRate; // b
-
-        private static double CalculateExperience(int level, ExperienceGrowthFormula formula) {
-            return formula.baseExperience * Math.Pow(formula.growthRate, level);
-        }
-    }
-
+    #region Attributes
 
     [Serializable]
     public struct PlayerAttributes : IComponentData {
@@ -29,10 +20,26 @@ namespace Component {
         public float Experience;
         public uint Level;
         public ulong NextLevelExperience;
+       
+        
         public PlayerAttributes InGameAttributes;
         public PlayerAttributes BaseAttributes;
     }
 
+    [Serializable] //TODO 经验值系统
+    public struct ExperienceGrowthFormula {
+        public float baseExperience; // A
+        public float growthRate; // b
+
+        private static double CalculateExperience(int level, ExperienceGrowthFormula formula) {
+            return formula.baseExperience * Math.Pow(formula.growthRate, level);
+        }
+    }
+
+    #endregion
+
+
+    #region Movement
 
     [GhostComponent]
     public struct PlayerInput : IInputComponentData {
@@ -62,4 +69,15 @@ namespace Component {
             Animator = VisualizationInstance.GetComponent<Animator>();
         }
     }
+
+    #endregion
+
+
+    #region Weapon
+
+    public struct WeaponNeedRefresh : IComponentData, IEnableableComponent { }
+
+   
+
+    #endregion
 }

@@ -1,5 +1,8 @@
 using System;
+using Common;
 using Unity.Entities;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace Component {
@@ -8,18 +11,18 @@ namespace Component {
     public struct WeaponComponent : IComponentData {
         public float baseDamage;
         public float range;
-        public float fireInterval;
-        public WeaponType weaponType;
-        public float projectileSpeed;
-        public WeaponPrefab Prefabs;
-        public ulong NextFireTime { get; private set; }
+        public CoolDownData coolDownData;
+        public DmgSrcComponent dmgSrcComponent;
+
     }
 
-
-    public struct WeaponPrefab {
-        public Entity Projectile;
+    [Serializable]
+    public struct WeaponProjectile : IComponentData {
+        public HealthComponent projectileHealth;
+        public ProjectileData projectileData;
+        [HideInInspector] public Entity ProjectilePrefab;
     }
-
+    
 
     public enum WeaponType {
         Melee,

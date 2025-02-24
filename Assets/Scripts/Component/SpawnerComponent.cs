@@ -21,7 +21,7 @@ namespace Component {
         [HideInInspector] public double nextSpawnTime;
     }
 
-    public struct WeaponPrefabElement : IBufferElementData {
+    public struct WeaponSlotElement : IBufferElementData {
         public Entity WeaponPrefab;
     }
 

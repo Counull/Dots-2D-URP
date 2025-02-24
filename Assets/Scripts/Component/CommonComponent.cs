@@ -24,12 +24,14 @@ namespace Component {
                 if (maxHit > 0) {
                     return hitCounter >= maxHit;
                 }
+
                 return currentHealth <= 0;
             }
         }
 
         public void Reset() {
             currentHealth = maxHealth;
+            hitCounter = 0;
         }
     }
 

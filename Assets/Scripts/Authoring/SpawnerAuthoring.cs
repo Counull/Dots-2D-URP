@@ -35,9 +35,9 @@ namespace Authoring {
 
 
                 // Add and initialize the DynamicBuffer
-                var buffer = AddBuffer<WeaponPrefabElement>(entity);
+                var buffer = AddBuffer<WeaponSlotElement>(entity);
                 foreach (var prefab in authoring.weaponPrefabs)
-                    buffer.Add(new WeaponPrefabElement {
+                    buffer.Add(new WeaponSlotElement {
                         WeaponPrefab = GetEntity(prefab, TransformUsageFlags.Dynamic)
                     });
             }
