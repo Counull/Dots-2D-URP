@@ -11,6 +11,7 @@ namespace Component {
     [Serializable]
     public struct PlayerAttributes : IComponentData {
         public float speed;
+        public float weaponMountDistance;
         public uint maxWeaponCount;
     }
 
@@ -20,8 +21,8 @@ namespace Component {
         public float Experience;
         public uint Level;
         public ulong NextLevelExperience;
-       
-        
+
+
         public PlayerAttributes InGameAttributes;
         public PlayerAttributes BaseAttributes;
     }
@@ -76,8 +77,6 @@ namespace Component {
     #region Weapon
 
     public struct WeaponNeedRefresh : IComponentData, IEnableableComponent { }
-
-   
 
     #endregion
 }

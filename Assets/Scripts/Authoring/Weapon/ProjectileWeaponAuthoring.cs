@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Authoring.Weapon {
     public class ProjectileWeaponAuthoring : WeaponBaseAuthoring {
-        [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private WeaponProjectile weaponProjectile;
+        [SerializeField] private GameObject projectilePrefab;
 
         private class Baker : Baker<ProjectileWeaponAuthoring> {
             public override void Bake(ProjectileWeaponAuthoring authoring) {

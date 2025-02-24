@@ -1,6 +1,8 @@
 using Component;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace Systems.Server.SpawnSystemGroup {
     [UpdateInGroup(typeof(SpawnSystemGroup))]
@@ -17,15 +19,29 @@ namespace Systems.Server.SpawnSystemGroup {
             var ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
                 .CreateCommandBuffer(state.WorldUnmanaged);
 
+
             foreach (var (playerComponent, entity) in SystemAPI.Query<RefRO<PlayerComponent>>()
                          .WithAll<WeaponNeedRefresh>()
                          .WithEntityAccess()) {
                 var maxWeaponCount = playerComponent.ValueRO.InGameAttributes.maxWeaponCount;
+                var weaponMountDistance = playerComponent.ValueRO.InGameAttributes.weaponMountDistance;
+                var weaponPerRad = 2 * Mathf.PI / maxWeaponCount;
+
                 var weaponIndex = 0;
                 var weaponBuffer = _weaponBuffer[entity];
                 foreach (var element in weaponBuffer) {
                     var weapon = ecb.Instantiate(element.WeaponPrefab);
                     ecb.AddComponent(weapon, new Parent {Value = entity});
+
+                    //计算武器的位置
+                    var position = new float3(
+                        Mathf.Cos(weaponPerRad * weaponIndex) * weaponMountDistance,
+                        Mathf.Sin(weaponPerRad * weaponIndex) * weaponMountDistance,
+                        0
+                    );
+                    var newLocal = LocalTransform.Identity;
+                    newLocal.Position = position;
+                    ecb.SetComponent(weapon, newLocal);
                     weaponIndex++;
                 }
 

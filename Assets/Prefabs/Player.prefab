@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attributes:
     speed: 6
+    weaponMountDistance: 1.5
     maxWeaponCount: 6
   healthComponent:
     maxHealth: 20
@@ -61,6 +62,11 @@ MonoBehaviour:
     hitCounter: 0
   playerVisualizationPrefab: {fileID: 5628018141983903104, guid: fb4d48c684e8fc043a98fb4d3c28c0e1, type: 3}
   initialWeaponPrefab:
+  - {fileID: 7648292333534193872, guid: e0f299d2e3673564eb63b0802a497efd, type: 3}
+  - {fileID: 7648292333534193872, guid: e0f299d2e3673564eb63b0802a497efd, type: 3}
+  - {fileID: 7648292333534193872, guid: e0f299d2e3673564eb63b0802a497efd, type: 3}
+  - {fileID: 7648292333534193872, guid: e0f299d2e3673564eb63b0802a497efd, type: 3}
+  - {fileID: 7648292333534193872, guid: e0f299d2e3673564eb63b0802a497efd, type: 3}
   - {fileID: 7648292333534193872, guid: e0f299d2e3673564eb63b0802a497efd, type: 3}
 --- !u!114 &5582199848832912948
 MonoBehaviour:
