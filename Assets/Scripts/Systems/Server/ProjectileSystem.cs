@@ -15,10 +15,8 @@ namespace Systems.Server {
         public void OnUpdate(ref SystemState state) {
             var job = new ProjectileMovementJob {
                 SystemTime = SystemAPI.Time,
-                Ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
-                    .CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
             };
-            state.Dependency = job.Schedule(state.Dependency);
+            state.Dependency = job.ScheduleParallel(state.Dependency);
         }
     }
 
@@ -27,10 +25,9 @@ namespace Systems.Server {
     /// </summary>
     public partial struct ProjectileMovementJob : IJobEntity {
         public TimeData SystemTime;
-        public EntityCommandBuffer.ParallelWriter Ecb;
+      
 
-        private void Execute(Entity entity, [EntityIndexInQuery] int entityInQueryIndex,
-            ref LocalTransform localPosition,
+        private void Execute(ref LocalTransform localPosition,
             ref ProjectileData data, ref HealthComponent healthComponent) {
             var distance = data.speed * SystemTime.DeltaTime;
             //直线移动

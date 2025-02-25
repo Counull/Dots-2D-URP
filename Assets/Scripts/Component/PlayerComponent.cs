@@ -21,8 +21,6 @@ namespace Component {
         public float Experience;
         public uint Level;
         public ulong NextLevelExperience;
-
-
         public PlayerAttributes InGameAttributes;
         public PlayerAttributes BaseAttributes;
     }

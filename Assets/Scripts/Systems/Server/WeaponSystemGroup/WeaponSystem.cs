@@ -46,7 +46,6 @@ namespace Systems.Server.WeaponSystemGroup {
 
             //其实应该在spawn系统中等待这里的ECB被执行 这里这样写其实发射子弹的行为都会被推到下一帧
             //TODO system顺序 互相依赖 相关的东西写得都不是很好
-            ecbSystem.AddJobHandleForProducer(state.Dependency);
         }
     }
 

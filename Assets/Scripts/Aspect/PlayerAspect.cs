@@ -1,5 +1,6 @@
 using Component;
 using Unity.Entities;
+using Unity.NetCode;
 using Unity.Transforms;
 
 namespace Aspect {
@@ -8,4 +9,7 @@ namespace Aspect {
         public readonly RefRW<LocalTransform> LocalTransform;
         public readonly RefRW<PlayerComponent> PlayerComponent;
     }
+
+   
+
 }

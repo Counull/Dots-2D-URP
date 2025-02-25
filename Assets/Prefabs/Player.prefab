@@ -58,7 +58,6 @@ MonoBehaviour:
     maxHit: 0
     invincibilityTimeBeenHit: 0.5
     invincibilityEndTime: 0
-    currentHealth: 20
     hitCounter: 0
   playerVisualizationPrefab: {fileID: 5628018141983903104, guid: fb4d48c684e8fc043a98fb4d3c28c0e1, type: 3}
   initialWeaponPrefab:

@@ -42,6 +42,7 @@ namespace Systems.Server.SpawnSystemGroup {
                     ecb.AddComponent(projectileEntity, projectileEvent.HealthComponent);
                     ecb.AddComponent(projectileEntity, projectileEvent.FactionComponent);
                     ecb.SetComponent(projectileEntity, prefabTransform);
+                    ecb.AddBuffer<HitedEntityElement>(projectileEntity);
                 }
 
                 buffer.Clear();

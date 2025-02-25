@@ -100,7 +100,6 @@ MonoBehaviour:
     maxHit: 0
     invincibilityTimeBeenHit: 0
     invincibilityEndTime: 0
-    currentHealth: 10
     hitCounter: 0
   collisionDmgSrc:
     damage: 2
@@ -331,7 +330,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3584599820630843842, guid: add5ab1cca4ee994d9f396d44d51bc66, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3584599818706254737, guid: add5ab1cca4ee994d9f396d44d51bc66, type: 3}
+    - {fileID: 3584599819192227523, guid: add5ab1cca4ee994d9f396d44d51bc66, type: 3}
+    - {fileID: 3584599819398561755, guid: add5ab1cca4ee994d9f396d44d51bc66, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add5ab1cca4ee994d9f396d44d51bc66, type: 3}

@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponComponent:
-    range: 4
+    range: 5
     coolDownData:
       totalTime: 1
     dmgSrcComponent:
@@ -192,7 +192,6 @@ MonoBehaviour:
       maxHit: 4
       invincibilityTimeBeenHit: 0
       invincibilityEndTime: 0
-      currentHealth: 0
       hitCounter: 0
     projectileData:
       speed: 10

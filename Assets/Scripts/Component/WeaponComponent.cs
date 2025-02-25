@@ -22,6 +22,10 @@ namespace Component {
         [HideInInspector] public Entity ProjectilePrefab;
     }
 
+    public struct HitedEntityElement : IBufferElementData {
+        public Entity hitedEntity;
+    }
+
 
     public enum WeaponType {
         Melee,

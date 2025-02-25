@@ -3,7 +3,22 @@ using Unity.Entities;
 
 namespace Component {
     public struct RoundData : IComponentData {
-        public float CombatTimeCountingDown;
+        private float _combatTimeCountingDown;
+
+        public float CombatTimeCountingDown {
+            get => _combatTimeCountingDown;
+            set {
+                var lastSecond = (int) _combatTimeCountingDown;
+                var currentSecond = (int) value;
+                _combatTimeCountingDown = value;
+                CountingDownChangedPerSecond |= (lastSecond != currentSecond);
+                if (_combatTimeCountingDown < 0) {
+                    _combatTimeCountingDown = 0;
+                }
+            }
+        }
+
+        public bool CountingDownChangedPerSecond { get; private set; }
         public ushort CombatRound;
         public float MaxCombatTime => 60f;
         public ushort MaxCombatRound => 20;
@@ -17,6 +32,10 @@ namespace Component {
 
         public bool AllSystemReady() {
             return lockedSystemCount == 0;
+        }
+
+        public void UIRefresh() {
+            CountingDownChangedPerSecond = false;
         }
 
         public void SystemLock() {

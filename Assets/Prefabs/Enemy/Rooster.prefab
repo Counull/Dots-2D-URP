@@ -63,7 +63,6 @@ MonoBehaviour:
     maxHit: 0
     invincibilityTimeBeenHit: 0
     invincibilityEndTime: 0
-    currentHealth: 15
     hitCounter: 0
   collisionDmgSrc:
     damage: 3
@@ -85,6 +84,8 @@ MonoBehaviour:
     projectileData:
       speed: 10
       lifeTime: 10
+      maxDistance: 0
+      currentDistance: 0
       spawnTime: 0
       startPosition:
         x: 0
@@ -101,7 +102,6 @@ MonoBehaviour:
       maxHit: 1
       invincibilityTimeBeenHit: 0
       invincibilityEndTime: 0
-      currentHealth: 0
       hitCounter: 0
     coolDownData:
       totalTime: 3
@@ -283,6 +283,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5510196490160580393, guid: 511008ffae6ab11459f4abdc9e6f876c, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510196490160580393, guid: 511008ffae6ab11459f4abdc9e6f876c, type: 3}
+      propertyPath: m_LODs.Array.data[1].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510196490160580393, guid: 511008ffae6ab11459f4abdc9e6f876c, type: 3}
+      propertyPath: m_LODs.Array.data[2].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5510196490160580396, guid: 511008ffae6ab11459f4abdc9e6f876c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -380,7 +392,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5510196489708162491, guid: 511008ffae6ab11459f4abdc9e6f876c, type: 3}
+    - {fileID: 5510196489536978160, guid: 511008ffae6ab11459f4abdc9e6f876c, type: 3}
+    - {fileID: 5510196488302394239, guid: 511008ffae6ab11459f4abdc9e6f876c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 511008ffae6ab11459f4abdc9e6f876c, type: 3}

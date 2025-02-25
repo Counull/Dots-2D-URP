@@ -3,6 +3,7 @@ using Component;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
@@ -37,9 +38,10 @@ namespace Systems.Server.MonsterSystemGroup {
             var searchingTargetJob = new SearchingTargetJob {
                 TargetTransforms = targetTransforms
             };
-            state.Dependency.Complete();
-            state.Dependency = searchingTargetJob.ScheduleParallel(targetHandle);
-            state.Dependency.Complete();
+
+
+            state.Dependency =
+                searchingTargetJob.ScheduleParallel(JobHandle.CombineDependencies(targetHandle, state.Dependency));
         }
     }
 

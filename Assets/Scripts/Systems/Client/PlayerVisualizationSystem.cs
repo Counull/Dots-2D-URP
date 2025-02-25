@@ -1,4 +1,5 @@
-﻿using Component;
+﻿using Aspect;
+using Component;
 using Unity.Cinemachine;
 using Unity.Entities;
 using Unity.NetCode;
@@ -16,7 +17,7 @@ namespace Systems.Client {
     public partial class PlayerVisualizationSystem : SystemBase {
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int Direction = Animator.StringToHash("Direction");
-        private CinemachineCamera camera;
+        private CinemachineCamera _camera;
 
         protected override void OnCreate() {
             RequireForUpdate<PlayerComponent>();
@@ -24,13 +25,15 @@ namespace Systems.Client {
         }
 
         protected override void OnStartRunning() {
-            camera = Object.FindFirstObjectByType<CinemachineCamera>();
+            _camera = Object.FindFirstObjectByType<CinemachineCamera>();
         }
 
 
         protected override void OnUpdate() {
             foreach (var (localTransform, playerInput, entity) in
-                     SystemAPI.Query<RefRO<LocalTransform>, RefRO<PlayerInput>>().WithEntityAccess()) {
+                     SystemAPI.Query<RefRO<LocalTransform>, RefRO<PlayerInput>>()
+                         .WithAll<GhostOwnerIsLocal, PlayerComponent>()
+                         .WithEntityAccess()) {
                 var managedComponent = EntityManager.GetComponentObject<PlayerVisualizationComponent>(entity);
 
                 //如果没有可视化对象，就实例化一个
@@ -39,7 +42,7 @@ namespace Systems.Client {
 
                     //如果是本地玩家，就让摄像机跟随
                     if (EntityManager.IsComponentEnabled<GhostOwnerIsLocal>(entity))
-                        camera.Follow = managedComponent.VisualizationInstance.transform;
+                        _camera.Follow = managedComponent.VisualizationInstance.transform;
                 }
 
                 //更新可视化对象的位置
@@ -66,6 +69,4 @@ namespace Systems.Client {
             else if (input.y > 0) animator.SetInteger(Direction, 1);
         }
     }
-
-
 }
