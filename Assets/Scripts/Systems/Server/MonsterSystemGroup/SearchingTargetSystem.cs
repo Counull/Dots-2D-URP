@@ -13,6 +13,7 @@ namespace Systems.Server.MonsterSystemGroup {
     ///     怪物更新最近的玩家
     /// </summary>
     [UpdateInGroup(typeof(MonsterBehaviorGroup), OrderFirst = true)]
+    [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct SearchingTargetSystem : ISystem {
         private EntityQuery _monsterQuery;
         private EntityQuery _targetQuery;

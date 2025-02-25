@@ -16,7 +16,7 @@ namespace Systems.Client {
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
+            using  var ecb = new EntityCommandBuffer(Allocator.Temp);
             //查找所有带着networkId(跟着返回他们的entity)
             //且他们暂时还没带有NetworkStreamInGame的标签
             foreach (var (id, entity) in

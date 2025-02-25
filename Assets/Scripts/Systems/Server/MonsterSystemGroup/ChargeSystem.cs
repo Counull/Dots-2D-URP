@@ -8,6 +8,7 @@ using Unity.Transforms;
 namespace Systems.Server.MonsterSystemGroup {
     [UpdateInGroup(typeof(MonsterBehaviorGroup))]
     [UpdateAfter(typeof(SearchingTargetSystem))]
+    [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct ChargeSystem : ISystem {
         public void OnCreate(ref SystemState state) {
             var monsterQuery = SystemAPI.QueryBuilder()

@@ -12,7 +12,6 @@ namespace Systems.Client {
     ///     在客户端的所有移动操作（包括网络同步）之后更新
     /// </summary>
     [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
-    [UpdateAfter(typeof(PlayerMovementSystem))]
     [UpdateAfter(typeof(GhostSimulationSystemGroup))]
     public partial class PlayerVisualizationSystem : SystemBase {
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");

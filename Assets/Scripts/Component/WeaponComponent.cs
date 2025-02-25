@@ -2,6 +2,7 @@ using System;
 using Common;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.NetCode;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,6 +25,11 @@ namespace Component {
 
     public struct HitedEntityElement : IBufferElementData {
         public Entity hitedEntity;
+    }
+
+    [GhostComponent]
+    public struct WeaponMounted : IComponentData {
+        [GhostField] public Entity PlayerEntity;
     }
 
 

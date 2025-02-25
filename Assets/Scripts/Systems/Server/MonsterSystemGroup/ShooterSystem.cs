@@ -6,6 +6,7 @@ using Unity.Mathematics;
 
 namespace Systems.Server.MonsterSystemGroup {
     [UpdateInGroup(typeof(MonsterBehaviorGroup))]
+    [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct ShooterSystem : ISystem {
         private BufferLookup<ProjectileShootingEvent> _projectileShootingEventBuffer;
 

@@ -7,6 +7,7 @@ using Unity.Transforms;
 
 namespace Systems.Server.WeaponSystemGroup {
     [UpdateInGroup(typeof(WeaponSystemGroup))]
+    [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct WeaponSystem : ISystem {
         ComponentLookup<WeaponProjectile> _weaponProjectileLookup;
         BufferLookup<ProjectileShootingEvent> _projectileShootingEventLookup;

@@ -1,5 +1,4 @@
 using Component;
-
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -7,7 +6,7 @@ using Unity.Transforms;
 using Random = UnityEngine.Random;
 
 namespace Systems.Server.SpawnSystemGroup {
-    [UpdateBefore(typeof(SpawnSystemGroup))]
+    [UpdateInGroup(typeof(SpawnSystemGroup))]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct MonsterSpawnSystem : ISystem {
         private BufferLookup<EnemyPrefabElement> enemyBufferLookup;

@@ -145,6 +145,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2886352139783535409}
   - component: {fileID: 6474912493738072469}
+  - component: {fileID: -2834354496084962300}
+  - component: {fileID: -6000718088156866130}
   m_Layer: 0
   m_Name: Weapon_proj
   m_TagString: Untagged
@@ -208,3 +210,40 @@ MonoBehaviour:
         y: 0
         z: 0
   projectilePrefab: {fileID: 2075434912211488848, guid: dff7b8f6e40a7b34b9f0a805b47ffaf6, type: 3}
+--- !u!114 &-2834354496084962300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7648292333534193872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16549610bfe4458aa9389201d072bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6000718088156866130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7648292333534193872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c79d771cedb4794bf100ce60df5f764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultGhostMode: 1
+  SupportedGhostModes: 3
+  OptimizationMode: 1
+  Importance: 40
+  MaxSendRate: 0
+  prefabId: e0f299d2e3673564eb63b0802a497efd
+  HasOwner: 0
+  SupportAutoCommandTarget: 1
+  TrackInterpolationDelay: 0
+  GhostGroup: 0
+  UsePreSerialization: 0
+  RollbackPredictedSpawnedGhostState: 0
+  RollbackPredictionOnStructuralChanges: 1

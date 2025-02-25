@@ -6,6 +6,7 @@ using Unity.Transforms;
 
 namespace Systems.Server.SpawnSystemGroup {
     [UpdateInGroup(typeof(SpawnSystemGroup))]
+    [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct ProjectileSpawnSystem : ISystem {
         private BufferLookup<ProjectileShootingEvent> _projectileShootingEventBuffer;
 

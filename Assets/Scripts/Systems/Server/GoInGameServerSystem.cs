@@ -22,7 +22,7 @@ namespace Systems.Server {
         public void OnUpdate(ref SystemState state) {
             var playerSpawner = SystemAPI.GetSingleton<PlayerSpawner>();
             var roundData = SystemAPI.GetSingletonRW<RoundData>();
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
+            using var ecb = new EntityCommandBuffer(Allocator.Temp);
 
             //当服务器World内接收到GoInGameRequest时
             //生成一个Player实体

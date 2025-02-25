@@ -52,6 +52,7 @@ namespace Component {
 
     public struct CameraFollowed : IComponentData { }
 
+
     public class PlayerVisualizationComponent : IComponentData {
         public Animator Animator;
         public GameObject PlayerVisualizationPrefab;
@@ -75,6 +76,8 @@ namespace Component {
     #region Weapon
 
     public struct WeaponNeedRefresh : IComponentData, IEnableableComponent { }
+
+  
 
     #endregion
 }

@@ -6,7 +6,7 @@ using Unity.Transforms;
 
 namespace Systems.Server {
     [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
-    [UpdateBefore(typeof(LocalToWorldSystem))]
+   
     public partial struct ProjectileSystem : ISystem {
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<ProjectileData>();

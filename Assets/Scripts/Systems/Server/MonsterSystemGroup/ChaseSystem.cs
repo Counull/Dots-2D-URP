@@ -12,6 +12,7 @@ namespace Systems.Server.MonsterSystemGroup {
     /// </summary>
     [UpdateInGroup(typeof(MonsterBehaviorGroup), OrderLast = true)]
     [UpdateAfter(typeof(SearchingTargetSystem))]
+    [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct ChaseSystem : ISystem {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
