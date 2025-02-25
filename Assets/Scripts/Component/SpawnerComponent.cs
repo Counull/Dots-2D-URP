@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Component {
     public struct PlayerSpawner : IComponentData {
         public Entity PlayerPrefab;
+        
     }
 
     public struct EnemyPrefabElement : IBufferElementData {

@@ -33,9 +33,7 @@ namespace Systems.Server.MonsterSystemGroup {
         }
     }
 
-    /// <summary>
-    /// todo 此处改用IJobEntityBatch
-    /// </summary>
+
     public partial struct ChaseMoveJob : IJobEntity {
         public float DeltaTime;
 

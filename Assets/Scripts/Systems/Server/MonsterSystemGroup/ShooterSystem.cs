@@ -34,7 +34,6 @@ namespace Systems.Server.MonsterSystemGroup {
                 cd.TriggerCoolDown(SystemAPI.Time.ElapsedTime); //触发冷却
 
                 var buffer = _projectileShootingEventBuffer[entity];
-
                 var dmgSrc = shooterData.dmgSrcComponent;
 
 

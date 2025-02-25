@@ -3,6 +3,18 @@ using Unity.Entities;
 
 namespace Component {
     public struct RoundData : IComponentData {
+        public ushort CombatRound;
+        public float MaxCombatTime => 60f;
+        public ushort MaxCombatRound => 20;
+        public ushort PlayerCount;
+        public ushort MinPlayerCount => 1;
+        public ushort MaxPlayerCount => 4;
+        public bool RoundDefeated;
+        public RoundPhase Phase;
+        public RoundPhase NextPhase;
+
+        //其它系统可以锁定阶段转换，防止在某些情况下提前进入下一个阶段
+        private ushort _lockedSystemCount;
         private float _combatTimeCountingDown;
 
         public float CombatTimeCountingDown {
@@ -19,19 +31,10 @@ namespace Component {
         }
 
         public bool CountingDownChangedPerSecond { get; private set; }
-        public ushort CombatRound;
-        public float MaxCombatTime => 60f;
-        public ushort MaxCombatRound => 20;
-        public bool RoundDefeated;
-        public RoundPhase Phase;
-        public RoundPhase NextPhase;
-
-        //其它系统可以锁定阶段转换，防止在某些情况下提前进入下一个阶段
-        private ushort lockedSystemCount;
         public bool CombatTimeOut => CombatTimeCountingDown <= 0;
 
         public bool AllSystemReady() {
-            return lockedSystemCount == 0;
+            return _lockedSystemCount == 0;
         }
 
         public void UIRefresh() {
@@ -39,11 +42,11 @@ namespace Component {
         }
 
         public void SystemLock() {
-            lockedSystemCount++;
+            _lockedSystemCount++;
         }
 
         public void SystemUnlock() {
-            lockedSystemCount--;
+            _lockedSystemCount--;
         }
     }
 

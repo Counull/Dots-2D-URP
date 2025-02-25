@@ -14,12 +14,14 @@ namespace Systems.Server {
             var query = SystemAPI.QueryBuilder().WithAll<GoInGameRequest, ReceiveRpcCommandRequest>().Build();
             state.RequireForUpdate(query);
             state.RequireForUpdate<PlayerSpawner>();
+            state.RequireForUpdate<RoundData>();
         }
 
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            var playerPrefab = SystemAPI.GetSingleton<PlayerSpawner>().PlayerPrefab;
+            var playerSpawner = SystemAPI.GetSingleton<PlayerSpawner>();
+            var roundData = SystemAPI.GetSingletonRW<RoundData>();
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
             //当服务器World内接收到GoInGameRequest时
@@ -28,12 +30,11 @@ namespace Systems.Server {
                      SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>()
                          .WithAll<GoInGameRequest>().WithEntityAccess()) {
                 ecb.AddComponent<NetworkStreamInGame>(requestSource.ValueRO.SourceConnection);
-
                 {
                     var networkId = SystemAPI.GetComponent<NetworkId>(requestSource.ValueRO.SourceConnection);
-                    var player = ecb.Instantiate(playerPrefab);
+                    var player = ecb.Instantiate(playerSpawner.PlayerPrefab);
+                    roundData.ValueRW.PlayerCount++;
                     ecb.SetComponent(player, new GhostOwner {NetworkId = networkId.Value});
-
                     // Add the player to the linked entity group so it is destroyed automatically on disconnect
                     ecb.AppendToBuffer(requestSource.ValueRO.SourceConnection, new LinkedEntityGroup {Value = player});
                 }

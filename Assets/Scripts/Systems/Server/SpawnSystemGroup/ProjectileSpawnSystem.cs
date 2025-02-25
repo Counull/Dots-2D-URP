@@ -24,8 +24,9 @@ namespace Systems.Server.SpawnSystemGroup {
             var ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
                 .CreateCommandBuffer(state.WorldUnmanaged);
             using var entities = query.ToEntityArray(Allocator.Temp);
-            state.Dependency.Complete();
             _projectileShootingEventBuffer.Update(ref state);
+           
+       
             foreach (var entity in entities) {
                 var buffer = _projectileShootingEventBuffer[entity];
 

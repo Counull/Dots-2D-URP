@@ -17,16 +17,14 @@ public class GameBootstrap : ClientServerBootstrap {
     public override bool Initialize(string defaultWorldName) {
         AutoConnectPort = 14747;
         //      DefaultConnectAddress = NetworkEndpoint.Parse("10.31.7.7", AutoConnectPort);
-        //    MultiplayerPlayModePreferences.RequestedPlayType =PlayType.Client;
-        //   return CreateClientWorld(defaultWorldName)!= null;
         //-p 设置端口
-        //  ProcessCommandLineArgs(defaultWorldName);
 
 
 #if UNITY_EDITOR
         return base.Initialize(defaultWorldName);
 
 #else
+   ProcessCommandLineArgs(defaultWorldName);
         if (IsServerPlatform) {
             return CreateServerWorld(defaultWorldName) != null;
         }

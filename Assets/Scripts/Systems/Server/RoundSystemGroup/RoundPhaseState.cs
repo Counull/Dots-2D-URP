@@ -1,5 +1,3 @@
-
-
 using Component;
 
 namespace Systems.Server.RoundSystemGroup {
@@ -18,7 +16,7 @@ namespace Systems.Server.RoundSystemGroup {
         public virtual void PhaseExit(ref RoundData roundData) { }
 
         public virtual bool ReadyForNextPhase(ref RoundData roundData) {
-            return roundData.AllSystemReady();
+            return roundData.AllSystemReady() && roundData.PlayerCount >= roundData.MinPlayerCount;
         }
     }
 

@@ -7,6 +7,10 @@ using Unity.Entities;
 using Unity.Physics;
 
 namespace Systems.Server.HitSystemGroup {
+    
+    /// <summary>
+    /// 用于检测碰撞 暂时在这里处理伤害计算但最终伤害计算会被分发到各个其他系统中
+    /// </summary>
     [UpdateInGroup(typeof(HitSystemGroup))]
     public partial struct HitSystem : ISystem {
         [BurstCompile]

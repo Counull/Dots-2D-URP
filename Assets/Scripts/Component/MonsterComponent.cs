@@ -7,6 +7,10 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Component {
+    
+    /// <summary>
+    /// 怪物的基础组件
+    /// </summary>
     [Serializable]
     public struct MonsterComponent : IComponentData {
         [HideInInspector] public float3 targetPlayerPos;
@@ -15,12 +19,19 @@ namespace Component {
     }
 
 
+    /// <summary>
+    /// 跟随组件
+    /// </summary>
     [Serializable]
     public struct ChaseComponent : IComponentData, IEnableableComponent {
         public float speed;
     }
 
 
+    
+    /// <summary>
+    /// 冲锋组件
+    /// </summary>
     [Serializable]
     public struct ChargeComponent : IComponentData, IEnableableComponent {
         public float speed;
@@ -30,6 +41,9 @@ namespace Component {
         [HideInInspector] public float3 direction;
     }
 
+    /// <summary>
+    /// 发射弹幕组件
+    /// </summary>
     [Serializable]
     public struct ShooterComponent : IComponentData, IEnableableComponent {
         public ushort count;
