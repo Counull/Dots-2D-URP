@@ -15172,6 +15172,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainUI
       objectReference: {fileID: 0}
+    - target: {fileID: 7849930640106884645, guid: e6f022ee78ca1af45a8e96fb3ffae4d7, type: 3}
+      propertyPath: m_text
+      value: ' '
+      objectReference: {fileID: 0}
     - target: {fileID: 8397990717961375444, guid: e6f022ee78ca1af45a8e96fb3ffae4d7, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

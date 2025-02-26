@@ -15,7 +15,7 @@ namespace Mono {
         }
 
         public void RefreshRoundData(in RoundData roundData) {
-            if (roundData.RoundDefeated) {
+            /*if (roundData.RoundDefeated) {
                 timeText.text = "Defeated";
             }
             else if (roundData.CombatTimeOut) {
@@ -23,7 +23,7 @@ namespace Mono {
             }
             else {
                 timeText.text = ((int) roundData.CombatTimeCountingDown).ToString();
-            }
+            }*/
         }
     }
 }

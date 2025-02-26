@@ -54,9 +54,9 @@ MonoBehaviour:
     weaponMountDistance: 1.5
     maxWeaponCount: 6
   healthComponent:
-    maxHealth: 20
+    maxHealth: 500
     maxHit: 0
-    invincibilityTimeBeenHit: 0.5
+    invincibilityTimeBeenHit: 1
     invincibilityEndTime: 0
     hitCounter: 0
   playerVisualizationPrefab: {fileID: 5628018141983903104, guid: fb4d48c684e8fc043a98fb4d3c28c0e1, type: 3}

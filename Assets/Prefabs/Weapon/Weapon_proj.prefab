@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponComponent:
-    range: 5
+    range: 6
     coolDownData:
       totalTime: 1
     dmgSrcComponent:

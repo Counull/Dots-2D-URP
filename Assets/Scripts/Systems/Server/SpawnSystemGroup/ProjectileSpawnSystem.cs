@@ -6,7 +6,6 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace Systems.Server.SpawnSystemGroup {
-    
     /// <summary>
     /// 根据场景中的projectileEvent生成对应的Projectile 
     /// </summary>
@@ -14,11 +13,13 @@ namespace Systems.Server.SpawnSystemGroup {
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct ProjectileSpawnSystem : ISystem {
         private BufferLookup<ProjectileShootingEvent> _projectileShootingEventBuffer;
+        private EntityQuery _query;
 
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<ProjectileShootingEvent>();
             _projectileShootingEventBuffer = state.GetBufferLookup<ProjectileShootingEvent>();
+            _query = state.GetEntityQuery(ComponentType.ReadOnly<ProjectileShootingEvent>());
         }
 
         /// <summary>
@@ -28,13 +29,11 @@ namespace Systems.Server.SpawnSystemGroup {
         /// <param name="state"></param>
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            var query = state.GetEntityQuery(ComponentType.ReadOnly<ProjectileShootingEvent>());
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
-            using var entities = query.ToEntityArray(Allocator.Temp);
+            using var entities = _query.ToEntityArray(Allocator.Temp);
             _projectileShootingEventBuffer.Update(ref state);
-           
-       
+
             foreach (var entity in entities) {
                 var buffer = _projectileShootingEventBuffer[entity];
 

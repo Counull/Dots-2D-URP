@@ -5,7 +5,10 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-[assembly: RegisterGenericJobType(typeof(Unity.Collections.SortJob<LocalTransform, Utils.Utils.LocalTransformXComparer>))]
+
+[assembly:
+    RegisterGenericJobType(typeof(Unity.Collections.SortJob<LocalTransform, Utils.Utils.LocalTransformXComparer>))]
+
 namespace Systems.Server.WeaponSystemGroup {
     /// <summary>
     /// 这里用了一个特殊算法来找到最近的目标，
@@ -30,7 +33,6 @@ namespace Systems.Server.WeaponSystemGroup {
         }
 
 
-       
         public void OnUpdate(ref SystemState state) {
             var monsterLocalTrans = _monsterQuery.ToComponentDataListAsync<LocalTransform>(state.WorldUpdateAllocator,
                 out var monsterQueryHandle);
@@ -39,7 +41,7 @@ namespace Systems.Server.WeaponSystemGroup {
                 .Schedule(monsterQueryHandle);
             _weaponProjectileLookup.Update(ref state);
             _projectileShootingEventLookup.Update(ref state);
-            var ecbSystem =  SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
 
 
@@ -52,11 +54,10 @@ namespace Systems.Server.WeaponSystemGroup {
             };
             var combineHandle = JobHandle.CombineDependencies(sortHandle, state.Dependency);
             state.Dependency = weaponTriggerJob.Schedule(combineHandle);
-             monsterLocalTrans.Dispose(state.Dependency);
-         
-          
+            monsterLocalTrans.Dispose(state.Dependency);
         }
     }
+
     [BurstCompile]
     public partial struct WeaponTriggerJob : IJobEntity {
         [ReadOnly] public ComponentLookup<WeaponProjectile> WeaponProjectileLookup;
@@ -71,6 +72,7 @@ namespace Systems.Server.WeaponSystemGroup {
             weaponComponent.coolDownData.TriggerCoolDown(ElapsedTime);
             //local to world
             var weaponWorldPos = localToWorld.Position;
+            weaponWorldPos.z = 0;
             var (nearestTargetPos, nearestDistSq) = FindNearestTarget(weaponWorldPos);
             if (nearestDistSq > math.square(weaponComponent.range)) return; //超出射程
 
@@ -105,6 +107,7 @@ namespace Systems.Server.WeaponSystemGroup {
             if (startIdx >= MonsterLocalTrans.Length) startIdx = MonsterLocalTrans.Length - 1;
 
             float3 nearestTargetPos = MonsterLocalTrans[startIdx].Position;
+            nearestTargetPos.z = 0;
             float nearestDistSq = math.distancesq(weaponPos, nearestTargetPos);
             // Searching upwards through the array for a closer target.
             Search(weaponPos, startIdx + 1, MonsterLocalTrans.Length, +1, ref nearestTargetPos, ref nearestDistSq);
@@ -118,6 +121,7 @@ namespace Systems.Server.WeaponSystemGroup {
             ref float3 nearestTargetPos, ref float nearestDistSq) {
             for (int i = startIdx; i != endIdx; i += step) {
                 float3 targetPos = MonsterLocalTrans[i].Position;
+                targetPos.z = 0;
                 float xdiff = seekerPos.x - targetPos.x;
 
                 // If the square of the x distance is greater than the current nearest, we can stop searching.

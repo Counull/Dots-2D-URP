@@ -15,8 +15,8 @@ public class GameBootstrap : ClientServerBootstrap {
                                             || Application.platform == RuntimePlatform.OSXServer;
 
     public override bool Initialize(string defaultWorldName) {
-        AutoConnectPort = 14747;
-        //      DefaultConnectAddress = NetworkEndpoint.Parse("10.31.7.7", AutoConnectPort);
+        AutoConnectPort = 14747; 
+    
         //-p 设置端口
 
 
@@ -24,6 +24,7 @@ public class GameBootstrap : ClientServerBootstrap {
         return base.Initialize(defaultWorldName);
 
 #else
+    DefaultConnectAddress = NetworkEndpoint.Parse("127.0.0.1", AutoConnectPort);
    ProcessCommandLineArgs(defaultWorldName);
         if (IsServerPlatform) {
             return CreateServerWorld(defaultWorldName) != null;
