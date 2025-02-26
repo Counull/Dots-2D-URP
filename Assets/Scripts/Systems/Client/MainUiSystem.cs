@@ -7,6 +7,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Systems.Client {
+    
+    /// <summary>
+    /// 用于刷新UI
+    /// </summary>
     [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
     public partial class MainUiSystem : SystemBase {
         private EntityQuery _localPlayerQuery;

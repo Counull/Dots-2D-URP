@@ -120,7 +120,7 @@ namespace Systems.Server.HitSystemGroup {
                 return true; //如果该物体不适投射物则不需要后续判断直接计算伤害
 
             foreach (var hitedEntityElement in hitedEntityBuffer) {
-                if (hitedEntityElement.hitedEntity == healthEntity) {
+                if (hitedEntityElement.HitedEntity == healthEntity) {
                     return false; //如果投射物已经命中过该物体则返回不需要后续的伤害计算
                 }
             }
@@ -128,7 +128,7 @@ namespace Systems.Server.HitSystemGroup {
             //投生物成功命中物体 则增加命中次数
             projectileHealth.hitCounter++;
             HealthLookup[dmgSrcEntity] = projectileHealth;
-            Ecb.AppendToBuffer(dmgSrcEntity, new HitedEntityElement {hitedEntity = healthEntity});
+            Ecb.AppendToBuffer(dmgSrcEntity, new HitedEntityElement {HitedEntity = healthEntity});
             return true; //计算后续伤害
         }
     }

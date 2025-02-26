@@ -20,9 +20,7 @@ namespace Systems.Server.SpawnSystemGroup {
 
 
         /// <summary>
-        ///     随机生成敌人，如果这里用ECB可能性能会有提升但是设置敌人的位置需要在物体完全被创建之后所以逻辑会变得复杂
-        ///     当然我可以让敌人的prefab最外层不具有任何缩放旋转，但是这绝对不是最好的解决方案
-        ///     也可以将生成随机位置的逻辑放到别的系统中
+        ///随机生成敌人
         /// </summary>
         /// <param name="state"></param>
         [BurstCompile]

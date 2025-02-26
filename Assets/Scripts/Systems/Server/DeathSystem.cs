@@ -2,6 +2,9 @@ using Component;
 using Unity.Entities;
 
 namespace Systems.Server {
+    /// <summary>
+    /// 死亡系统，摧毁掉HealthComponent中标记为死亡的实体
+    /// </summary>
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct DeathSystem : ISystem {

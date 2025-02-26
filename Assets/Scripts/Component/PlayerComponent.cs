@@ -75,9 +75,10 @@ namespace Component {
 
     #region Weapon
 
+    /// <summary>
+    /// 此组件被启用时会触发WeaponSpawnSystem生成武器
+    /// </summary>
     public struct WeaponNeedRefresh : IComponentData, IEnableableComponent { }
-
-  
 
     #endregion
 }

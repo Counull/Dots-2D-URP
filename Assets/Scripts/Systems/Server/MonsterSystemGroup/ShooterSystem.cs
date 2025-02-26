@@ -5,6 +5,10 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 namespace Systems.Server.MonsterSystemGroup {
+    
+    /// <summary>
+    /// 会发射子弹的怪物的行为依赖ShooterComponent
+    /// </summary>
     [UpdateInGroup(typeof(MonsterBehaviorGroup))]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct ShooterSystem : ISystem {

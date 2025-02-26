@@ -4,6 +4,9 @@ using Unity.Entities;
 using Unity.Transforms;
 
 namespace Systems.Client {
+    /// <summary>
+    /// 用于在客户端为武器添加父级
+    /// </summary>
     [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
     public partial struct WeaponParentSystem : ISystem {
         EntityQuery _weaponQuery;

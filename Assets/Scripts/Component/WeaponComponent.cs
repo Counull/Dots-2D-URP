@@ -24,7 +24,7 @@ namespace Component {
     }
 
     public struct HitedEntityElement : IBufferElementData {
-        public Entity hitedEntity;
+        public Entity HitedEntity;
     }
 
     [GhostComponent]

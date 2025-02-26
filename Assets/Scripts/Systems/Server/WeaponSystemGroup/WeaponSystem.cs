@@ -9,6 +9,7 @@ namespace Systems.Server.WeaponSystemGroup {
     /// <summary>
     /// 这里用了一个特殊算法来找到最近的目标，
     /// 在这种怪物聚集的场景下且怪物和武器数量不多，所以 这里 其实是 负优化 这种算法
+    /// 目前只实现了发射子弹武器的逻辑
     /// </summary>
     [UpdateInGroup(typeof(WeaponSystemGroup))]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]

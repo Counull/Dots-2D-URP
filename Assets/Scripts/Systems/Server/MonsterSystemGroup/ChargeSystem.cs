@@ -6,6 +6,10 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace Systems.Server.MonsterSystemGroup {
+    
+    /// <summary>
+    /// 怪物的冲锋行为 依赖ChargeComponent
+    /// </summary>
     [UpdateInGroup(typeof(MonsterBehaviorGroup))]
     [UpdateAfter(typeof(SearchingTargetSystem))]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]

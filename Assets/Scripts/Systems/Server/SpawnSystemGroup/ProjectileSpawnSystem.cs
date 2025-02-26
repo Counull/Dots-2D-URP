@@ -5,6 +5,10 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace Systems.Server.SpawnSystemGroup {
+    
+    /// <summary>
+    /// 根据场景中的projectileEvent生成对应的Projectile 
+    /// </summary>
     [UpdateInGroup(typeof(SpawnSystemGroup))]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct ProjectileSpawnSystem : ISystem {

@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Component {
+    
+    //伤害来源组件，会在伤害检测时作用于HealthComponent
     [Serializable]
     public struct DmgSrcComponent : IComponentData {
         public float damage;
@@ -25,7 +27,7 @@ namespace Component {
 
         //todo 这里计数Hit是否有必要 目前只有投射物在用
         public ushort maxHit;
-        public float invincibilityTimeBeenHit;
+        public float invincibilityTimeBeenHit;//玩家被击中后的无敌时间，怪物一般设置为0
         [HideInInspector] public double invincibilityEndTime;
         [HideInInspector] public ushort hitCounter;
         private float _currentHealth;
@@ -68,6 +70,7 @@ namespace Component {
     }
 
 
+    //阵营Enum
     public struct FactionComponent : IComponentData, IEquatable<FactionComponent> {
         public Faction Faction;
 
