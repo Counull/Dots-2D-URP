@@ -37,7 +37,7 @@ namespace Systems.Server.SpawnSystemGroup {
                     var prefabTransform =
                         state.EntityManager.GetComponentData<LocalTransform>(projectileEvent.ProjectilePrefab);
                     prefabTransform.Position = projectileEvent.ProjectileData.startPosition;
-                    prefabTransform.Rotation = quaternion.LookRotationSafe(new float3(0, 0, 1),
+                    prefabTransform.Rotation = quaternion.LookRotationSafe(math.forward(),
                         projectileEvent.ProjectileData.direction);
                     ecb.AddComponent(projectileEntity, projectileEvent.ProjectileData);
                     ecb.AddComponent(projectileEntity, projectileEvent.DmgSrcComponent);

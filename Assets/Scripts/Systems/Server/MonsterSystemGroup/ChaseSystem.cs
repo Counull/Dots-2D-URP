@@ -41,9 +41,9 @@ namespace Systems.Server.MonsterSystemGroup {
         public void Execute(MonsterAspectWithHealthRW monsterAspect,
             ref ChaseComponent chase) {
             if (monsterAspect.HealthComponent.ValueRO.IsDead) return;
-            monsterAspect.LocalTransform.ValueRW.Position +=
-                monsterAspect.Monster.ValueRO.targetPlayerDirNormalized *
-                DeltaTime * chase.speed;
+            var playerDir = monsterAspect.Monster.ValueRO.targetPlayerDirNormalized;
+            monsterAspect.LocalTransform.ValueRW.Position += playerDir * DeltaTime * chase.speed;
+            monsterAspect.LocalTransform.ValueRW.Rotation = quaternion.LookRotationSafe(math.forward(), playerDir);
         }
     }
 }

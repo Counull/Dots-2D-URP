@@ -43,10 +43,10 @@ namespace Systems.Server.MonsterSystemGroup {
 
                     //如果没有激活冲锋则初始化冲锋数据
                     cd.TriggerCoolDown(SystemAPI.Time.ElapsedTime); //触发冷却
-                    var targetDir = monsterAspect.Monster.ValueRO.targetPlayerPos -
-                                    monsterAspect.LocalTransform.ValueRO.Position;
-                    chargeDataRW.direction = math.normalize(targetDir); //这里的normalize其实是可以被优化的节省一个dot的计算量
+                    chargeDataRW.direction = monsterAspect.Monster.ValueRO.targetPlayerDirNormalized;
                     EnableCharge(ref state, entity, true);
+                    monsterAspect.LocalTransform.ValueRW.Rotation =
+                        quaternion.LookRotationSafe(math.forward(), chargeDataRW.direction);
                 }
 
                 //冲锋状态移动
