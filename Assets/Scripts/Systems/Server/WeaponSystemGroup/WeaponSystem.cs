@@ -6,6 +6,10 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace Systems.Server.WeaponSystemGroup {
+    /// <summary>
+    /// 这里用了一个特殊算法来找到最近的目标，
+    /// 在这种怪物聚集的场景下且怪物和武器数量不多，所以 这里 其实是 负优化 这种算法
+    /// </summary>
     [UpdateInGroup(typeof(WeaponSystemGroup))]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct WeaponSystem : ISystem {
@@ -43,7 +47,7 @@ namespace Systems.Server.WeaponSystemGroup {
                 ElapsedTime = SystemAPI.Time.ElapsedTime,
             };
             var combineHandle = JobHandle.CombineDependencies(sortHandle, state.Dependency);
-            state.Dependency = weaponTriggerJob.ScheduleParallel(combineHandle);
+            state.Dependency = weaponTriggerJob.Schedule(combineHandle);
 
             //其实应该在spawn系统中等待这里的ECB被执行 这里这样写其实发射子弹的行为都会被推到下一帧
             //TODO system顺序 互相依赖 相关的东西写得都不是很好

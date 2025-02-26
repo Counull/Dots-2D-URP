@@ -8,6 +8,7 @@ using UnityEngine;
 namespace GPUECSAnimationBaker.Engine.AnimatorSystem
 {
     [BurstCompile]
+    [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
     public partial struct GpuEcsAnimatorSystem : ISystem
     {
         [BurstCompile]

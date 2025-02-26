@@ -4,6 +4,7 @@ using Unity.Entities;
 
 namespace GPUECSAnimationBaker.Engine.AnimatorSystem
 {
+    [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
     public partial struct GpuEcsAnimatedMeshSystem : ISystem
     {
         private ComponentLookup<GpuEcsAnimatorShaderDataComponent> gpuEcsAnimatorShaderDataLookup;

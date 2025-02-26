@@ -6,6 +6,7 @@ using Unity.Transforms;
 namespace GPUECSAnimationBaker.Engine.AnimatorSystem
 {
     [BurstCompile]
+    [WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation)]
     public partial struct GpuEcsAttachmentSystem : ISystem
     {
         private BufferLookup<GpuEcsCurrentAttachmentAnchorBufferElement> gpuEcsCurrentAttachmentAnchorLookup;

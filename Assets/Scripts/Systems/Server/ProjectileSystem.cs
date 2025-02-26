@@ -16,7 +16,7 @@ namespace Systems.Server {
             var job = new ProjectileMovementJob {
                 SystemTime = SystemAPI.Time,
             };
-            state.Dependency = job.ScheduleParallel(state.Dependency);
+            state.Dependency = job.Schedule(state.Dependency);
         }
     }
 
