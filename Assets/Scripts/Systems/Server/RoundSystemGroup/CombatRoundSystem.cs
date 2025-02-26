@@ -1,15 +1,18 @@
 using Component;
+using Unity.Burst;
 using Unity.Entities;
 
 namespace Systems.Server.RoundSystemGroup {
     [UpdateInGroup(typeof(RoundSystemGroup))]
     [UpdateAfter(typeof(RoundSystem))]
     public partial struct CombatRoundSystem : ISystem {
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<RoundData>();
             state.RequireForUpdate<PlayerComponent>();
         }
 
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var roundData = SystemAPI.GetSingletonRW<RoundData>();
 

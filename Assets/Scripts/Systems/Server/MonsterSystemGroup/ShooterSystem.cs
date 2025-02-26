@@ -1,6 +1,7 @@
 using Aspect;
 using Common;
 using Component;
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 
@@ -14,12 +15,14 @@ namespace Systems.Server.MonsterSystemGroup {
     public partial struct ShooterSystem : ISystem {
         private BufferLookup<ProjectileShootingEvent> _projectileShootingEventBuffer;
 
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<RoundData>();
             state.RequireForUpdate<ShooterComponent>();
             _projectileShootingEventBuffer = state.GetBufferLookup<ProjectileShootingEvent>();
         }
 
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var roundData = SystemAPI.GetSingleton<RoundData>();
             if (roundData.Phase != RoundPhase.Combat) return;

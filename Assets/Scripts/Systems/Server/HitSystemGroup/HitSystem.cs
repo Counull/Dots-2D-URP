@@ -74,6 +74,7 @@ namespace Systems.Server.HitSystemGroup {
         [ReadOnly] public BufferLookup<HitedEntityElement> HitedEntityBufferLookup;
 
 
+       
         public void Execute(TriggerEvent triggerEvent) {
             if (!FactionLookup.TryGetComponent(triggerEvent.EntityA, out var factionA)
                 || !FactionLookup.TryGetComponent(triggerEvent.EntityB, out var factionB)) {
@@ -87,6 +88,7 @@ namespace Systems.Server.HitSystemGroup {
             BeenHit(triggerEvent.EntityB, triggerEvent.EntityA, ElapsedTime);
         }
 
+   
         private bool BeenHit(Entity healthEntity, Entity dmgSrcEntity, double currentTime) {
             if (!HealthLookup.TryGetComponent(healthEntity, out var health) ||
                 !DmgSrcLookup.TryGetComponent(dmgSrcEntity, out var dmgSrc)) return false;

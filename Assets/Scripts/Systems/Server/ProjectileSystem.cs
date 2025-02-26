@@ -1,4 +1,5 @@
 using Component;
+using Unity.Burst;
 using Unity.Core;
 using Unity.Entities;
 using Unity.NetCode;
@@ -6,12 +7,13 @@ using Unity.Transforms;
 
 namespace Systems.Server {
     [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
-   
     public partial struct ProjectileSystem : ISystem {
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<ProjectileData>();
         }
 
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var job = new ProjectileMovementJob {
                 SystemTime = SystemAPI.Time,
@@ -23,9 +25,10 @@ namespace Systems.Server {
     /// <summary>
     /// TODO 此处应该改用IJobEntityBatch
     /// </summary>
+    [BurstCompile]
     public partial struct ProjectileMovementJob : IJobEntity {
         public TimeData SystemTime;
-      
+
 
         private void Execute(ref LocalTransform localPosition,
             ref ProjectileData data, ref HealthComponent healthComponent) {

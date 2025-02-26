@@ -1,6 +1,7 @@
 using Aspect;
 using Component;
 using Systems.Server.RoundSystemGroup;
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -14,6 +15,7 @@ namespace Systems.Server.MonsterSystemGroup {
     [UpdateAfter(typeof(SearchingTargetSystem))]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct ChargeSystem : ISystem {
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             var monsterQuery = SystemAPI.QueryBuilder()
                 .WithAll<LocalTransform, ChargeComponent, MonsterComponent>()
@@ -27,6 +29,7 @@ namespace Systems.Server.MonsterSystemGroup {
         ///     暂时是否使用异步只是基于可能激活此系统的怪物数量
         /// </summary>
         /// <param name="state"></param>
+       [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             foreach (var (monsterAspect, chargeComponent, entity)
                      in SystemAPI.Query<MonsterAspectWithHealthRW, RefRW<ChargeComponent>>()

@@ -1,4 +1,5 @@
 using Component;
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
@@ -11,6 +12,7 @@ namespace Systems.Server.SpawnSystemGroup {
     public partial struct WeaponSpawnSystem : ISystem {
         private BufferLookup<WeaponSlotElement> _weaponBuffer;
 
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<WeaponNeedRefresh>();
             _weaponBuffer = state.GetBufferLookup<WeaponSlotElement>();

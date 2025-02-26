@@ -1,4 +1,5 @@
 using Component;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -14,6 +15,7 @@ namespace Systems.Server.SpawnSystemGroup {
     public partial struct ProjectileSpawnSystem : ISystem {
         private BufferLookup<ProjectileShootingEvent> _projectileShootingEventBuffer;
 
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<ProjectileShootingEvent>();
             _projectileShootingEventBuffer = state.GetBufferLookup<ProjectileShootingEvent>();
@@ -24,6 +26,7 @@ namespace Systems.Server.SpawnSystemGroup {
         /// 说实话这里应当包含一个线程池以避免更多的Structural Changes 用ECS节省的性能都在这浪费了
         /// </summary>
         /// <param name="state"></param>
+       
         public void OnUpdate(ref SystemState state) {
             var query = state.GetEntityQuery(ComponentType.ReadOnly<ProjectileShootingEvent>());
             var ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW

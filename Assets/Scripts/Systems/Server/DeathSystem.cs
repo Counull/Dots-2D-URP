@@ -1,4 +1,5 @@
 using Component;
+using Unity.Burst;
 using Unity.Entities;
 
 namespace Systems.Server {
@@ -8,10 +9,12 @@ namespace Systems.Server {
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
     [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
     public partial struct DeathSystem : ISystem {
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<HealthComponent>();
         }
 
+       
         public void OnUpdate(ref SystemState state) {
             var ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
                 .CreateCommandBuffer(state.WorldUnmanaged);

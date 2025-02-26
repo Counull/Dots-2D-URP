@@ -1,4 +1,5 @@
 using Component;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -18,6 +19,7 @@ namespace Systems.Server.WeaponSystemGroup {
         BufferLookup<ProjectileShootingEvent> _projectileShootingEventLookup;
         EntityQuery _monsterQuery;
 
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             _weaponProjectileLookup = state.GetComponentLookup<WeaponProjectile>(true);
             _projectileShootingEventLookup = state.GetBufferLookup<ProjectileShootingEvent>(true);
@@ -28,6 +30,7 @@ namespace Systems.Server.WeaponSystemGroup {
         }
 
 
+       
         public void OnUpdate(ref SystemState state) {
             var monsterLocalTrans = _monsterQuery.ToComponentDataListAsync<LocalTransform>(state.WorldUpdateAllocator,
                 out var monsterQueryHandle);

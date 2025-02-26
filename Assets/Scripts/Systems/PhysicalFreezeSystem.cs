@@ -1,4 +1,5 @@
 using Component;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -11,10 +12,12 @@ namespace Systems {
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderFirst = true)]
     [UpdateAfter(typeof(BeginSimulationEntityCommandBufferSystem))]
     public partial struct PhysicalFreezeSystem : ISystem {
+        [BurstCompile]
         public void OnCreate(ref SystemState state) {
             state.RequireForUpdate<PhysicalShouldFreeze>();
         }
 
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             using var ecb = new EntityCommandBuffer(Allocator.Temp);
             foreach (var (mass, entity) in
