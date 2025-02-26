@@ -100,7 +100,7 @@ namespace Systems.Server.HitSystemGroup {
             health.hitCounter++;
             health.invincibilityEndTime = currentTime + health.invincibilityTimeBeenHit;
             HealthLookup[healthEntity] = health;
-
+            
 
             return false;
         }

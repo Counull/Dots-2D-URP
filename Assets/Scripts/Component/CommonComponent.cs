@@ -1,6 +1,7 @@
 using System;
 using Common;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.NetCode;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,13 +12,19 @@ namespace Component {
         public float damage;
     }
 
+    public struct DmgEventComponent : IBufferElementData {
+        public DmgSrcComponent DmgSrc;
+        public float3 HitPoint;
+    }
+
+
     [Serializable]
     [GhostComponent]
     public struct HealthComponent : IComponentData, IEnableableComponent {
         public float maxHealth;
 
         //todo 这里计数Hit是否有必要 目前只有投射物在用
-         public ushort maxHit;
+        public ushort maxHit;
         public float invincibilityTimeBeenHit;
         [HideInInspector] public double invincibilityEndTime;
         [HideInInspector] public ushort hitCounter;

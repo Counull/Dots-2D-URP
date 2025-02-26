@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: f59f36aa0db265544b1c07c07a120fa3
 ModelImporter:
-  serializedVersion: 19301
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       1: 100000
@@ -151,16 +151,15 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -698,27 +697,35 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -732,7 +739,62 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Penguin_Animations(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Rig
+      parentName: Penguin_Animations(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 39.999996, y: 39.999996, z: 39.999996}
+    - name: root
+      parentName: Rig
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: body
+      parentName: root
+      position: {x: 1.1710194e-18, y: -0.00000039339065, z: 0.0087555405}
+      rotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: wing.L
+      parentName: body
+      position: {x: -0.004620367, y: -0.0009443784, z: 0.0000444571}
+      rotation: {x: 0.0029239687, y: -0.08712346, z: 0.9956336, w: -0.033386737}
+      scale: {x: 1.0000001, y: 1, z: 0.9999998}
+    - name: wing.R
+      parentName: body
+      position: {x: 0.004620367, y: -0.0009443784, z: 0.0000444571}
+      rotation: {x: -0.0029239703, y: -0.08712346, z: 0.9956336, w: 0.033386737}
+      scale: {x: 1.0000001, y: 1, z: 0.9999999}
+    - name: tail.01
+      parentName: body
+      position: {x: 1.07724016e-16, y: -0.0061624735, z: -0.0021386228}
+      rotation: {x: -0.000000096722225, y: -0.6030414, z: 0.7977099, w: 0.00000009380672}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: hair.01
+      parentName: body
+      position: {x: 4.6629333e-16, y: 0.0078186905, z: 0.0020642823}
+      rotation: {x: 0.025013518, y: -0.0000000048205315, z: 0.00000007529462, w: 0.99968714}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: feet.L
+      parentName: body
+      position: {x: -0.002364924, y: -0.0050785304, z: 0.00034919858}
+      rotation: {x: 0.0000000754979, y: 4.622913e-24, z: 1, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: feet.R
+      parentName: body
+      position: {x: 0.002364924, y: -0.0050785304, z: 0.00034919858}
+      rotation: {x: 0.0000000754979, y: 4.622913e-24, z: 1, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mesh
+      parentName: Penguin_Animations(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 39.999996, y: 39.999996, z: 39.999996}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -743,13 +805,16 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
