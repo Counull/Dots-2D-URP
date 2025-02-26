@@ -11,6 +11,7 @@ namespace Systems.Server {
     public partial struct DeathSystem : ISystem {
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
+            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<HealthComponent>();
         }
 

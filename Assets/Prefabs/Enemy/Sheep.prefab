@@ -97,7 +97,7 @@ MonoBehaviour:
       z: 0
     targetDistanceSq: 0
   healthComponent:
-    maxHealth: 21
+    maxHealth: 67
     maxHit: 0
     invincibilityTimeBeenHit: 0
     invincibilityEndTime: 0

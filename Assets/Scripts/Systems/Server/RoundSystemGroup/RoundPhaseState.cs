@@ -2,7 +2,7 @@ using Component;
 
 namespace Systems.Server.RoundSystemGroup {
     /// <summary>
-    ///     阶段转换的状态机
+    /// 阶段转换的状态机
     /// </summary>
     public abstract class RoundPhaseState {
         public abstract RoundPhase Phase { get; }
@@ -21,7 +21,7 @@ namespace Systems.Server.RoundSystemGroup {
     }
 
     /// <summary>
-    ///     初始化阶段
+    /// 初始化阶段
     /// </summary>
     public class RoundInitPhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.Init;
@@ -34,7 +34,7 @@ namespace Systems.Server.RoundSystemGroup {
     }
 
     /// <summary>
-    ///     战斗阶段
+    /// 战斗阶段
     /// </summary>
     public class RoundCombatPhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.Combat;
@@ -66,7 +66,7 @@ namespace Systems.Server.RoundSystemGroup {
     }
 
     /// <summary>
-    ///     升级选择阶段
+    /// 升级选择阶段
     /// </summary>
     public class RoundLevelUpPhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.LevelUp;
@@ -79,7 +79,7 @@ namespace Systems.Server.RoundSystemGroup {
 
 
     /// <summary>
-    ///     购买物品阶段
+    /// 购买物品阶段
     /// </summary>
     public class RoundPurchasePhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.Purchase;
@@ -92,7 +92,7 @@ namespace Systems.Server.RoundSystemGroup {
 
 
     /// <summary>
-    ///     结算阶段
+    /// 结算阶段
     /// </summary>
     public class RoundSettlementPhase : RoundPhaseState {
         public override RoundPhase Phase => RoundPhase.Settlement;

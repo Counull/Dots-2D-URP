@@ -7,7 +7,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Systems.Client {
-    
     /// <summary>
     /// 用于刷新UI
     /// </summary>
@@ -17,8 +16,8 @@ namespace Systems.Client {
         private UiManager _uiManager;
 
         protected override void OnCreate() {
-            _localPlayerQuery = SystemAPI.QueryBuilder().WithAll<PlayerComponent, GhostOwnerIsLocal, HealthComponent>()
-                .Build();
+            _localPlayerQuery = SystemAPI.QueryBuilder()
+                .WithAll<PlayerComponent, GhostOwnerIsLocal, HealthComponent>().Build();
             RequireForUpdate(_localPlayerQuery);
             RequireForUpdate<RoundData>();
         }
@@ -37,10 +36,9 @@ namespace Systems.Client {
 
             foreach (var health in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithAll<PlayerComponent, GhostOwnerIsLocal>()) {
-                if (health.ValueRO.HealthChanged) {
-                    _uiManager.RefreshHp(health.ValueRO);
-                    health.ValueRW.UIRefreshed();
-                }
+                if (!health.ValueRO.HealthChanged) continue;
+                _uiManager.RefreshHp(health.ValueRO);
+                health.ValueRW.UIRefreshed();
             }
         }
     }

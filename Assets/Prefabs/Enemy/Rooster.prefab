@@ -60,7 +60,7 @@ MonoBehaviour:
       z: 0
     targetDistanceSq: 0
   healthComponent:
-    maxHealth: 15
+    maxHealth: 34
     maxHit: 0
     invincibilityTimeBeenHit: 0
     invincibilityEndTime: 0
@@ -71,10 +71,10 @@ MonoBehaviour:
     speed: 5
   chargeData:
     speed: -8
-    chargeRange: 3
+    chargeRange: 3.5
     chargeTotalTime: 0.3
     coolDownData:
-      totalTime: 5
+      totalTime: 4
     direction:
       x: 0
       y: 0

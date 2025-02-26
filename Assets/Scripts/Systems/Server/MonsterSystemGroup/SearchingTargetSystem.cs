@@ -39,8 +39,7 @@ namespace Systems.Server.MonsterSystemGroup {
             var searchingTargetJob = new SearchingTargetJob {
                 TargetTransforms = targetTransforms
             };
-
-
+            
             state.Dependency =
                 searchingTargetJob.ScheduleParallel(JobHandle.CombineDependencies(targetHandle, state.Dependency));
             targetTransforms.Dispose(state.Dependency);

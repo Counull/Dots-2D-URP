@@ -35,8 +35,8 @@ namespace Systems.Server.MonsterSystemGroup {
                 ref var cd = ref shooter.ValueRW.coolDownData;
                 if (!cd.IsCoolDownReadyWithBaseCd(SystemAPI.Time.ElapsedTime)) continue; //如果冷却时间未到
                 var shooterData = shooter.ValueRO;
+               
                 //计算目标方向
-
                 var targetDistanceSq = monsterAspect.Monster.ValueRO.targetDistanceSq;
                 if (targetDistanceSq > math.square(shooterData.triggerRange)) continue; //超出范围
                 cd.TriggerCoolDown(SystemAPI.Time.ElapsedTime); //触发冷却

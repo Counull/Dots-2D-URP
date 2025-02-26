@@ -39,7 +39,7 @@ namespace Systems.Server.MonsterSystemGroup {
     public partial struct ChaseMoveJob : IJobEntity {
         public float DeltaTime;
 
-        public void Execute(MonsterAspectWithHealthRW monsterAspect,
+        private void Execute(MonsterAspectWithHealthRW monsterAspect,
             ref ChaseComponent chase) {
             if (monsterAspect.HealthComponent.ValueRO.IsDead) return;
             var playerDir = monsterAspect.Monster.ValueRO.targetPlayerDirNormalized;

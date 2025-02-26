@@ -17,6 +17,7 @@ namespace Systems.Server.SpawnSystemGroup {
             state.RequireForUpdate<WeaponNeedRefresh>();
             _weaponBuffer = state.GetBufferLookup<WeaponSlotElement>();
         }
+
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             _weaponBuffer.Update(ref state);
@@ -29,10 +30,10 @@ namespace Systems.Server.SpawnSystemGroup {
                          .WithEntityAccess()) {
                 var maxWeaponCount = playerComponent.ValueRO.InGameAttributes.maxWeaponCount;
                 var weaponMountDistance = playerComponent.ValueRO.InGameAttributes.weaponMountDistance;
-                var weaponPerRad = 2 * Mathf.PI / maxWeaponCount;
-
-                var weaponIndex = 0;
                 var weaponBuffer = _weaponBuffer[playerEntity];
+                ;
+                var weaponPerRad = 2 * Mathf.PI / maxWeaponCount;
+                var weaponIndex = 0;
                 foreach (var element in weaponBuffer) {
                     //计算武器的位置
                     var newLocalTrans = state.EntityManager.GetComponentData<LocalTransform>(element.WeaponPrefab);
@@ -43,10 +44,10 @@ namespace Systems.Server.SpawnSystemGroup {
                     );
                     var weapon = ecb.Instantiate(element.WeaponPrefab);
                     ecb.AddComponent<GhostChildEntity>(weapon);
-                    ecb.SetComponent(weapon, new WeaponMounted() {PlayerEntity = playerEntity});
                     ecb.AddComponent(weapon, new Parent {Value = playerEntity});
                     ecb.AddComponent(weapon, FactionComponent.Player);
                     ecb.SetComponent(weapon, newLocalTrans);
+                    ecb.SetComponent(weapon, new WeaponMounted() {PlayerEntity = playerEntity});
                     ecb.AppendToBuffer(playerEntity, new GhostGroup() {Value = weapon});
                     ecb.AppendToBuffer(playerEntity, new LinkedEntityGroup() {Value = weapon});
                     weaponIndex++;

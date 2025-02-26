@@ -4,6 +4,7 @@ using Component;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Physics;
 
 namespace Systems.Server.HitSystemGroup {
@@ -43,12 +44,9 @@ namespace Systems.Server.HitSystemGroup {
             _factionLookup.Update(ref state);
             _dmgSrcLookup.Update(ref state);
             _projectileLookup.Update(ref state);
-
-            var sim = SystemAPI.GetSingleton<SimulationSingleton>().AsSimulation();
-            var ss = SystemAPI.GetSingleton<SimulationSingleton>();
-            sim.FinalJobHandle.Complete();
-
             _hitedEntityBufferLookup.Update(ref state);
+
+
             var hitJob = new HitJob {
                 ElapsedTime = SystemAPI.Time.ElapsedTime,
                 HealthLookup = _healthLookup,
@@ -59,7 +57,10 @@ namespace Systems.Server.HitSystemGroup {
                 Ecb = SystemAPI.GetSingletonRW<EndSimulationEntityCommandBufferSystem.Singleton>().ValueRW
                     .CreateCommandBuffer(state.WorldUnmanaged)
             };
-            state.Dependency = hitJob.Schedule(ss, state.Dependency);
+
+            var sim = SystemAPI.GetSingleton<SimulationSingleton>();
+            var combineHandle = JobHandle.CombineDependencies(state.Dependency, sim.AsSimulation().FinalJobHandle);
+            state.Dependency = hitJob.Schedule(sim, combineHandle);
         }
     }
 
@@ -74,7 +75,6 @@ namespace Systems.Server.HitSystemGroup {
         [ReadOnly] public BufferLookup<HitedEntityElement> HitedEntityBufferLookup;
 
 
-       
         public void Execute(TriggerEvent triggerEvent) {
             if (!FactionLookup.TryGetComponent(triggerEvent.EntityA, out var factionA)
                 || !FactionLookup.TryGetComponent(triggerEvent.EntityB, out var factionB)) {
@@ -88,7 +88,7 @@ namespace Systems.Server.HitSystemGroup {
             BeenHit(triggerEvent.EntityB, triggerEvent.EntityA, ElapsedTime);
         }
 
-   
+
         private bool BeenHit(Entity healthEntity, Entity dmgSrcEntity, double currentTime) {
             if (!HealthLookup.TryGetComponent(healthEntity, out var health) ||
                 !DmgSrcLookup.TryGetComponent(dmgSrcEntity, out var dmgSrc)) return false;
@@ -102,7 +102,7 @@ namespace Systems.Server.HitSystemGroup {
             health.hitCounter++;
             health.invincibilityEndTime = currentTime + health.invincibilityTimeBeenHit;
             HealthLookup[healthEntity] = health;
-            
+
 
             return false;
         }

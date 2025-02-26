@@ -7,7 +7,6 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 namespace Systems.Server.MonsterSystemGroup {
-    
     /// <summary>
     /// 怪物的冲锋行为 依赖ChargeComponent
     /// </summary>
@@ -29,7 +28,7 @@ namespace Systems.Server.MonsterSystemGroup {
         ///     暂时是否使用异步只是基于可能激活此系统的怪物数量
         /// </summary>
         /// <param name="state"></param>
-       [BurstCompile]
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             foreach (var (monsterAspect, chargeComponent, entity)
                      in SystemAPI.Query<MonsterAspectWithHealthRW, RefRW<ChargeComponent>>()
@@ -40,10 +39,12 @@ namespace Systems.Server.MonsterSystemGroup {
 
                 if (monsterAspect.HealthComponent.ValueRO.IsDead) continue; //怪物死亡
 
+
                 ref var chargeDataRW = ref chargeComponent.ValueRW;
-                var charging = state.EntityManager.IsComponentEnabled<ChargeComponent>(entity);
                 ref var cd = ref chargeDataRW.coolDownData;
-                if (!charging) {
+
+                var isCharging = state.EntityManager.IsComponentEnabled<ChargeComponent>(entity);
+                if (!isCharging) {
                     if (!cd.IsCoolDownReadyWithBaseCd(SystemAPI.Time.ElapsedTime)) continue; //冷却时间未到
                     var rangeSq = chargeDataRW.chargeRange * chargeDataRW.chargeRange;
                     if (monsterAspect.Monster.ValueRO.targetDistanceSq > rangeSq) continue; //超出范围

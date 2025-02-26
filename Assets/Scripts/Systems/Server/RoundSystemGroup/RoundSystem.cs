@@ -32,8 +32,6 @@ namespace Systems.Server.RoundSystemGroup {
                 phaseStateData.PhaseState.PhaseExit(ref roundData.ValueRW);
                 if (phaseStateData.PhaseState.Phase == RoundPhase.Settlement &&
                     phaseStateData.PhaseState.NextPhase == null) {
-                 
-                 
                     return;
                 }
 
