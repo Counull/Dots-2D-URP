@@ -21,6 +21,7 @@ namespace Authoring.Monster {
             baker.AddComponent(entity, monsterData);
             baker.AddComponent(entity, collisionDmgSrc);
             baker.AddComponent(entity, new FactionComponent {Faction = Faction.Monster});
+     
         }
 
         public static void AddShooterComponent(IBaker baker, Entity entity, ShooterComponent shooterData,

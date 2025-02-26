@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Component {
-    
     /// <summary>
     /// 怪物的基础组件
     /// </summary>
@@ -28,7 +27,6 @@ namespace Component {
     }
 
 
-    
     /// <summary>
     /// 冲锋组件
     /// </summary>
@@ -52,8 +50,9 @@ namespace Component {
         public DmgSrcComponent dmgSrcComponent;
         public HealthComponent projectileHealth;
         public CoolDownData coolDownData;
+        public Entity ProjectilePrefab;
         [HideInInspector] public float spreadAngleRad;
-        [HideInInspector] public Entity ProjectilePrefab;
+
 
         [ShowInInspector]
         public float SpreadAngleDeg {
