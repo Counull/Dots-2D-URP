@@ -5,7 +5,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-
+[assembly: RegisterGenericJobType(typeof(Unity.Collections.SortJob<LocalTransform, Utils.Utils.LocalTransformXComparer>))]
 namespace Systems.Server.WeaponSystemGroup {
     /// <summary>
     /// 这里用了一个特殊算法来找到最近的目标，
@@ -39,8 +39,8 @@ namespace Systems.Server.WeaponSystemGroup {
                 .Schedule(monsterQueryHandle);
             _weaponProjectileLookup.Update(ref state);
             _projectileShootingEventLookup.Update(ref state);
-            var ecbSystem = state.World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>();
-            var ecb = ecbSystem.CreateCommandBuffer().AsParallelWriter();
+            var ecbSystem =  SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter();
 
 
             var weaponTriggerJob = new WeaponTriggerJob() {
@@ -52,12 +52,12 @@ namespace Systems.Server.WeaponSystemGroup {
             };
             var combineHandle = JobHandle.CombineDependencies(sortHandle, state.Dependency);
             state.Dependency = weaponTriggerJob.Schedule(combineHandle);
-
-            //其实应该在spawn系统中等待这里的ECB被执行 这里这样写其实发射子弹的行为都会被推到下一帧
-            //TODO system顺序 互相依赖 相关的东西写得都不是很好
+             monsterLocalTrans.Dispose(state.Dependency);
+         
+          
         }
     }
-
+    [BurstCompile]
     public partial struct WeaponTriggerJob : IJobEntity {
         [ReadOnly] public ComponentLookup<WeaponProjectile> WeaponProjectileLookup;
         [ReadOnly] public BufferLookup<ProjectileShootingEvent> ProjectileShootingEventLookup;

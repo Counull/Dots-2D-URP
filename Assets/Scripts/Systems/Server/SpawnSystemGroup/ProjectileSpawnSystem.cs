@@ -26,10 +26,10 @@ namespace Systems.Server.SpawnSystemGroup {
         /// 说实话这里应当包含一个线程池以避免更多的Structural Changes 用ECS节省的性能都在这浪费了
         /// </summary>
         /// <param name="state"></param>
-       
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             var query = state.GetEntityQuery(ComponentType.ReadOnly<ProjectileShootingEvent>());
-            var ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
+            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
             using var entities = query.ToEntityArray(Allocator.Temp);
             _projectileShootingEventBuffer.Update(ref state);

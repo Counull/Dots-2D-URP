@@ -35,6 +35,7 @@ namespace Systems.Server.MonsterSystemGroup {
     }
 
 
+    [BurstCompile]
     public partial struct ChaseMoveJob : IJobEntity {
         public float DeltaTime;
 

@@ -17,10 +17,10 @@ namespace Systems.Server.SpawnSystemGroup {
             state.RequireForUpdate<WeaponNeedRefresh>();
             _weaponBuffer = state.GetBufferLookup<WeaponSlotElement>();
         }
-
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
             _weaponBuffer.Update(ref state);
-            var ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
+            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
 
 

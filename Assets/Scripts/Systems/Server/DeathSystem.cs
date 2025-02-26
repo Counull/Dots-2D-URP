@@ -14,9 +14,9 @@ namespace Systems.Server {
             state.RequireForUpdate<HealthComponent>();
         }
 
-       
+        [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-            var ecb = SystemAPI.GetSingletonRW<BeginSimulationEntityCommandBufferSystem.Singleton>().ValueRW
+            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
             foreach (var (healthComponent, entity) in
                      SystemAPI.Query<RefRO<HealthComponent>>().WithEntityAccess()) {

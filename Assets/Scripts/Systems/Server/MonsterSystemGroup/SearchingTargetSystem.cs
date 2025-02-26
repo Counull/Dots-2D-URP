@@ -43,6 +43,7 @@ namespace Systems.Server.MonsterSystemGroup {
 
             state.Dependency =
                 searchingTargetJob.ScheduleParallel(JobHandle.CombineDependencies(targetHandle, state.Dependency));
+            targetTransforms.Dispose(state.Dependency);
         }
     }
 
