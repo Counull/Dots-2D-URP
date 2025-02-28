@@ -24,6 +24,7 @@ namespace Systems.Server.WeaponSystemGroup {
 
         [BurstCompile]
         public void OnCreate(ref SystemState state) {
+            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             _weaponProjectileLookup = state.GetComponentLookup<WeaponProjectile>(true);
             _projectileShootingEventLookup = state.GetBufferLookup<ProjectileShootingEvent>(true);
             _monsterQuery = SystemAPI.QueryBuilder().WithAll<MonsterComponent, LocalTransform>().Build();
@@ -67,7 +68,7 @@ namespace Systems.Server.WeaponSystemGroup {
         public double ElapsedTime;
 
         public void Execute(Entity entity, [EntityIndexInQuery] int index, ref WeaponComponent weaponComponent,
-            in LocalTransform localTransform, in LocalToWorld localToWorld, in FactionComponent factionComponent) {
+             in LocalToWorld localToWorld, in FactionComponent factionComponent) {
             if (!weaponComponent.coolDownData.IsCoolDownReady(ElapsedTime)) return;
             weaponComponent.coolDownData.TriggerCoolDown(ElapsedTime);
             //local to world
@@ -78,6 +79,7 @@ namespace Systems.Server.WeaponSystemGroup {
 
             if (WeaponProjectileLookup.TryGetComponent(entity, out var weaponProjectile) &&
                 ProjectileShootingEventLookup.HasBuffer(entity)) {
+               
                 var bulletData = weaponProjectile.projectileData;
                 bulletData.direction = math.normalize(nearestTargetPos - weaponWorldPos);
                 bulletData.startPosition = weaponWorldPos;
@@ -90,6 +92,7 @@ namespace Systems.Server.WeaponSystemGroup {
                     HealthComponent = weaponProjectile.projectileHealth,
                     ProjectilePrefab = weaponProjectile.ProjectilePrefab
                 };
+                //子弹生成事件将会在ProjectileSpawnSystem中处理
                 Ecb.AppendToBuffer(index, entity, projectileEvent);
             }
         }

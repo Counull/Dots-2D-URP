@@ -4,6 +4,7 @@ using Unity.Entities;
 using UnityEngine;
 
 namespace Authoring {
+    [DisableAutoCreation]
     public class SpawnerAuthoring : MonoBehaviour {
         [Header("Player")] [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameObject[] weaponPrefabs;
