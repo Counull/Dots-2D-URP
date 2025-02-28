@@ -23,7 +23,7 @@ namespace Systems.Server {
     }
 
     /// <summary>
-    /// TODO 此处应该改用IJobEntityBatch
+    ///
     /// </summary>
     [BurstCompile]
     public partial struct ProjectileMovementJob : IJobEntity {

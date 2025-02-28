@@ -5,6 +5,7 @@ using UnityEngine;
 using Utils;
 
 namespace Authoring.Monster {
+    [DisallowMultipleComponent]
     internal class SheepAuthoring : MonsterAuthoringBase {
         [SerializeField] private ChaseComponent chaseData;
         [SerializeField] private ChargeComponent chargeData;

@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 
 namespace Component {
     
+   
     //伤害来源组件，会在伤害检测时作用于HealthComponent
     [Serializable]
     public struct DmgSrcComponent : IComponentData {
@@ -19,7 +20,7 @@ namespace Component {
         public float3 HitPoint;
     }
 
-
+    //TODO 或许该使用sharedComponent去优化内存
     [Serializable]
     [GhostComponent]
     public struct HealthComponent : IComponentData, IEnableableComponent {

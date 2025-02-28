@@ -4,6 +4,7 @@ using Unity.Entities;
 using UnityEngine;
 
 namespace Authoring.Monster {
+    [DisallowMultipleComponent]
     internal class PenguinAuthoring : MonsterAuthoringBase {
         [SerializeField] private ChaseComponent chaseData;
 
